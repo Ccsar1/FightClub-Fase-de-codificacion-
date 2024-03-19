@@ -16,7 +16,7 @@ public class Ghouls extends Minions {
     /**
      *
      */
-    private int {1-5} dependencies;
+    private int dependencies;
 
     /**
      * @return

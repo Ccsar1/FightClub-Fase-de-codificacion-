@@ -16,7 +16,7 @@ public class Hunter extends Character {
     /**
      *
      */
-    private int {0-3} willpower;
+    private int willpower;
 
     /**
      *

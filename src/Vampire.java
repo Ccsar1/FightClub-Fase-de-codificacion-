@@ -16,7 +16,7 @@ public class Vampire extends Character {
     /**
      *
      */
-    private int {0-10} blood;
+    private int blood;
 
     /**
      *

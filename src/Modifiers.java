@@ -21,7 +21,7 @@ public abstract class Modifiers {
     /**
      *
      */
-    private int {1-5} value;
+    private int value;
 
     /**
      *

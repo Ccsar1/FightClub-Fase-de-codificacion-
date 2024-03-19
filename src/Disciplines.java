@@ -16,7 +16,7 @@ public class Disciplines extends SpecialAbility {
     /**
      *
      */
-    private int {1-3} cost;
+    private int cost;
 
     /**
      * @return

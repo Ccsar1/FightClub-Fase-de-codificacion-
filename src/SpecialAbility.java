@@ -21,12 +21,12 @@ public abstract class SpecialAbility {
     /**
      *
      */
-    private int {1-3} attackValue;
+    private int attackValue;
 
     /**
      *
      */
-    private int {1-3} defenceValue;
+    private int defenceValue;
 
     /**
      *

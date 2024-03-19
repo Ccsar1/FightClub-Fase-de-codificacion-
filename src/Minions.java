@@ -16,12 +16,12 @@ public abstract class Minions {
     /**
      *
      */
-    private string name;
+    private String name;
 
     /**
      *
      */
-    private int {1-3} HP;
+    private int hp;
 
     /**
      *

@@ -16,7 +16,7 @@ public class Lycanthrope extends Character {
     /**
      *
      */
-    private int {0-3} fury;
+    private int fury;
 
     /**
      *

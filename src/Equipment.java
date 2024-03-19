@@ -21,12 +21,12 @@ public abstract class Equipment {
     /**
      *
      */
-    private int {1-3} attackModifier;
+    private int attackModifier;
 
     /**
      *
      */
-    private int {1-3} defenceModifier;
+    private int defenceModifier;
 
     /**
      * @param i

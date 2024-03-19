@@ -34,10 +34,10 @@ public abstract class User {
     private DataBaseManager dataBase;
 
     /**
-     * @param String
+     * @param password
      * @return
      */
-    public Boolean checkPassword(void String) {
+    public Boolean checkPassword(String password) {
         // TODO implement here
         return null;
     }

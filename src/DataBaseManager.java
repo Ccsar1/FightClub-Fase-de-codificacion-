@@ -16,100 +16,100 @@ public class DataBaseManager {
     /**
      *
      */
-    private Character [0..*] charDB;
+    private Character[] charDB;
 
     /**
      *
      */
-    private Fight [0..*] fightDB;
+    private Fight[] fightDB;
 
     /**
      *
      */
-    private Users [0..*] userDB;
+    private User[] userDB;
 
     /**
      *
      */
-    private Equipment [0..*] equipmentDB;
+    private Equipment[] equipmentDB;
 
     /**
      *
      */
-    private Challenge [0..*] challengeDB;
+    private Challenge[] challengeDB;
 
     /**
      * @return
      */
-    public Character [0..*] getCharDB() {
+    public Character[] getCharDB() {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param Character [0..*]
+     * @param characters
      */
-    public void setCharDB(void Character [0..*]) {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public Fight [0..*] getFightDB() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param Fight[0..*]
-     */
-    public void setFightDB(void Fight[0..*]) {
+    public void setCharDB(Character[] characters) {
         // TODO implement here
     }
 
     /**
      * @return
      */
-    public User [0..*] getUserDB() {
+    public Fight[] getFightDB() {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param User[0..*]
+     * @param fights
      */
-    public void setUserDB(void User[0..*]) {
+    public void setFightDB(Fight[] fights) {
         // TODO implement here
     }
 
     /**
      * @return
      */
-    public Equipment [0..*] getEquipmentDB() {
+    public User[] getUserDB() {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param Equipment[0..*]
+     * @param users
      */
-    public void setEquipmentDB(void Equipment[0..*]) {
+    public void setUserDB(User[] users) {
         // TODO implement here
     }
 
     /**
      * @return
      */
-    public Challenge [0..*] getChallengeDB() {
+    public Equipment[] getEquipmentDB() {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param Challenge [0..*]
+     * @param equipments
      */
-    public void setChallengeDB(void Challenge [0..*]) {
+    public void setEquipmentDB(Equipment[] equipments) {
+        // TODO implement here
+    }
+
+    /**
+     * @return
+     */
+    public Challenge[] getChallengeDB() {
+        // TODO implement here
+        return null;
+    }
+
+    /**
+     * @param challenges
+     */
+    public void setChallengeDB(Challenge[] challenges) {
         // TODO implement here
     }
 

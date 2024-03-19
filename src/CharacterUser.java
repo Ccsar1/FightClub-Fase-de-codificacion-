@@ -16,7 +16,7 @@ public class CharacterUser {
     /**
      *
      */
-    private Character char;
+    private Character character;
 
     /**
      *
@@ -31,7 +31,7 @@ public class CharacterUser {
     /**
      *
      */
-    private int {0-5} HP;
+    private int hp;
 
     /**
      *

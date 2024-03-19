@@ -16,12 +16,12 @@ public abstract class Character {
     /**
      *
      */
-    private string name;
+    private String name;
 
     /**
      *
      */
-    private int  {1-5} power;
+    private int power;
 
     /**
      *
