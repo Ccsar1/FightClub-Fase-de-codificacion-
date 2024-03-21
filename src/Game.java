@@ -23,13 +23,28 @@ public class Game {
     private DataBaseManager dataBase;
 
     /**
-     * @param nombre
-     * @param cont
-     * @return
+     * @param nick
+     * @param pass
      */
-    private boolean login(String nombre, String cont) {
-        System.out.println("Not Implemented Yet");
-        return false;
+    private void login(String nick, String pass) {
+        //user = dataBase.getUserByNick(nick);
+        System.out.println("---searching for user by nickname");
+        if (user != null) {
+            boolean correctPass = user.checkPassword(pass);
+            if (correctPass) {
+                boolean deleteAccount = false;
+                //deleteAccount = user.showMenu();
+                System.out.println("---logging in and showing users menu");
+                if (deleteAccount) {
+                    this.deleteAccount();
+                }
+            } else {
+                System.out.println("Incorrect password!");
+            }
+        } else {
+            System.out.println("That nickname doesn't exist!");
+        }
+
     }
 
     /**
@@ -49,7 +64,6 @@ public class Game {
      *
      */
     public void showWelcome() throws IOException {
-        // TODO implement here
         System.out.println("WELCOME TO FIGHT CLUB!!");
 
         //this.initializeDB();
@@ -110,8 +124,12 @@ public class Game {
      *
      */
     private void showMenuLogin() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Write your nickname: ");
+        String nick = scanner.nextLine();
+        System.out.print("Write your password: ");
+        String pass = scanner.nextLine();
+        this.login(nick, pass);
     }
 
     /**
@@ -123,11 +141,10 @@ public class Game {
     }
 
     /**
-     * @param U
+     *
      */
-    private void deleteAccount(User U) {
+    private void deleteAccount() {
         // TODO implement here
         System.out.println("Not Implemented Yet");
     }
-
 }
