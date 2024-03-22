@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.*;
 import java.util.*;
 
@@ -29,8 +31,8 @@ public class Game {
     private void login(String nick, String pass) {
         //user = dataBase.getUserByNick(nick);
         System.out.println("---searching for user by nickname");
-        if (user != null) {
-            boolean correctPass = user.checkPassword(pass);
+        if (this.user != null) {
+            boolean correctPass = this.user.checkPassword(pass);
             if (correctPass) {
                 boolean deleteAccount = false;
                 //deleteAccount = user.showMenu();
@@ -48,16 +50,32 @@ public class Game {
     }
 
     /**
-     * @param nombre
+     * @param name
      * @param nick
-     * @param cont
-     * @param Type
+     * @param pass
+     * @param type
      * @return
      */
-    private boolean register(String nombre, String nick, String cont, TUser Type) {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
-        return false;
+    private void register(String name, String nick, String pass, TUser type) {
+        //boolean validNick = this.dataBase.validNick(nick);
+        boolean validNick = true;
+        System.out.println("---checking if nickname already exists");
+        if (validNick) {
+            switch (type) {
+                case TUser.Player:
+                    //this.user = new Player(name, nick, pass);
+                    System.out.println("---creating new player");
+                    break;
+                case TUser.Operator:
+                    //this.user = new Operator(name, nick, pass);
+                    System.out.println("---creating new operator");
+                    break;
+            }
+            //this.dataBase.addUser(this.user);
+            System.out.println("---adding new user to the database");
+        } else {
+            System.out.println("That nickname already exists");
+        }
     }
 
     /**
@@ -136,8 +154,32 @@ public class Game {
      *
      */
     private void showMenuRegister() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        Scanner scanner = new Scanner(System.in);
+        TUser userType = null;
+        int input;
+        while (userType == null) {
+            System.out.println("Choose a role:");
+            System.out.println("1. Player");
+            System.out.println("2. Operator");
+            input = scanner.nextInt();
+            switch (input) {
+                case 1:
+                    userType = TUser.Player;
+                    break;
+                case 2:
+                    userType = TUser.Operator;
+                    break;
+                default:
+                    System.out.println(input + " is not a valid option");
+            }
+        }
+        System.out.print("Write your name: ");
+        String name = scanner.nextLine();
+        System.out.print("Write your nickname: ");
+        String nick = scanner.nextLine();
+        System.out.print("Write your password: ");
+        String pass = scanner.nextLine();
+        this.register(name, nick, pass, userType);
     }
 
     /**
