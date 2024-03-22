@@ -40,6 +40,7 @@ public class Game {
                 if (deleteAccount) {
                     this.deleteAccount();
                 }
+                this.user = null;
             } else {
                 System.out.println("Incorrect password!");
             }
@@ -162,6 +163,7 @@ public class Game {
             System.out.println("1. Player");
             System.out.println("2. Operator");
             input = scanner.nextInt();
+            scanner.nextLine();
             switch (input) {
                 case 1:
                     userType = TUser.Player;
