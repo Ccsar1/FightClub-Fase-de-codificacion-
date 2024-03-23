@@ -7,30 +7,23 @@ import java.util.*;
  */
 public class Don extends SpecialAbility {
 
-    /**
-     * Default constructor
-     */
-    public Don() {
-    }
-
-    /**
-     *
-     */
     private int fury;
-
-    /**
-     * @return
-     */
-    public int getFury() {
-        // TODO implement here
-        return 0;
+    public Don(String name, int attack, int defence, TAbility type, int fury) {
+        super(name,attack,defence,type);
+        this.fury=fury;
     }
 
-    /**
-     * @param value
-     */
-    public void setFury(int value) {
-        // TODO implement here
+    public void setFury(int fury){
+        this.fury=fury;
+    }
+
+    public int getFury(){
+        return this.fury;
+    }
+
+    @Override
+    public void execute() {
+
     }
 
 }
