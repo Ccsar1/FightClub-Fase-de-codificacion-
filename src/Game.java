@@ -38,7 +38,8 @@ public class Game {
                 //deleteAccount = user.showMenu();
                 System.out.println("---logging in and showing users menu");
                 if (deleteAccount) {
-                    this.deleteAccount();
+                    //dataBase.deleteUser(this.user);
+                    System.out.println("---deleting user");
                 }
                 this.user = null;
             } else {
@@ -182,13 +183,5 @@ public class Game {
         System.out.print("Write your password: ");
         String pass = scanner.nextLine();
         this.register(name, nick, pass, userType);
-    }
-
-    /**
-     *
-     */
-    private void deleteAccount() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
     }
 }

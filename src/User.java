@@ -34,12 +34,11 @@ public abstract class User {
     private DataBaseManager dataBase;
 
     /**
-     * @param password
+     * @param pass
      * @return
      */
-    public Boolean checkPassword(String password) {
-        // TODO implement here
-        return null;
+    public boolean checkPassword(String pass) {
+        return this.password.equals(pass);
     }
 
 }
