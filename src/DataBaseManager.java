@@ -16,6 +16,7 @@ public class DataBaseManager implements Serializable{
 
     public DataBaseManager() {
         loadFiles();
+
     }
 
 
