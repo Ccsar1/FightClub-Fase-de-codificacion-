@@ -20,21 +20,29 @@ public class DataBaseManager implements Serializable{
     }
 
 
-    private void loadFiles() {
+    public void loadFiles() {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("datos2.txt"))) {
             DataBaseManager savedData = (DataBaseManager) inputStream.readObject();
             this.userDB = savedData.userDB;
             this.userBlockDB = savedData.userBlockDB;
+            this.charDB = savedData.charDB;
+            this.fightDB = savedData.fightDB;
+            this.challengeDB = savedData.challengeDB;
+            this.equipmentDB = savedData.equipmentDB;
         } catch (FileNotFoundException e) {
 
             this.userDB = new ArrayList<>();
             this.userBlockDB = new ArrayList<>();
+            this.charDB = new ArrayList<>();
+            this.fightDB = new ArrayList<>();
+            this.challengeDB = new ArrayList<>();
+            this.equipmentDB = new ArrayList<>();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void saveFiles() {
+    public void saveFiles() {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("datos2.txt"))) {
             outputStream.writeObject(this);
         } catch (IOException e) {
@@ -154,7 +162,7 @@ public class DataBaseManager implements Serializable{
         Collections.sort(charDB, new Comparator<Character>() {
             @Override
             public int compare(Character o1, Character o2) {
-                return Integer.compare(o1.getGold(), o2.getGold());
+                return Integer.compare(o2.getGold(), o1.getGold());
             }
         });
     }
@@ -169,6 +177,24 @@ public class DataBaseManager implements Serializable{
 
         }
 
+    }
+
+    public boolean isUserBlock (String nick){
+        for (User user:userDB){
+            if (user.getNick().equals(nick)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkExistsCharacter(String nick){
+        for (Character character:charDB){
+            if (character.getNick().equals(nick)){
+                return true;
+            }
+        }
+        return false;
     }
 }
 
