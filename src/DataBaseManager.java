@@ -67,6 +67,7 @@ public class DataBaseManager implements Serializable{
     public void setFightDB(Fight fight) {
         fightDB.add(fight);
         saveFiles();
+
     }
 
     public void setPlayerDB(Player player) {
