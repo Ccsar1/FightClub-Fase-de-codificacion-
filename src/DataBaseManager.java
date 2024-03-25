@@ -8,10 +8,11 @@ public class DataBaseManager implements Serializable{
     private static final long serialVersionUID = 7608283362899377929L;
     private ArrayList<Character> charDB = new ArrayList<>();
     private ArrayList<Fight> fightDB = new ArrayList<>();
-    private ArrayList<User> userDB = new ArrayList<>();
+    private ArrayList<Player> playerDB = new ArrayList<>();
+    private ArrayList<Operator> operatorDB = new ArrayList<>();
     private ArrayList<Equipment> equipmentDB = new ArrayList<>();
     private ArrayList<Challenge> challengeDB = new ArrayList<>();
-    private ArrayList<User> userBlockDB = new ArrayList<>();
+    private ArrayList<Player> userBlockDB = new ArrayList<>();
 
 
     public DataBaseManager() {
@@ -23,7 +24,8 @@ public class DataBaseManager implements Serializable{
     public void loadFiles() {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("datos2.txt"))) {
             DataBaseManager savedData = (DataBaseManager) inputStream.readObject();
-            this.userDB = savedData.userDB;
+            this.playerDB = savedData.playerDB;
+            this.operatorDB = savedData.operatorDB;
             this.userBlockDB = savedData.userBlockDB;
             this.charDB = savedData.charDB;
             this.fightDB = savedData.fightDB;
@@ -31,7 +33,8 @@ public class DataBaseManager implements Serializable{
             this.equipmentDB = savedData.equipmentDB;
         } catch (FileNotFoundException e) {
 
-            this.userDB = new ArrayList<>();
+            this.playerDB = new ArrayList<>();
+            this.operatorDB = new ArrayList<>();
             this.userBlockDB = new ArrayList<>();
             this.charDB = new ArrayList<>();
             this.fightDB = new ArrayList<>();
@@ -66,30 +69,46 @@ public class DataBaseManager implements Serializable{
         saveFiles();
     }
 
-    public void setUserDB(User user) {
-        for (User usuario : userDB) {
-            if (usuario.getNick().equals(user.getNick())) {
+    public void setPlayerDB(Player player) {
+        for (Player usuario : playerDB) {
+            if (usuario.getNick().equals(player.getNick())) {
                 return;
             }
         }
-        for (User userBlock : userBlockDB) {
-            if (userBlock.getNick().equals(user.getNick())) {
+        for (Player userBlock : userBlockDB) {
+            if (userBlock.getNick().equals(player.getNick())) {
                 return;
             }
         }
-        userDB.add(user);
+        playerDB.add(player);
         saveFiles();
     }
 
-    public void getUsersDB() {
-        for (User user : userDB) {
-            System.out.println("Name " + user.getName() + ",nick: " + user.getNick() + ",password: " + user.getPassword() + ",register number: " + user.getRegister_number());
+    public void getPlayersDB() {
+        for (Player player : playerDB) {
+            System.out.println("Name " + player.getName() + ",nick: " + player.getNick() + ",password: " + player.getPassword() + ",register number: " + player.getRegister_number());
+        }
+    }
+
+    public void setOperatorDB(Operator operator) {
+        for (Operator usuario : operatorDB) {
+            if (usuario.getNick().equals(operator.getNick())) {
+                return;
+            }
+        }
+        operatorDB.add(operator);
+        saveFiles();
+    }
+
+    public void getPlayersDB() {
+        for (Operator operator : operatorDB) {
+            System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick() + ",password: " + operator.getPassword());
         }
     }
 
     public void getUsersBlockDB() {
-        for (User user : userBlockDB) {
-            System.out.println("Name " + user.getName() + ",nick: " + user.getNick() + ",password: " + user.getPassword() + ",register number: " + user.getRegister_number());
+        for (Player player : userBlockDB) {
+            System.out.println("Name " + player.getName() + ",nick: " + player.getNick() + ",password: " + player.getPassword() + ",register number: " + player.getRegister_number());
         }
     }
 
@@ -103,11 +122,11 @@ public class DataBaseManager implements Serializable{
         saveFiles();
     }
 
-    public User getUserByNick(String nick) {
-        for (User user : userDB) {
+    public Player getPlayerByNick(String nick) {
+        for (Player player : playerDB) {
 
-            if (user.getNick().equals(nick)) {
-                return user;
+            if (player.getNick().equals(nick)) {
+                return player;
             }
 
         }
@@ -117,10 +136,10 @@ public class DataBaseManager implements Serializable{
 
 
     public void blockUser(String nick) {
-        for (User user : userDB) {
-            if (user.getNick().equals(nick)) {
-                userDB.remove(user);
-                userBlockDB.add(user);
+        for (Player player : playerDB) {
+            if (player.getNick().equals(nick)) {
+                playerDB.remove(player);
+                userBlockDB.add(player);
                 saveFiles();
                 return;
             }
@@ -129,10 +148,10 @@ public class DataBaseManager implements Serializable{
     }
 
     public void unlockUser(String nick) {
-        for (User user : userBlockDB) {
-            if (user.getNick().equals(nick)) {
-                userBlockDB.remove(user);
-                userDB.add(user);
+        for (Player player : userBlockDB) {
+            if (player.getNick().equals(nick)) {
+                userBlockDB.remove(player);
+                playerDB.add(player);
                 saveFiles();
                 return;
             }
@@ -141,17 +160,17 @@ public class DataBaseManager implements Serializable{
     }
 
     public void deleteUser(String nick) {
-        Iterator<User> iterator = userDB.iterator();
+        Iterator<Player> iterator = playerDB.iterator();
         while (iterator.hasNext()) {
-            User user = iterator.next();
-            if (user.getNick().equals(nick)) {
+            Player player = iterator.next();
+            if (player.getNick().equals(nick)) {
                 iterator.remove();
             }
         }
-        Iterator<User> iteratorBlock = userBlockDB.iterator();
+        Iterator<Player> iteratorBlock = userBlockDB.iterator();
         while (iteratorBlock.hasNext()) {
-            User user = iteratorBlock.next();
-            if (user.getNick().equals(nick)) {
+            Player player = iteratorBlock.next();
+            if (player.getNick().equals(nick)) {
                 iteratorBlock.remove();
             }
         }
@@ -180,8 +199,8 @@ public class DataBaseManager implements Serializable{
     }
 
     public boolean isUserBlock (String nick){
-        for (User user:userDB){
-            if (user.getNick().equals(nick)){
+        for (Player player: playerDB){
+            if (player.getNick().equals(nick)){
                 return true;
             }
         }
