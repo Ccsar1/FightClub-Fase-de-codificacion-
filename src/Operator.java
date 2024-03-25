@@ -10,7 +10,8 @@ public class Operator extends User {
     /**
      * Default constructor
      */
-    public Operator() {
+    public Operator(String username, String nick, String pass, DataBaseManager db) {
+        super(username, nick, pass, TUser.Operator, db);
     }
 
     /**
@@ -56,4 +57,8 @@ public class Operator extends User {
         return false;
     }
 
+    @Override
+    public boolean showMenu() {
+        return false;
+    }
 }

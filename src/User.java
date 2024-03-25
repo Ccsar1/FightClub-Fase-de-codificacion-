@@ -10,7 +10,12 @@ public abstract class User {
     /**
      * Default constructor
      */
-    public User() {
+    public User(String username, String nick, String pass, TUser userType, DataBaseManager db) {
+        this.name = username;
+        this.nickname = nick;
+        this.password = pass;
+        this.type = userType;
+        this.dataBase = db;
     }
 
     /**
@@ -21,12 +26,17 @@ public abstract class User {
     /**
      *
      */
-    private String nick;
+    private String nickname;
 
     /**
      *
      */
     private String password;
+
+    /**
+     *
+     */
+    private TUser type;
 
     /**
      *
@@ -39,6 +49,12 @@ public abstract class User {
      */
     public boolean checkPassword(String pass) {
         return this.password.equals(pass);
+    }
+
+    public abstract boolean showMenu();
+
+    public String getName() {
+        return name;
     }
 
 }
