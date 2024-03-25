@@ -2,35 +2,23 @@
 import java.io.*;
 import java.util.*;
 
-/**
- *
- */
+
 public class CharacterEditor {
 
-    /**
-     * Default constructor
-     */
-    public CharacterEditor() {
+    private Character character;
+    private DataBaseManager dataBase;
+    public CharacterEditor(Character character) {
+        this.character=character;
     }
 
-    /**
-     *
-     */
-    private Character character;
-
-    /**
-     * @param character
-     * @return
-     */
-    public Character editName(Character character) {
-        // TODO implement here
+    public Character editName(Character character, String name) {
+        if (dataBase.checkExistsCharacter(character.getName())){
+            character.setName(name);
+            dataBase.saveFiles();
+        }
         return null;
     }
 
-    /**
-     * @param character
-     * @return
-     */
     public Character editPower(Character character) {
         // TODO implement here
         return null;
