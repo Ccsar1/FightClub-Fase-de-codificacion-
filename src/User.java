@@ -43,6 +43,10 @@ public abstract class User {
      */
     private DataBaseManager dataBase;
 
+    public String getNick() {
+        return nickname;
+    }
+
     /**
      * @param pass
      * @return
