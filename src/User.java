@@ -41,7 +41,7 @@ public abstract class User {
     /**
      *
      */
-    private DataBaseManager dataBase;
+    protected DataBaseManager dataBase;
 
     public String getNick() {
         return nickname;

@@ -36,6 +36,8 @@ public class Player extends User {
         } while (registerExists);
 
         registerNumber = newNumber.toString();
+        block = false;
+        characters = new ArrayList<>();
     }
 
     /**
@@ -57,8 +59,24 @@ public class Player extends User {
      *
      */
     private void registerCharacter() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Character> characterArray = super.dataBase.getCharacters();
+        int input = 1;
+        do {
+            System.out.println("Select your character");
+            int i = 1;
+            for (Character character : characterArray) {
+                System.out.println(i + ". " + character.getName());
+                i++;
+            }
+            input = scanner.nextInt();
+            if (input < 1 || input > characterArray.size()) {
+                System.out.println(input + " is not a valid option");
+            }
+
+        } while (input < 1 || input > characterArray.size());
+        Character selectedCharacter = characterArray.get(input);
+        CharacterUser newCharacter = new CharacterUser(selectedCharacter);
     }
 
     /**
@@ -94,19 +112,10 @@ public class Player extends User {
     }
 
     /**
-     * @return
-     */
-    public boolean showMenuPlayer() {
-        // TODO implement here
-        return false;
-    }
-
-    /**
      *
      */
     private void showRanking() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        super.dataBase.getRanking();
     }
 
     /**
@@ -119,9 +128,8 @@ public class Player extends User {
     /**
      * @return
      */
-    public CharacterUser getCharacter() {
-        // TODO implement here
-        return null;
+    public ArrayList<CharacterUser> getCharacters() {
+        return characters;
     }
 
     @Override
