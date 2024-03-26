@@ -179,23 +179,47 @@ public class DataBaseManager implements Serializable{
     }
 
     public void getRanking() {
-        Collections.sort(charDB, new Comparator<Character>() {
+        ArrayList<CharacterUser>allcharacters= new ArrayList<>();
+
+        for (Player player:playerDB){
+            allcharacters.addAll(player.getPersonajes());
+        }
+        Collections.sort(allcharacters, new Comparator<CharacterUser>() {
             @Override
-            public int compare(Character o1, Character o2) {
+            public int compare(CharacterUser o1, CharacterUser o2) {
                 return Integer.compare(o2.getGold(), o1.getGold());
             }
         });
-    }
+        System.out.println("RANKING");
+        System.out.println("--------");
+        int posicion=1;
+        for (CharacterUser character:allcharacters){
+            System.out.println(posicion+": Name: "+character.getName()+",Gold: "+character.getGold());
+            posicion++;
+        }
 
+
+    }
     public void deleteCharacter(String name) {
-        for (Character character : charDB) {
-            if (character.getName().equals(name)) {
-                charDB.remove(character);
+        boolean found=false;
+        for (Player player : playerDB) {
+            ArrayList<CharacterUser>allCharacterUser=new ArrayList<>();
+            allCharacterUser.addAll(player.getPersonajes());
+            for (CharacterUser character: allCharacterUser){
+                if (character.getName().equals(name)) {
+                    allCharacterUser.remove(character);
+                    found=true;
+                }
+
+            }
+            if (found){
+                playerDB.setPersonajes(allCharacterUser);
                 saveFiles();
                 return;
             }
 
         }
+
 
     }
 
