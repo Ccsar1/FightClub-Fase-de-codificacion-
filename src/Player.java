@@ -63,7 +63,7 @@ public class Player extends User {
         ArrayList<Character> characterArray = super.dataBase.getCharacters();
         int input = 1;
         do {
-            System.out.println("Select your character");
+            System.out.println("Choose your character");
             int i = 1;
             for (Character character : characterArray) {
                 System.out.println(i + ". " + character.getName());
@@ -75,7 +75,7 @@ public class Player extends User {
             }
 
         } while (input < 1 || input > characterArray.size());
-        Character selectedCharacter = characterArray.get(input);
+        Character selectedCharacter = characterArray.get(input - 1);
         CharacterUser newCharacter = new CharacterUser(selectedCharacter);
     }
 
@@ -83,8 +83,19 @@ public class Player extends User {
      *
      */
     private void deleteCharacter() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Select the character you want to delete");
+        int i = 1;
+        for (CharacterUser character : this.characters) {
+            System.out.println(i + ". " + character.getName());
+            i++;
+        }
+        int input = scanner.nextInt();
+        if (input >= 1 && input <= this.characters.size()) {
+            this.characters.remove(input - 1);
+        } else {
+            System.out.println(input + " is not a valid option, so no character was deleted");
+        }
     }
 
     /**
@@ -99,8 +110,44 @@ public class Player extends User {
      *
      */
     private void createChallenge() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        if (!this.characters.isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Write the nickname of the player you want to fight: ");
+            String challengedNick = scanner.nextLine();
+            Player challengedPlayer = super.dataBase.getPlayerByNick(challengedNick);
+            if (challengedPlayer != null) {
+                if (!challengedPlayer.getCharacters().isEmpty()) {
+                    int input = 1;
+                    do {
+                        System.out.println("Choose your character");
+                        int i = 1;
+                        for (CharacterUser character : this.characters) {
+                            System.out.println(i + ". " + character.getName());
+                            i++;
+                        }
+                        input = scanner.nextInt();
+                        if (input < 1 || input > this.characters.size()) {
+                            System.out.println(input + " is not a valid option");
+                        }
+                    } while (input < 1 || input > this.characters.size());
+                    CharacterUser challengerCharacter = this.characters.get(input - 1);
+                    int goldBet = 0;
+                    do {
+                        System.out.println("How much gold do you want to bet? You have " + challengerCharacter.getGold());
+                        goldBet = scanner.nextInt();
+                    } while (goldBet < 0 || goldBet > challengerCharacter.getGold());
+                    Challenge newChallenge = new Challenge();
+                    super.dataBase.setChallenge(newChallenge);
+                } else {
+                    System.out.println("The player " + challengedNick + " does not have any character");
+                }
+            } else {
+                System.out.println("The player " + challengedNick + " does not exist");
+            }
+        } else {
+            System.out.println("You should create at least one character before you enter a fight");
+        }
+
     }
 
     /**
