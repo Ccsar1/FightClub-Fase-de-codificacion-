@@ -28,17 +28,13 @@ public class Game {
      * @param pass
      */
     private void login(String nick, String pass) {
-        //user = dataBase.getUserByNick(nick);
-        System.out.println("---searching for user by nickname");
+        this.user = dataBase.getUserByNick(nick);
         if (this.user != null) {
             boolean correctPass = this.user.checkPassword(pass);
             if (correctPass) {
-                boolean deleteAccount = false;
-                //deleteAccount = user.showMenu();
-                System.out.println("---logging in and showing users menu");
+                boolean deleteAccount = user.showMenu();
                 if (deleteAccount) {
-                    //dataBase.deleteUser(this.user);
-                    System.out.println("---deleting user");
+                    dataBase.deleteUser(this.user);
                 }
                 this.user = null;
             } else {
@@ -58,22 +54,17 @@ public class Game {
      * @return
      */
     private void register(String name, String nick, String pass, TUser type) {
-        //boolean validNick = this.dataBase.validNick(nick);
-        boolean validNick = true;
-        System.out.println("---checking if nickname already exists");
+        boolean validNick = this.dataBase.validNick(nick);
         if (validNick) {
             switch (type) {
                 case TUser.Player:
-                    //this.user = new Player(name, nick, pass);
-                    System.out.println("---creating new player");
+                    this.user = new Player(name, nick, pass, dataBase);
                     break;
                 case TUser.Operator:
-                    //this.user = new Operator(name, nick, pass);
-                    System.out.println("---creating new operator");
+                    this.user = new Operator(name, nick, pass, dataBase);
                     break;
             }
-            //this.dataBase.addUser(this.user);
-            System.out.println("---adding new user to the database");
+            this.dataBase.addUser(this.user);
         } else {
             System.out.println("That nickname already exists");
         }
@@ -85,8 +76,7 @@ public class Game {
     public void showWelcome() throws IOException {
         System.out.println("WELCOME TO FIGHT CLUB!!");
 
-        //this.initializeDB();
-        System.out.println("---initializing database");
+        this.dataBase = new DataBaseManager();
 
         int exit = 0;
 
@@ -117,26 +107,7 @@ public class Game {
                     System.out.println(input + " is not a valid option");
             }
         }
-        //dataBase.saveDB();
-        System.out.println("---saving database");
-    }
-
-    private void initializeDB() throws IOException {
-
-        String filePath = "database.xml";
-
-        File file = new File(filePath);
-
-        if (file.exists()) {
-            try {
-                //this.dataBase = DataBaseManager.loadDB(filePath);
-                System.out.println("---loading database");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            this.dataBase = new DataBaseManager();
-        }
+        this.dataBase.saveFiles();
     }
 
     /**
