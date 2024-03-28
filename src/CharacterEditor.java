@@ -5,6 +5,7 @@ import java.util.*;
 
 public class CharacterEditor {
 
+    Scanner scanner = new Scanner(System.in);
     private Character character;
     private DataBaseManager dataBase;
     public CharacterEditor() {
@@ -24,90 +25,111 @@ public class CharacterEditor {
             System.out.println("5. Edit special abilities");
             System.out.println("6. Edit equipment");
             System.out.println("7. Edit minions");
-            System.out.println("8. Edit weapons");
-            System.out.println("9. Edit armor");
-            System.out.println("10. Exit");
+            System.out.println("8. Exit");
 
 
-            Scanner scanner = new Scanner(System.in);
+
             int input = scanner.nextInt();
-
             System.out.println("Write the name of the character");
             String nameCharacter = scanner.nextLine();
 
-            switch (input) {
-                case 1:
-                    this.editName(nameCharacter);
-                    break;
-                case 2:
-                    this.editPower(nameCharacter);
-                    break;
-                case 3:
-                    this.editType(nameCharacter);
-                    break;
-                case 4:
-                    this.editGold(nameCharacter);
-                    break;
-                case 5:
-                    this.editSpecialAbilities(nameCharacter);
-                    break;
-                case 6:
-                    this.editEquipment(nameCharacter);
-                    break;
-                case 7:
-                    this.editMinions(nameCharacter);
-                    break;
-                case 8:
-                    System.out.println("Please enter 1 to confirm exit");
-                    exit = scanner.nextInt();
-                    if (exit == 1) {
-                        System.out.println("Byebye!");
-                    }
-                    break;
-                default:
-                    System.out.println(input + " is not a valid option");
+            if (dataBase.checkExistsCharacter(nameCharacter)) {
+                Character character= dataBase.getCharacterByName(nameCharacter);
+                switch (input) {
+                    case 1:
+                        this.editName(character);
+                        break;
+                    case 2:
+                        this.editPower(character);
+                        break;
+                    case 3:
+                        this.editType(character);
+                        break;
+                    case 4:
+                        this.editGold(character);
+                        break;
+                    case 5:
+                        this.editSpecialAbilities(character);
+                        break;
+                    case 6:
+                        this.editEquipment(character);
+                        break;
+                    case 7:
+                        this.editMinions(character);
+                        break;
+                    case 8:
+                        System.out.println("Please enter 1 to confirm exit");
+                        exit = scanner.nextInt();
+                        if (exit == 1) {
+                            System.out.println("Byebye!");
+                        }
+                        break;
+                    default:
+                        System.out.println(input + " is not a valid option");
+                }
+            }else{
+                System.out.println(nameCharacter+" is not a valid name");
             }
-        }
-        System.out.println("---saving database");
-    }
-    public void editName(String nameCharacter) {
-        if (dataBase.checkExistsCharacter(character.getName())){
-            character.setName(name);
             dataBase.saveFiles();
+            System.out.println("---saving in database");
         }
 
     }
-
-    public void editPower(String nameCharacter) {
-        if (dataBase.checkExistsCharacter(character.getName())){
-            character.setPower(power);
-            dataBase.saveFiles();
-        }
-
-
-    }
-
-    public void editType(String nameCharacter) {
-        if (dataBase.checkExistsCharacter(character.getName())){
-            character.setType(type);
-            dataBase.saveFiles();
-        }
+    public void editName(Character character) {
+        String nameCharacter;
+        do {
+            System.out.println("Write the new name: ");
+             nameCharacter = scanner.nextLine();
+             if (dataBase.checkExistsCharacter(nameCharacter)){
+                 System.out.println("Name already used, try it again!");
+             }
+        }while(dataBase.checkExistsCharacter(nameCharacter));
+        character.setName(nameCharacter);
 
 
     }
 
+    public void editPower(Character character) {
+        int power;
+        do {
+            System.out.println("Write the new power: ");
+            power = scanner.nextInt();
+            if ((power<1)||(power>5)){
+                System.out.println("Name already used, try it again!");
+            }
+        }while((power<1) || (power>5));
+        character.setPower(power);
+    }
 
-    public void editGold(String nameCharacter) {
-        if (dataBase.checkExistsCharacter(character.getName())){
-            character.setGold(gold);
-            dataBase.saveFiles();
-        }
+    public void editType(Character character) {
+        String type;
+        TCharacter typeCharacter;
+        boolean found=false;
+        do {
+            System.out.println("Write the new type of character: ");
+            type = scanner.nextLine();
+            typeCharacter= TCharacter.valueOf(type);
+            try {
+                character.setType(typeCharacter);
+                found=true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Write one of the three types, try it again!");
+            }
+        }while(found);
+
+    }
+
+
+    public void editGold(Character character) {
+        System.out.println("Write the new amount of gold: ");
+        int gold = scanner.nextInt();
+        character.setGold(gold);
 
 
     }
 
 
-    public void editSpecialAbilities(String nameCharacter) {
+    public void editSpecialAbilities(Character character) {
         if (dataBase.checkExistsCharacter(character.getName())){
             character.setSpecialAbilities(special);
             dataBase.saveFiles();
@@ -116,7 +138,7 @@ public class CharacterEditor {
 
     }
 
-    public void editMinions(String nameCharacter) {
+    public void editMinions(Character character) {
         if (dataBase.checkExistsCharacter(character.getName())){
             character.setMinions(minions);
             dataBase.saveFiles();
@@ -124,7 +146,7 @@ public class CharacterEditor {
 
 
     }
-    public void editEquipment(String nameCharacter) {
+    public void editEquipment(Character character) {
         if (dataBase.checkExistsCharacter(character.getName())){
             character.setMinions(minions);
             dataBase.saveFiles();

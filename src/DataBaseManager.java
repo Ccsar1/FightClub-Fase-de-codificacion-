@@ -196,6 +196,20 @@ public class DataBaseManager implements Serializable{
         saveFiles();
     }
 
+    public Character getCharacterByName(String name){
+        for (Player player : playerDB) {
+            ArrayList<Character>allCharacter=new ArrayList<>();
+            allCharacter.addAll(player.getPersonajes());
+            for (Character character: allCharacter) {
+                if (character.getName().equals(name)) {
+                    return character;
+
+                }
+
+            }
+        }
+        return null;
+    }
     public void getRanking() {
         ArrayList<CharacterUser>allcharacters= new ArrayList<>();
 
