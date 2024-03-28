@@ -270,7 +270,7 @@ public class DataBaseManager implements Serializable{
 
     public Challenge getChallengeByChallenger(Player player){
         for (Challenge challenge: challengeDB){
-            if (challenge.getChallenger().equals(player)){
+            if ((challenge.getChallenger().equals(player)) && (challenge.getValid())){
                 challengeDB.remove(challenge);
                 saveFiles();
                 return challenge;
@@ -282,13 +282,24 @@ public class DataBaseManager implements Serializable{
 
     public Challenge getChallengeByChallenged(Player player){
         for (Challenge challenge: challengeDB){
-            if (challenge.getChallenged().equals(player)){
+            if ((challenge.getChallenged().equals(player)) && (challenge.getValid())){
                 challengeDB.remove(challenge);
                 saveFiles();
                 return challenge;
             }
         }
         return null;
+
+    }
+
+    public ArrayList<Challenge> getNonValidatedChallenges(){
+        ArrayList<Challenge>nonValidatedChallenges=new ArrayList<>();
+        for (Challenge challenge: challengeDB){
+            if (challenge.getValid()==false){
+                nonValidatedChallenges.add(challenge);
+            }
+        }
+        return nonValidatedChallenges;
 
     }
 
