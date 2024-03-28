@@ -5,7 +5,6 @@ import java.util.*;
 
 public class DataBaseManager implements Serializable{
 
-    private static final long serialVersionUID = 7608283362899377929L;
     private ArrayList<Character> charDB = new ArrayList<>();
     private ArrayList<Fight> fightDB = new ArrayList<>();
     private ArrayList<Player> playerDB = new ArrayList<>();
@@ -22,7 +21,7 @@ public class DataBaseManager implements Serializable{
 
 
     public void loadFiles() {
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("datos2.txt"))) {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("FightClub.ser"))) {
             DataBaseManager savedData = (DataBaseManager) inputStream.readObject();
             this.playerDB = savedData.playerDB;
             this.operatorDB = savedData.operatorDB;
@@ -46,7 +45,7 @@ public class DataBaseManager implements Serializable{
     }
 
     public void saveFiles() {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("datos2.txt"))) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("FightClub.ser"))) {
             outputStream.writeObject(this);
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,7 +100,7 @@ public class DataBaseManager implements Serializable{
         saveFiles();
     }
 
-    public void getPlayersDB() {
+    public void getOpeartorsDB() {
         for (Operator operator : operatorDB) {
             System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick() + ",password: " + operator.getPassword());
         }
@@ -121,6 +120,25 @@ public class DataBaseManager implements Serializable{
     public void setChallengeDB(Challenge challenge) {
         challengeDB.add(challenge);
         saveFiles();
+    }
+
+    public User getUserByNick(String nick) {
+        for (Player player : playerDB) {
+
+            if (player.getNick().equals(nick)) {
+                return player;
+            }
+
+        }
+        for (Operator operator : operatorDB) {
+
+            if (operator.getNick().equals(nick)) {
+                return operator;
+            }
+
+        }
+        return null;
+
     }
 
     public Player getPlayerByNick(String nick) {
@@ -240,6 +258,41 @@ public class DataBaseManager implements Serializable{
         }
         return false;
     }
+
+    public void setChallenge(Challenge challenge){
+        for (Challenge chal:challengeDB){
+            if ((chal.getChallenged().equals(challenge.getChallenged())) && (chal.getChallenger().equals(challenge.getChallenger()))){
+                return;
+            }
+        }
+    challengeDB.add(challenge);
+    }
+
+    public Challenge getChallengeByChallenger(Player player){
+        for (Challenge challenge: challengeDB){
+            if (challenge.getChallenger().equals(player)){
+                challengeDB.remove(challenge);
+                saveFiles();
+                return challenge;
+            }
+        }
+        return null;
+    }
+
+
+    public Challenge getChallengeByChallenged(Player player){
+        for (Challenge challenge: challengeDB){
+            if (challenge.getChallenged().equals(player)){
+                challengeDB.remove(challenge);
+                saveFiles();
+                return challenge;
+            }
+        }
+        return null;
+
+    }
+
+
 }
 
 
