@@ -18,7 +18,8 @@ public class Operator extends User {
      *
      */
     public void editCharacter() {
-        // TODO implement here
+        CharacterEditor characterEditor = new CharacterEditor();
+        characterEditor.showMenuEditor();
     }
 
     /**
@@ -46,15 +47,16 @@ public class Operator extends User {
      *
      */
     public void unlockUser() {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public boolean showMenuOperator() {
-        // TODO implement here
-        return false;
+        ArrayList<Player> blockedPlayersArray = super.dataBase.getUsersBlockDB();
+        System.out.println("Select a player to unlock its account");
+        int i = 1;
+        for (Player blockedPlayer : blockedPlayersArray) {
+            System.out.println(i + ". " + blockedPlayer);
+            i++;
+        }
+        if (i > 1 && i < blockedPlayersArray.size()) {
+            super.dataBase.unlockUser(blockedPlayersArray.get(i - 1));
+        }
     }
 
     @Override
