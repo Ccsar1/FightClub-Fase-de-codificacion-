@@ -25,7 +25,8 @@ public class CharacterEditor {
             System.out.println("5. Edit special abilities");
             System.out.println("6. Edit equipment");
             System.out.println("7. Edit minions");
-            System.out.println("8. Exit");
+            System.out.println("8. Edit modifiers");
+            System.out.println("9. Exit");
 
 
 
@@ -58,6 +59,57 @@ public class CharacterEditor {
                         this.editMinions(character);
                         break;
                     case 8:
+                        this.editModifiers(character);
+                        break;
+                    case 9:
+                        System.out.println("Please enter 1 to confirm exit");
+                        exit = scanner.nextInt();
+                        if (exit == 1) {
+                            System.out.println("Byebye!");
+                        }
+                        break;
+                    default:
+                        System.out.println(input + " is not a valid option");
+                }
+            }else{
+                System.out.println(nameCharacter+" is not a valid name");
+            }
+            dataBase.saveFiles();
+            System.out.println("---saving in database");
+        }
+
+    }
+
+    public void showMenuAddProperties() throws IOException {
+        System.out.println("Character add properties");
+
+
+        int exit = 0;
+
+        while (exit != 1) {
+            exit = 0;
+            System.out.println("1. Add equipment");
+            System.out.println("2. Add modifiers");
+            System.out.println("3. Add minions");
+            System.out.println("4. Exit");
+
+            int input = scanner.nextInt();
+            System.out.println("Write the name of the character");
+            String nameCharacter = scanner.nextLine();
+
+            if (dataBase.checkExistsCharacter(nameCharacter)) {
+                Character character= dataBase.getCharacterByName(nameCharacter);
+                switch (input) {
+                    case 1:
+                        this.editEquipment(character);
+                        break;
+                    case 2:
+                        this.editModifiers(character);
+                        break;
+                    case 3:
+                        this.editMinions(character);
+                        break;
+                    case 4:
                         System.out.println("Please enter 1 to confirm exit");
                         exit = scanner.nextInt();
                         if (exit == 1) {
@@ -130,13 +182,45 @@ public class CharacterEditor {
 
 
     public void editSpecialAbilities(Character character) {
-        if (dataBase.checkExistsCharacter(character.getName())){
-            character.setSpecialAbilities(special);
-            dataBase.saveFiles();
+        int defence=0,attack=0;
+        System.out.println("Write the name of the special ability: ");
+        String ability= scanner.nextLine();
+
+        do{
+            System.out.println("Write the defence value: ");
+             defence=scanner.nextInt();
+            System.out.println("Write the attack value: ");
+             attack= scanner.nextInt();
+             if (((attack<1)||(attack>3)) && ((defence<1)||(defence>3)) ){
+                 System.out.println("Write correct values, try it again!");
+             }
+        }while(((attack<1)||(attack>3)) && ((defence<1)||(defence>3)) );
+
+        TCharacter typeCharacter= character.getType();
+        int value=0;
+        switch (typeCharacter){
+            case Vampire:
+                do{
+                    System.out.println("Write the cost in blood : ");
+                    value=scanner.nextInt();
+                    if (((value<1)||(value>3))){
+                        System.out.println("Write correct values, try it again!");
+                    }
+                }while(((value<1)||(value>3)) );
+                character.setDisciplines(ability,attack,defence,typeCharacter,value);
+                break;
+            case Lycanthrope:
+                System.out.println("Write the fury value: ");
+                value=scanner.nextInt();
+                character.setDon(ability,attack,defence,typeCharacter,value);
+                break;
+            case Hunter:
+                character.setTalent(ability,attack,defence,typeCharacter);
+                break;
         }
 
-
     }
+
 
     public void editMinions(Character character) {
         if (dataBase.checkExistsCharacter(character.getName())){
@@ -147,10 +231,137 @@ public class CharacterEditor {
 
     }
     public void editEquipment(Character character) {
-        if (dataBase.checkExistsCharacter(character.getName())){
-            character.setMinions(minions);
-            dataBase.saveFiles();
+        int exit=0,defenceValue=0,attackValue=0;
+        while (exit!=1) {
+            System.out.println("1. Edit armor");
+            System.out.println("2. Edit weapons");
+            System.out.println("3. Exit");
+            int option=scanner.nextInt();
+            switch (option) {
+                case 1:
+                    do {
+                        System.out.println("Write the name of the armor: ");
+                        String armor = scanner.nextLine();
+                        System.out.println("Write the defence value: ");
+                        defenceValue = scanner.nextInt();
+                        System.out.println("If you want to add attack value to the armor write 1");
+                        int optionAdd= scanner.nextInt();
+                        if (optionAdd==1){
+                            do{
+                            System.out.println("Write the attack value: ");
+                            attackValue = scanner.nextInt();
+                                if (((attackValue < 1) || (attackValue > 3))) {
+                                    System.out.println("Write correct values, try it again!");
+
+                                }
+                            }while(((attackValue < 1) || (attackValue > 3)));
+                        }
+                        if (((defenceValue < 1) || (defenceValue > 3))) {
+                            System.out.println("Write correct values, try it again!");
+
+                        } else {
+                            character.setArmor(armor, defenceValue, attackValue);
+                        }
+                    } while (((defenceValue < 1) || (defenceValue > 3)));
+
+                    break;
+                case 2:
+                    do {
+                        System.out.println("Write the name of the weapon: ");
+                        String weapon = scanner.nextLine();
+                        System.out.println("Write the attack value: ");
+                        attackValue = scanner.nextInt();
+                        System.out.println("1 or 2 hand: ");
+                        int type = scanner.nextInt();
+                        System.out.println("If you want to add defence value to the weapom write 1");
+                        int optionAdd= scanner.nextInt();
+                        if (optionAdd==1){
+                            do{
+                                System.out.println("Write the attack value: ");
+                                defenceValue = scanner.nextInt();
+                                if (((defenceValue < 1) || (defenceValue > 3))) {
+                                    System.out.println("Write correct values, try it again!");
+
+                                }
+                            }while(((defenceValue < 1) || (defenceValue > 3)));
+                        }
+                        if (((attackValue < 1) || (attackValue > 3))) {
+                            System.out.println("Write correct values, try it again!");
+
+                        } else {
+                            character.setArmor(weapon,type, defenceValue, attackValue);
+                        }
+                    } while (((attackValue < 1) || (attackValue > 3)));
+                    break;
+                case 3:
+                    System.out.println("Please enter 1 to confirm exit");
+                    exit = scanner.nextInt();
+                    if (exit == 1) {
+                        System.out.println("Byebye!");
+                    }
+                    break;
+                break;
+                default:
+                    System.out.println(option + " is not a valid option");
+
+
+            }
         }
+    }
+
+
+
+
+    public void editModifiers(Character character) {
+        int exit=0,value=0;
+        while (exit!=1) {
+        System.out.println("1. Edit weaknesses");
+        System.out.println("2. Edit strengths");
+        System.out.println("3. Exit");
+        int option=scanner.nextInt();
+            switch (option) {
+                case 1:
+                    do {
+                        System.out.println("Write the name of the weakness: ");
+                        String weaknesses = scanner.nextLine();
+                        System.out.println("Write the value: ");
+                        value = scanner.nextInt();
+                        if (((value < 1) || (value > 5))) {
+                            System.out.println("Write correct values, try it again!");
+                        } else {
+                            character.setModifiers(weaknesses, value, Weaknesses);
+                        }
+                    } while (((value < 1) || (value > 5)));
+
+                    break;
+                case 2:
+                    do {
+                        System.out.println("Write the name of the strength: ");
+                        String strength = scanner.nextLine();
+                        System.out.println("Write the value: ");
+                        value = scanner.nextInt();
+                        if (((value < 1) || (value > 5))) {
+                            System.out.println("Write correct values, try it again!");
+                        } else {
+                            character.setModifiers(strength, value, Strengths);
+                        }
+                    } while (((value < 1) || (value > 5)));
+                    break;
+                case 3:
+                    System.out.println("Please enter 1 to confirm exit");
+                    exit = scanner.nextInt();
+                    if (exit == 1) {
+                        System.out.println("Byebye!");
+                    }
+                    break;
+                break;
+                default:
+                    System.out.println(option + " is not a valid option");
+
+
+            }
+        }
+
 
 
     }
