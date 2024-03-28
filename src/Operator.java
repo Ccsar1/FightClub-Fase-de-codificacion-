@@ -40,7 +40,16 @@ public class Operator extends User {
      *
      */
     public void blockUser() {
-        // TODO implement here
+        ArrayList<Player> playersArray = super.dataBase.getPlayersDB();
+        System.out.println("Select a player to block its account");
+        int i = 1;
+        for (Player player : playersArray) {
+            System.out.println(i + ". " + player);
+            i++;
+        }
+        if (i > 1 && i < playersArray.size()) {
+            super.dataBase.blockUser(playersArray.get(i - 1));
+        }
     }
 
     /**
