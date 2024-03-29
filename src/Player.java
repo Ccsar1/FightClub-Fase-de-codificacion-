@@ -53,11 +53,6 @@ public class Player extends User {
     /**
      *
      */
-    private boolean block;
-
-    /**
-     *
-     */
     private void registerCharacter() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Character> characterArray = super.dataBase.getCharacters();

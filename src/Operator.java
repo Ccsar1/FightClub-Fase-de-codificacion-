@@ -25,13 +25,6 @@ public class Operator extends User {
     /**
      *
      */
-    public void addToCharacter() {
-        // TODO implement here
-    }
-
-    /**
-     *
-     */
     public void validateChallenge() {
         // TODO implement here
     }
@@ -75,12 +68,11 @@ public class Operator extends User {
         int exit = 0;
         while (exit != 1) {
             System.out.println("1. Edit a character");
-            System.out.println("2. Add things to a character");
-            System.out.println("3. Validate challenges");
-            System.out.println("4. Block players");
-            System.out.println("5. Unblock players");
-            System.out.println("6. Exit");
-            System.out.println("7. Delete user");
+            System.out.println("2. Validate challenges");
+            System.out.println("3. Block players");
+            System.out.println("4. Unblock players");
+            System.out.println("5. Exit");
+            System.out.println("6. Delete user");
 
             int input = scanner.nextInt();
 
@@ -89,22 +81,19 @@ public class Operator extends User {
                     this.editCharacter();
                     break;
                 case 2:
-                    this.addToCharacter();
-                    break;
-                case 3:
                     this.validateChallenge();
                     break;
-                case 4:
+                case 3:
                     this.blockUser();
                     break;
-                case 5:
+                case 4:
                     this.unlockUser();
                     break;
-                case 6:
+                case 5:
                     System.out.println("Press 1 to confirm exit");
                     exit = scanner.nextInt();
                     break;
-                case 7:
+                case 6:
                     System.out.println("Press 1 to exit and delete your user");
                     exit = scanner.nextInt();
                     if (exit == 1) {
