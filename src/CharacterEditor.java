@@ -21,12 +21,11 @@ public class CharacterEditor {
             System.out.println("1. Edit name");
             System.out.println("2. Edit power");
             System.out.println("3. Edit type");
-            System.out.println("4. Edit gold");
-            System.out.println("5. Edit special abilities");
-            System.out.println("6. Edit equipment");
-            System.out.println("7. Edit minions");
-            System.out.println("8. Edit modifiers");
-            System.out.println("9. Exit");
+            System.out.println("4. Edit special abilities");
+            System.out.println("5. Edit equipment");
+            System.out.println("6. Edit minions");
+            System.out.println("7. Edit modifiers");
+            System.out.println("8. Exit");
 
 
 
@@ -47,21 +46,18 @@ public class CharacterEditor {
                         this.editType(character);
                         break;
                     case 4:
-                        this.editGold(character);
-                        break;
-                    case 5:
                         this.editSpecialAbilities(character);
                         break;
-                    case 6:
+                    case 5:
                         this.editEquipment(character);
                         break;
-                    case 7:
+                    case 6:
                         this.editMinions(character);
                         break;
-                    case 8:
+                    case 7:
                         this.editModifiers(character);
                         break;
-                    case 9:
+                    case 8:
                         System.out.println("Please enter 1 to confirm exit");
                         exit = scanner.nextInt();
                         if (exit == 1) {
@@ -171,14 +167,6 @@ public class CharacterEditor {
 
     }
 
-
-    public void editGold(Character character) {
-        System.out.println("Write the new amount of gold: ");
-        int gold = scanner.nextInt();
-        character.setGold(gold);
-
-
-    }
 
 
     public void editSpecialAbilities(Character character) {
