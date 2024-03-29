@@ -223,12 +223,56 @@ public class CharacterEditor {
 
 
     public void editMinions(Character character) {
-        if (dataBase.checkExistsCharacter(character.getName())){
-            character.setMinions(minions);
-            dataBase.saveFiles();
+        String type;
+        TMinion typeMinion;
+        boolean found=false;
+        System.out.println("Write the name of the minion: ");
+        String name = scanner.nextLine();
+        System.out.println("Write the health of the minion: ");
+        int health = scanner.nextInt();
+        do {
+            System.out.println("Write the type of minion: ");
+            type = scanner.nextLine();
+            typeMinion= TMinion.valueOf(type);
+            try {
+                found=true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Write one of the three types, try it again!");
+            }
+        }while(found);
+        switch(typeMinion){
+            case Demons:
+                System.out.println("Write the pact: ");
+                String pact = scanner.nextLine();
+                character.setDemons(name,health,pact);
+                break;
+            case Ghouls:
+                int dependency=0;
+                do {
+                    System.out.println("Write the dependency: ");
+                    dependency = scanner.nextInt();
+                    if (((dependency < 1) || (dependency > 5))) {
+                        System.out.println("Write correct values, try it again!");
+                    }
+                } while (((dependency < 1) || (dependency > 5)));
+                character.setGhouls(name,health,dependency);
+                break;
+            case Humans:
+                boolean foundLoyalty=false;
+                TLoyalty loyalty;
+                do {
+                    System.out.println("Write the loyalty of minion: ");
+                    String loyal = scanner.nextLine();
+                    loyalty= TLoyalty.valueOf(loyal);
+                    try {
+                        foundLoyalty=true;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Write one of the three types, try it again!");
+                    }
+                }while(foundLoyalty);
+                character.setHumans(name,health,loyalty);
+                break;
         }
-
-
     }
     public void editEquipment(Character character) {
         int exit=0,defenceValue=0,attackValue=0;
