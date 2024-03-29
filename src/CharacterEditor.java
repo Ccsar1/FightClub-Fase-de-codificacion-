@@ -75,7 +75,6 @@ public class CharacterEditor {
         }
 
     }
-
     public void showMenuAddProperties() throws IOException {
         System.out.println("Character add properties");
 
