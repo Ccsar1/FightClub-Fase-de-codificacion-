@@ -386,37 +386,43 @@ public class CharacterEditor {
         int option=scanner.nextInt();
             switch (option) {
                 case 1:
-                    do {
-                        TModifiers weaknessesModifier= TModifiers.Weaknesses;
-                        System.out.println("Write the name of the weakness: ");
-                        String weaknesses = scanner.nextLine();
-                        System.out.println("Write the value: ");
-                        value = scanner.nextInt();
-                        if (((value < 1) || (value > 5))) {
-                            System.out.println("Write correct values, try it again!");
-                        } else {
-                            character.getModifiers().setName(weaknesses);
-                            character.getModifiers().setValue(value);
-                            character.getModifiers().setModifiersType(weaknessesModifier);
-                        }
-                    } while (((value < 1) || (value > 5)));
+                    boolean found=false;
 
+                        TModifiers weaknessesModifier= TModifiers.Weaknesses;
+                        System.out.println("Write the weakness you want to choose: ");
+                        ArrayList<Weaknesses>allWeak=dataBase.getAllWeaknesses();
+                        System.out.println(allWeak);
+                        String name=scanner.nextLine();
+                        do {
+                            for (Weaknesses weakness : allWeak) {
+                                if (weakness.equals(name)) {
+                                    character.getModifiers().setName(weakness.getName());
+                                    character.getModifiers().setValue(weakness.getValue());
+                                    character.getModifiers().setModifiersType(weaknessesModifier);
+                                    found=true;
+                                }
+                            }
+                        }while(found);
                     break;
+
                 case 2:
+                    boolean foundStrength=false;
+
+                    TModifiers strengthModifier= TModifiers.Strengths;
+                    System.out.println("Write the strength you want to choose: ");
+                    ArrayList<Strengths>allStrength=dataBase.getAllStrengths();
+                    System.out.println(allStrength);
+                    String nameStrength=scanner.nextLine();
                     do {
-                        TModifiers strengths= TModifiers.Strengths;
-                        System.out.println("Write the name of the strength: ");
-                        String strength = scanner.nextLine();
-                        System.out.println("Write the value: ");
-                        value = scanner.nextInt();
-                        if (((value < 1) || (value > 5))) {
-                            System.out.println("Write correct values, try it again!");
-                        } else {
-                            character.getModifiers().setName(strength);
-                            character.getModifiers().setValue(value);
-                            character.getModifiers().setModifiersType(strengths);
+                        for (Strengths strengths : allStrength) {
+                            if (strengths.equals(nameStrength)) {
+                                character.getModifiers().setName(strengths.getName());
+                                character.getModifiers().setValue(strengths.getValue());
+                                character.getModifiers().setModifiersType(strengthModifier);
+                                foundStrength=true;
+                            }
                         }
-                    } while (((value < 1) || (value > 5)));
+                    }while(foundStrength);
                     break;
                 case 3:
                     System.out.println("Please enter 1 to confirm exit");

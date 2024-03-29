@@ -8,7 +8,9 @@ public class DataBaseManager implements Serializable{
 
     private ArrayList<Character> charDB = new ArrayList<>();
     private ArrayList<Fight> fightDB = new ArrayList<>();
-    private ArrayList<Modifiers> modifiersDB = new ArrayList<>();
+    private ArrayList<Weaknesses> weaknessesDB = new ArrayList<>();
+
+    private ArrayList<Strengths> strengthsDB = new ArrayList<>();
     private ArrayList<Player> playerDB = new ArrayList<>();
     private ArrayList<Operator> operatorDB = new ArrayList<>();
     private ArrayList<Challenge> challengeDB = new ArrayList<>();
@@ -25,7 +27,8 @@ public class DataBaseManager implements Serializable{
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("FightClub.ser"))) {
             DataBaseManager savedData = (DataBaseManager) inputStream.readObject();
             this.playerDB = savedData.playerDB;
-            this.modifiersDB = savedData.modifiersDB;
+            this.weaknessesDB = savedData.weaknessesDB;
+            this.strengthsDB = savedData.strengthsDB;
             this.operatorDB = savedData.operatorDB;
             this.userBlockDB = savedData.userBlockDB;
             this.charDB = savedData.charDB;
@@ -35,7 +38,8 @@ public class DataBaseManager implements Serializable{
         } catch (FileNotFoundException e) {
 
             this.playerDB = new ArrayList<>();
-            this.modifiersDB = new ArrayList<>();
+            this.weaknessesDB = new ArrayList<>();
+            this.strengthsDB = new ArrayList<>();
             this.operatorDB = new ArrayList<>();
             this.userBlockDB = new ArrayList<>();
             this.charDB = new ArrayList<>();
@@ -270,12 +274,20 @@ public class DataBaseManager implements Serializable{
 
     }
 
-    public ArrayList<Modifiers> getAllModifiers(){
-        return modifiersDB;
+    public ArrayList<Weaknesses> getAllWeaknesses(){
+        return weaknessesDB;
     }
 
-    public void setModifiers(Modifiers modifiers){
-        modifiersDB.add(modifiers);
+    public ArrayList<Strengths> getAllStrengths(){
+        return strengthsDB;
+    }
+
+    public void setWeaknessesDB(Weaknesses weaknesses){
+        weaknessesDB.add(weaknesses);
+    }
+
+    public void setStrengthsDBDB(Strengths strengths){
+        strengthsDB.add(strengths);
     }
 
     public void deleteChallenge(Challenge challengeToDelete){

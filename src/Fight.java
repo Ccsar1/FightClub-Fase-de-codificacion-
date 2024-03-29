@@ -7,45 +7,15 @@ import java.util.*;
  */
 public class Fight {
 
-    /**
-     * Default constructor
-     */
+    private CharacterUser characterChallenger;
+    private CharacterUser characterChallenged;
+    private int gold;
+    private int roundNum;
+    private ArrayList<Round>roundList;
+    private TResult state;
     public Fight() {
     }
 
-    /**
-     *
-     */
-    private CharacterUser character1;
-
-    /**
-     *
-     */
-    private CharacterUser character2;
-
-    /**
-     *
-     */
-    private int gold;
-
-    /**
-     *
-     */
-    private Round [ ] roundList;
-
-    /**
-     *
-     */
-    private int roundNum;
-
-    /**
-     *
-     */
-    private TResult state;
-
-    /**
-     *
-     */
     public void startFight() {
         // TODO implement here
     }
