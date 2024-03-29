@@ -1,9 +1,5 @@
 
-/**
- *
- */
+
 public enum TLoyalty {
-    Low,
-    Normal,
-    High
+    Low, Normal, High
 }

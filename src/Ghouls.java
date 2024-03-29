@@ -2,35 +2,16 @@
 import java.io.*;
 import java.util.*;
 
-/**
- *
- */
 public class Ghouls extends Minions {
-
-    /**
-     * Default constructor
-     */
     public Ghouls() {
     }
-
-    /**
-     *
-     */
     private int dependencies;
-
-    /**
-     * @return
-     */
     public int getDependencies() {
-        // TODO implement here
-        return 0;
+        return dependencies;
     }
 
-    /**
-     * @param dependencies
-     */
     public void setDependencies(int dependencies) {
-        // TODO implement here
+        this.dependencies=dependencies;
     }
 
 }

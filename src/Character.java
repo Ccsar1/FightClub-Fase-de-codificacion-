@@ -1,164 +1,66 @@
+import java.lang.reflect.Modifier;
 
-import java.io.*;
-import java.util.*;
-
-/**
- *
- */
 public abstract class Character {
-
-    /**
-     * Default constructor
-     */
     public Character() {
     }
-
-    /**
-     *
-     */
     private String name;
-
-    /**
-     *
-     */
     private int power;
-
-    /**
-     *
-     */
     private Minions [ ] minions;
-
-    /**
-     *
-     */
     private Weapons [ ] weapons;
-
-    /**
-     *
-     */
     private Armor [ ] armor;
-
-    /**
-     *
-     */
     private TCharacter type;
-
-    /**
-     *
-     */
     private Modifiers modifiers;
-
-    /**
-     * @return
-     */
     public int getPower() {
-        // TODO implement here
-        return 0;
+        return power;
     }
-
-    /**
-     * @return
-     */
     public String getName() {
-        // TODO implement here
-        return "";
+        return name;
     }
 
-    /**
-     * @return
-     */
-    public Minions getMinions() {
-        // TODO implement here
-        return null;
+    public Minions[] getMinions() {
+        return minions;
     }
-
-    /**
-     * @return
-     */
     public Weapons getWeapons() {
-        // TODO implement here
-        return null;
+        return Weapons;
     }
 
-    /**
-     * @return
-     */
-    public Armor getArmor() {
-        // TODO implement here
-        return null;
+    public Armor[] getArmor() {
+        return armor;
     }
 
-    /**
-     * @return
-     */
     public TCharacter getType() {
-        // TODO implement here
-        return null;
+        return type;
     }
-
-    /**
-     * @return
-     */
     public SpecialAbility getSpecialAbilities() {
-        // TODO implement here
-        return null;
+        return SpecialAbility;
     }
-
-    /**
-     * @param power
-     */
     public void setPower(int power) {
-        // TODO implement here
+        this.power=power;
     }
 
-    /**
-     * @param name
-     */
     public void setName(String name) {
-        // TODO implement here
+        this.name=name;
     }
-
-    /**
-     * @param minion
-     */
     public void setMinions(Minions minion) {
-        // TODO implement here
+        this.minion=Minions;
     }
-
-    /**
-     * @param weapon
-     */
     public void setWeapons(Weapons weapon) {
-        // TODO implement here
+        this.weapon=Weapons;
     }
 
-    /**
-     * @param armor
-     */
     public void setArmor(Armor armor) {
-        // TODO implement here
+        this.armor=Armor;
     }
 
-    /**
-     * @param abilities
-     */
     public void setSpecialAbilities(SpecialAbility abilities) {
-        // TODO implement here
+        this.abilities=SpecialAbility;
     }
 
-    /**
-     * @return
-     */
     public Modifiers getModifiers() {
-        // TODO implement here
-        return null;
+        return modifiers;
     }
-
-    /**
-     * @param modifiers
-     */
     public void setModifiers(Modifiers modifiers) {
-        // TODO implement here
+        this.modifiers= Modifiers;
     }
 
 }

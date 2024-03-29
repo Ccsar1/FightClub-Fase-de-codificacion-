@@ -1,9 +1,5 @@
 
-/**
- *
- */
+
 public enum TMinion {
-    Humans,
-    Ghouls,
-    Demons
+    Humans, Ghouls, Demons
 }

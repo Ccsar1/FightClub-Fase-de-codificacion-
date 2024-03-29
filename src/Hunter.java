@@ -2,40 +2,18 @@
 import java.io.*;
 import java.util.*;
 
-/**
- *
- */
 public class Hunter extends Character {
-
-    /**
-     * Default constructor
-     */
     public Hunter() {
     }
-
-    /**
-     *
-     */
     private int willpower;
 
-    /**
-     *
-     */
     private Talent hunterAbility;
-
-    /**
-     * @return
-     */
     public int getWillpower() {
-        // TODO implement here
-        return 0;
+        return willpower;
     }
 
-    /**
-     * @param willpower
-     */
     public void setWillpower(int willpower) {
-        // TODO implement here
+        this.willpower=willpower;
     }
 
 }
