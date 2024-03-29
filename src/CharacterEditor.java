@@ -378,7 +378,7 @@ public class CharacterEditor {
 
 
     public void editModifiers(Character character) {
-        int exit=0,value=0;
+        int exit=0;
         while (exit!=1) {
         System.out.println("1. Edit weaknesses");
         System.out.println("2. Edit strengths");
@@ -395,7 +395,7 @@ public class CharacterEditor {
                         String name=scanner.nextLine();
                         do {
                             for (Weaknesses weakness : allWeak) {
-                                if (weakness.equals(name)) {
+                                if (weakness.getName().equals(name)) {
                                     character.getModifiers().setName(weakness.getName());
                                     character.getModifiers().setValue(weakness.getValue());
                                     character.getModifiers().setModifiersType(weaknessesModifier);
@@ -415,7 +415,7 @@ public class CharacterEditor {
                     String nameStrength=scanner.nextLine();
                     do {
                         for (Strengths strengths : allStrength) {
-                            if (strengths.equals(nameStrength)) {
+                            if (strengths.getName().equals(nameStrength)) {
                                 character.getModifiers().setName(strengths.getName());
                                 character.getModifiers().setValue(strengths.getValue());
                                 character.getModifiers().setModifiersType(strengthModifier);
