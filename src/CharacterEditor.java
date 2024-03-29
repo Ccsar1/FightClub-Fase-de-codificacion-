@@ -170,6 +170,7 @@ public class CharacterEditor {
         int defence=0,attack=0;
         System.out.println("Write the name of the special ability: ");
         String ability= scanner.nextLine();
+        character.getSpecialAbilities().setName(ability);
 
         do{
             System.out.println("Write the defence value: ");
@@ -180,9 +181,12 @@ public class CharacterEditor {
                  System.out.println("Write correct values, try it again!");
              }
         }while(((attack<1)||(attack>3)) && ((defence<1)||(defence>3)) );
+        character.getSpecialAbilities().setAttackValue(attack);
+        character.getSpecialAbilities().setDefenceValue(defence);
 
         TCharacter typeCharacter= character.getType();
         int value=0;
+
         switch (typeCharacter){
             case Vampire:
                 do{
@@ -192,15 +196,22 @@ public class CharacterEditor {
                         System.out.println("Write correct values, try it again!");
                     }
                 }while(((value<1)||(value>3)) );
-                character.setDisciplines(ability,attack,defence,typeCharacter,value);
+                TAbility tabilityVampire= TAbility.Disciplines;
+                character.getSpecialAbilities().setTypeAbility(tabilityVampire);
+                Disciplines disciplines= (Disciplines) character.getSpecialAbilities();
+                disciplines.setCost(value);
                 break;
             case Lycanthrope:
                 System.out.println("Write the fury value: ");
                 value=scanner.nextInt();
-                character.setDon(ability,attack,defence,typeCharacter,value);
+                TAbility tabilityLycanthrope= TAbility.Don;
+                character.getSpecialAbilities().setTypeAbility(tabilityLycanthrope);
+                Don don= (Don) character.getSpecialAbilities();
+                don.setFury(value);
                 break;
             case Hunter:
-                character.setTalent(ability,attack,defence,typeCharacter);
+                TAbility tabilityHunter= TAbility.Talent;
+                character.getSpecialAbilities().setTypeAbility(tabilityHunter);
                 break;
         }
 
@@ -213,8 +224,10 @@ public class CharacterEditor {
         boolean found=false;
         System.out.println("Write the name of the minion: ");
         String name = scanner.nextLine();
+        character.getMinions().setName(name);
         System.out.println("Write the health of the minion: ");
         int health = scanner.nextInt();
+        character.getMinions().setHP(health);
         do {
             System.out.println("Write the type of minion: ");
             type = scanner.nextLine();
@@ -225,6 +238,7 @@ public class CharacterEditor {
                 System.out.println("Write one of the three types, try it again!");
             }
         }while(found);
+        character.getMinions().setMinionType(typeMinion);
         switch(typeMinion){
             case Demons:
 
@@ -233,7 +247,8 @@ public class CharacterEditor {
                 if (typeCharacter!=vampire) {
                     System.out.println("Write the pact: ");
                     String pact = scanner.nextLine();
-                    character.setDemons(name, health, pact);
+                    Demons demons= (Demons) character.getMinions();
+                    demons.setPact(pact);
                 }else{
                     System.out.println("Vampires can´t have minions");
                 }
@@ -247,7 +262,8 @@ public class CharacterEditor {
                         System.out.println("Write correct values, try it again!");
                     }
                 } while (((dependency < 1) || (dependency > 5)));
-                character.setGhouls(name,health,dependency);
+                Ghouls ghouls= (Ghouls) character.getMinions();
+                ghouls.setDependencies(dependency);
                 break;
             case Humans:
                 boolean foundLoyalty=false;
@@ -262,7 +278,8 @@ public class CharacterEditor {
                         System.out.println("Write one of the three types, try it again!");
                     }
                 }while(foundLoyalty);
-                character.setHumans(name,health,loyalty);
+                Humans humans= (Humans) character.getMinions();
+                humans.setLoyalty(loyalty);
                 break;
         }
     }
@@ -275,11 +292,10 @@ public class CharacterEditor {
             int option=scanner.nextInt();
             switch (option) {
                 case 1:
-                    do {
+
                         System.out.println("Write the name of the armor: ");
                         String armor = scanner.nextLine();
-                        System.out.println("Write the defence value: ");
-                        defenceValue = scanner.nextInt();
+                        character.getArmor().setName(armor);
                         System.out.println("If you want to add attack value to the armor write 1");
                         int optionAdd= scanner.nextInt();
                         if (optionAdd==1){
@@ -289,43 +305,56 @@ public class CharacterEditor {
                                 if (((attackValue < 1) || (attackValue > 3))) {
                                     System.out.println("Write correct values, try it again!");
 
+                                }else{
+                                    character.getArmor().setAttackModifier(attackValue);
                                 }
                             }while(((attackValue < 1) || (attackValue > 3)));
-                        }
+                        }do {
+                    System.out.println("Write the defence value: ");
+                    defenceValue = scanner.nextInt();
                         if (((defenceValue < 1) || (defenceValue > 3))) {
                             System.out.println("Write correct values, try it again!");
 
-                        } else {
-                            character.setArmor(armor, defenceValue, attackValue);
+                        } else{
+                            character.getArmor().setDefenceModifier(defenceValue);
+
                         }
                     } while (((defenceValue < 1) || (defenceValue > 3)));
 
                     break;
                 case 2:
-                    do {
+                    int type=0;
+
                         System.out.println("Write the name of the weapon: ");
                         String weapon = scanner.nextLine();
-                        System.out.println("Write the attack value: ");
-                        attackValue = scanner.nextInt();
-                        System.out.println("1 or 2 hand: ");
-                        int type = scanner.nextInt();
-                        System.out.println("If you want to add defence value to the weapom write 1");
-                        int optionAdd= scanner.nextInt();
-                        if (optionAdd==1){
+                        character.getWeapons().setName(weapon);
+                        do {
+                            System.out.println("1 or 2 hand: ");
+                            type = scanner.nextInt();
+                        }while(type!=1 && type!=2);
+                        character.getWeapons().setType(weapon);
+                        System.out.println("If you want to add defence value to the weapon write 1");
+                        int optionAd= scanner.nextInt();
+                        if (optionAd==1){
                             do{
-                                System.out.println("Write the attack value: ");
+                                System.out.println("Write the defence value: ");
                                 defenceValue = scanner.nextInt();
                                 if (((defenceValue < 1) || (defenceValue > 3))) {
                                     System.out.println("Write correct values, try it again!");
 
+                                }else{
+                                    character.getWeapons().setDefenceModifier(defenceValue);
                                 }
                             }while(((defenceValue < 1) || (defenceValue > 3)));
                         }
+                    do {
+                        System.out.println("Write the attack value: ");
+                        attackValue = scanner.nextInt();
                         if (((attackValue < 1) || (attackValue > 3))) {
                             System.out.println("Write correct values, try it again!");
 
                         } else {
-                            character.setArmor(weapon,type, defenceValue, attackValue);
+                            character.getWeapons().setAttackModifier(attackValue);
                         }
                     } while (((attackValue < 1) || (attackValue > 3)));
                     break;
@@ -358,6 +387,7 @@ public class CharacterEditor {
             switch (option) {
                 case 1:
                     do {
+                        TModifiers weaknessesModifier= TModifiers.Weaknesses;
                         System.out.println("Write the name of the weakness: ");
                         String weaknesses = scanner.nextLine();
                         System.out.println("Write the value: ");
@@ -365,13 +395,16 @@ public class CharacterEditor {
                         if (((value < 1) || (value > 5))) {
                             System.out.println("Write correct values, try it again!");
                         } else {
-                            character.setModifiers(weaknesses, value, Weaknesses);
+                            character.getModifiers().setName(weaknesses);
+                            character.getModifiers().setValue(value);
+                            character.getModifiers().setModifiersType(weaknessesModifier);
                         }
                     } while (((value < 1) || (value > 5)));
 
                     break;
                 case 2:
                     do {
+                        TModifiers strengths= TModifiers.Strengths;
                         System.out.println("Write the name of the strength: ");
                         String strength = scanner.nextLine();
                         System.out.println("Write the value: ");
@@ -379,7 +412,9 @@ public class CharacterEditor {
                         if (((value < 1) || (value > 5))) {
                             System.out.println("Write correct values, try it again!");
                         } else {
-                            character.setModifiers(strength, value, Strengths);
+                            character.getModifiers().setName(strength);
+                            character.getModifiers().setValue(value);
+                            character.getModifiers().setModifiersType(strengths);
                         }
                     } while (((value < 1) || (value > 5)));
                     break;
