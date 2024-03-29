@@ -242,9 +242,15 @@ public class CharacterEditor {
         }while(found);
         switch(typeMinion){
             case Demons:
-                System.out.println("Write the pact: ");
-                String pact = scanner.nextLine();
-                character.setDemons(name,health,pact);
+                TCharacter typeCharacter= character.getType();
+                TCharacter vampire= TCharacter.Vampire;
+                if (typeCharacter!=vampire) {
+                    System.out.println("Write the pact: ");
+                    String pact = scanner.nextLine();
+                    character.setDemons(name, health, pact);
+                }else{
+                    System.out.println("Vampires can´t have minions");
+                }
                 break;
             case Ghouls:
                 int dependency=0;
