@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -7,9 +8,9 @@ public class DataBaseManager implements Serializable{
 
     private ArrayList<Character> charDB = new ArrayList<>();
     private ArrayList<Fight> fightDB = new ArrayList<>();
+    private ArrayList<Modifiers> modifiersDB = new ArrayList<>();
     private ArrayList<Player> playerDB = new ArrayList<>();
     private ArrayList<Operator> operatorDB = new ArrayList<>();
-    private ArrayList<Equipment> equipmentDB = new ArrayList<>();
     private ArrayList<Challenge> challengeDB = new ArrayList<>();
     private ArrayList<Player> userBlockDB = new ArrayList<>();
 
@@ -24,21 +25,23 @@ public class DataBaseManager implements Serializable{
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("FightClub.ser"))) {
             DataBaseManager savedData = (DataBaseManager) inputStream.readObject();
             this.playerDB = savedData.playerDB;
+            this.modifiersDB = savedData.modifiersDB;
             this.operatorDB = savedData.operatorDB;
             this.userBlockDB = savedData.userBlockDB;
             this.charDB = savedData.charDB;
             this.fightDB = savedData.fightDB;
             this.challengeDB = savedData.challengeDB;
-            this.equipmentDB = savedData.equipmentDB;
+
         } catch (FileNotFoundException e) {
 
             this.playerDB = new ArrayList<>();
+            this.modifiersDB = new ArrayList<>();
             this.operatorDB = new ArrayList<>();
             this.userBlockDB = new ArrayList<>();
             this.charDB = new ArrayList<>();
             this.fightDB = new ArrayList<>();
             this.challengeDB = new ArrayList<>();
-            this.equipmentDB = new ArrayList<>();
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -52,15 +55,10 @@ public class DataBaseManager implements Serializable{
         }
     }
 
-    public boolean setCharDB(Character character) {
-        for (Character personaje : charDB) {
-            if (personaje.equals(character)) {
-                return false;
-            }
-        }
+    public void setCharDB(Character character) {
         charDB.add(character);
         saveFiles();
-        return true;
+
     }
 
     public void setFightDB(Fight fight) {
@@ -70,16 +68,6 @@ public class DataBaseManager implements Serializable{
     }
 
     public void setPlayerDB(Player player) {
-        for (Player usuario : playerDB) {
-            if (usuario.getNick().equals(player.getNick())) {
-                return;
-            }
-        }
-        for (Player userBlock : userBlockDB) {
-            if (userBlock.getNick().equals(player.getNick())) {
-                return;
-            }
-        }
         playerDB.add(player);
         saveFiles();
     }
@@ -91,11 +79,6 @@ public class DataBaseManager implements Serializable{
     }
 
     public void setOperatorDB(Operator operator) {
-        for (Operator usuario : operatorDB) {
-            if (usuario.getNick().equals(operator.getNick())) {
-                return;
-            }
-        }
         operatorDB.add(operator);
         saveFiles();
     }
@@ -104,17 +87,6 @@ public class DataBaseManager implements Serializable{
         for (Operator operator : operatorDB) {
             System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick() + ",password: " + operator.getPassword());
         }
-    }
-
-    public void getUsersBlockDB() {
-        for (Player player : userBlockDB) {
-            System.out.println("Name " + player.getName() + ",nick: " + player.getNick() + ",password: " + player.getPassword() + ",register number: " + player.getRegister_number());
-        }
-    }
-
-    public void setEquipmentDB(Equipment equipment) {
-        equipmentDB.add(equipment);
-        saveFiles();
     }
 
     public void setChallengeDB(Challenge challenge) {
@@ -153,60 +125,63 @@ public class DataBaseManager implements Serializable{
 
     }
 
+    public ArrayList<Player> getAllPlayers (){
+        return playerDB;
+    }
+    public ArrayList<Player> getAllBlock (){
+        return userBlockDB;
+    }
 
-    public void blockUser(String nick) {
-        for (Player player : playerDB) {
-            if (player.getNick().equals(nick)) {
+    public void blockUser(Player player) {
                 playerDB.remove(player);
                 userBlockDB.add(player);
                 saveFiles();
-                return;
-            }
-        }
+
 
     }
 
-    public void unlockUser(String nick) {
-        for (Player player : userBlockDB) {
-            if (player.getNick().equals(nick)) {
+    public void unlockUser(Player player) {
                 userBlockDB.remove(player);
                 playerDB.add(player);
                 saveFiles();
-                return;
-            }
-        }
 
     }
 
-    public void deleteUser(String nick) {
+    public void deleteUser(User user) {
         Iterator<Player> iterator = playerDB.iterator();
         while (iterator.hasNext()) {
             Player player = iterator.next();
-            if (player.getNick().equals(nick)) {
+            if (player.equals(user)) {
                 iterator.remove();
+                return;
             }
         }
         Iterator<Player> iteratorBlock = userBlockDB.iterator();
         while (iteratorBlock.hasNext()) {
             Player player = iteratorBlock.next();
-            if (player.getNick().equals(nick)) {
+            if (player.equals(user)) {
                 iteratorBlock.remove();
+                return;
             }
         }
-        saveFiles();
+        Iterator<Operator> iteratorOperator = operatorDB.iterator();
+        while (iteratorBlock.hasNext()) {
+            Operator operator = iteratorOperator.next();
+            if (operator.equals(user)) {
+                iteratorOperator.remove();
+                return;
+            }
+        }
+
     }
 
+
+
     public Character getCharacterByName(String name){
-        for (Player player : playerDB) {
-            ArrayList<Character>allCharacter=new ArrayList<>();
-            allCharacter.addAll(player.getPersonajes());
-            for (Character character: allCharacter) {
-                if (character.getName().equals(name)) {
-                    return character;
-
-                }
-
-            }
+        for (Character character : charDB) {
+           if (character.getName().equals(name)){
+               return character;
+           }
         }
         return null;
     }
@@ -228,28 +203,6 @@ public class DataBaseManager implements Serializable{
         for (CharacterUser character:allcharacters){
             System.out.println(posicion+": Name: "+character.getName()+",Gold: "+character.getGold());
             posicion++;
-        }
-
-
-    }
-    public void deleteCharacter(String name) {
-        boolean found=false;
-        for (Player player : playerDB) {
-            ArrayList<CharacterUser>allCharacterUser=new ArrayList<>();
-            allCharacterUser.addAll(player.getPersonajes());
-            for (CharacterUser character: allCharacterUser){
-                if (character.getName().equals(name)) {
-                    allCharacterUser.remove(character);
-                    found=true;
-                }
-
-            }
-            if (found){
-                playerDB.setPersonajes(allCharacterUser);
-                saveFiles();
-                return;
-            }
-
         }
 
 
@@ -309,12 +262,20 @@ public class DataBaseManager implements Serializable{
     public ArrayList<Challenge> getNonValidatedChallenges(){
         ArrayList<Challenge>nonValidatedChallenges=new ArrayList<>();
         for (Challenge challenge: challengeDB){
-            if (challenge.getValid()==false){
+            if (!challenge.getValid()){
                 nonValidatedChallenges.add(challenge);
             }
         }
         return nonValidatedChallenges;
 
+    }
+
+    public ArrayList<Modifiers> getAllModifiers(){
+        return modifiersDB;
+    }
+
+    public void setModifiers(Modifiers modifiers){
+        modifiersDB.add(modifiers);
     }
 
 
