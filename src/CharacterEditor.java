@@ -242,6 +242,7 @@ public class CharacterEditor {
         }while(found);
         switch(typeMinion){
             case Demons:
+
                 TCharacter typeCharacter= character.getType();
                 TCharacter vampire= TCharacter.Vampire;
                 if (typeCharacter!=vampire) {
