@@ -167,8 +167,6 @@ public class CharacterEditor {
 
     }
 
-
-
     public void editSpecialAbilities(Character character) {
         int defence=0,attack=0;
         System.out.println("Write the name of the special ability: ");
