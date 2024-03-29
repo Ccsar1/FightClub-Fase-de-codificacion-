@@ -325,7 +325,7 @@ public class Player extends User {
                     } while (input < 1 || input > this.characters.size());
                     CharacterUser selectedCharacter = this.characters.get(input - 1);
 
-                    Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold() * 0.1);
+                    Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold() / 10);
                     newFight.showResult();
                 }
             }
