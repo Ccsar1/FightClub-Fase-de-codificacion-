@@ -298,7 +298,15 @@ public class DataBaseManager implements Serializable{
         }
     }
 
-
+public ArrayList<Fight> getNotNotifiedFights(Player player){
+        ArrayList<Fight>nonNotified=new ArrayList<>();
+        for(Fight fights:fightDB){
+            if ((!fights.getNotified())&&(fights.getChallenger().getName().equals(player.getName()))){
+                nonNotified.add(fights);
+            }
+        }
+        return nonNotified;
+}
 }
 
 
