@@ -335,6 +335,13 @@ public class Player extends User {
         } while (challenge != null);
     }
 
+    private void notifyFightResult() {
+        ArrayList<Fight> fightsArray = getNotNotifiedFights(this);
+        for (Fight fight : fightsArray) {
+            fight.showResult();
+        }
+    }
+
     /**
      * @return
      */
@@ -345,6 +352,7 @@ public class Player extends User {
     @Override
     public boolean showMenu() {
         System.out.println("Welcome " + super.getName());
+        this.notifyFightResult();
         this.challengeMenu();
         Scanner scanner = new Scanner(System.in);
         int exit = 0;
