@@ -1,7 +1,3 @@
-
-import java.io.*;
-import java.util.*;
-
 /**
  *
  */
@@ -32,28 +28,28 @@ public abstract class Equipment {
      * @param i
      */
     public void setAttackModifier(int i) {
-        // TODO implement here
+        this.attackModifier = i;
     }
 
     /**
      *
      */
-    public void getAttackModifier() {
-        // TODO implement here
+    public int getAttackModifier() {
+        return this.attackModifier;
     }
 
     /**
      * @param i
      */
     public void setDefenceModifier(int i) {
-        // TODO implement here
+        this.defenceModifier = i;
     }
 
     /**
      *
      */
-    public void getDefenceModifier() {
-        // TODO implement here
+    public int getDefenceModifier() {
+        return this.defenceModifier;
     }
 
 }

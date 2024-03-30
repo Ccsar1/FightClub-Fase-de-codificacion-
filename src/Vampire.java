@@ -16,7 +16,7 @@ public class Vampire extends Character {
     /**
      *
      */
-    private int blood;
+    private int blood = 0;
 
     /**
      *
@@ -32,23 +32,27 @@ public class Vampire extends Character {
      * @return
      */
     public boolean checkHumanMinion() {
-        // TODO implement here
-        return false;
+        return (Minions.getMinionType() == Humans);
     }
 
     /**
      * @return
      */
     public int getBlood() {
-        // TODO implement here
-        return 0;
+        return this.blood;
     }
 
     /**
      * @param blood
      */
     public void setBlood(int blood) {
-        // TODO implement here
+        if (blood > 10) {
+            this.blood = 10;
+        } else if (blood < 0) {
+            this.blood = 0;
+        } else{
+            this.blood = blood;
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 
-import java.io.*;
-import java.util.*;
+import java.util.Random;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,81 +13,133 @@ public class CharacterUser {
     public CharacterUser() {
     }
 
-    /**
-     *
-     */
     private Character character;
 
-    /**
-     *
-     */
-    private Weapons [ ] weaponActive;
+    private ArrayList<Weapons> weaponActive;
 
-    /**
-     *
-     */
     private Armor armorActive;
 
-    /**
-     *
-     */
-    private int hp;
+    private int hp = 5;
 
-    /**
-     *
-     */
-    private int gold;
+    private int gold = 150;
 
-    /**
-     *
-     */
-    public void doDamage() {
-        // TODO implement here
+
+    public void doDamage(int dam) {
+        this.hp = this.hp - dam;
     }
 
-    /**
-     *
-     */
-    public void removeGold() {
-        // TODO implement here
+    public void removeGold(int minus) {
+        this.gold = this.gold - minus;
     }
 
-    /**
-     * @return
-     */
     public int getHP() {
-        // TODO implement here
-        return 0;
+        return this.hp;
     }
 
-    /**
-     * @return
-     */
     public int getGold() {
-        // TODO implement here
-        return 0;
+        return this.gold;
     }
 
-    /**
-     *
-     */
-    public void calculateAttack() {
-        // TODO implement here
+    public int[] calculateAttack(Character character) {
+
+        switch (character.getType()){
+            case Hunter:
+                Hunter hunter = new Hunter();
+                int attack = character.getPower() + Equipment.getAttackModifier() + hunter.getWillPower();
+
+
+            case Lycanthrope:
+                int furia = 0;
+                Don don = new Don();
+                if (don.getFury() >= Lycanthrope.getFury()){
+                    furia = don.getFury();
+                    Lycanthrope.setFury(Lycanthrope.getFury() - don.getFury());
+                } else {
+                    break;
+                }
+                int attack = character.getPower() + furia + Equipment.getAttackModifier() + Lycanthrope.getFury();
+
+
+            case Vampire:
+                if (Disciplines.getCost() > Vampire.getBlood()){
+                    int disciplina = 0;
+                } else {
+                    int disciplina = Disciplines.getCost();
+                    Vampire.setBlood(Vampire.getBlood() - disciplina);
+                }
+
+                if (Vampire.getBlood() < 5){
+                    int extra = 0;
+                } else {
+                    int extra = 2;
+                }
+
+                int attack = character.getPower() + Equipment.getAttackModifier() + disciplina + extra;
+
+        }
+        return attack;
     }
 
-    /**
-     * @return
-     */
+    public int calculateDefense(){
+        switch (character.getType()){
+
+            case Hunter:
+                int defense = character.getPower() + talento + Equipment.getDefenceModifier() + Hunter.getWillPower();
+
+            case Vampire:
+                if (Disciplines.getCost() > Vampire.getBlood()){
+                    int disciplina = 0;
+                } else {
+                    int disciplina = Disciplines.getCost();
+                    Vampire.setBlood(Vampire.getBlood() - disciplina);
+                }
+
+                if (Vampire.getBlood() < 5){
+                    int extra = 0;
+                } else {
+                    int extra = 2;
+                }
+                int defense = character.getPower() + disciplina + Equipment.getDefenceModifier() + extra;
+
+            case Lycanthrope:
+                if (Don.getFury() > Lycanthrope.getFury()){
+                    int furia = 0;
+                } else {
+                    int furia = Don.getFury();
+                    Lycanthrope.setFury(Lycanthrope.getFury() - Don.getFury());
+                }
+                int defense = character.getPower() + furia + Equipment.getDefenceModifier() + Lycanthrope.getFury();
+
+        }
+
+
+        return defense;
+    }
+
     public String getName() {
-        // TODO implement here
-        return "";
+        String name = character.getName();
+        return name;
     }
 
-    /**
-     * @param gold
-     */
+
     public void setGold(int gold) {
-        // TODO implement here
+        this.gold = gold;
     }
 
+    public Weapons getWeapons(){
+        Weapons armas = character.getWeapons();
+        return armas;
+    }
+
+    public Weapons setWeapons(Weapons arma){
+        weaponActive.add(arma);
+    }
+
+    public void deleteWeapons(){
+        weaponActive = new ArrayList<>();
+    }
+
+    public void setArmor(Armor armor){
+        this.armorActive = armor;
+    }
 }

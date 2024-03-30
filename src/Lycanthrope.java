@@ -1,7 +1,3 @@
-
-import java.io.*;
-import java.util.*;
-
 /**
  *
  */
@@ -16,11 +12,12 @@ public class Lycanthrope extends Character {
     /**
      *
      */
-    private int fury;
+    private int fury = 0;
 
     /**
      *
      */
+
     private int height;
 
     /**
@@ -37,15 +34,20 @@ public class Lycanthrope extends Character {
      * @return
      */
     public int getFury() {
-        // TODO implement here
-        return 0;
+        return this.fury;
     }
 
     /**
      * @param fury
      */
     public void setFury(int fury) {
-        // TODO implement here
+        if (fury > 3){
+            this.fury = 3;
+        } else if (fury < 0) {
+            this.fury = 0;
+        } else {
+            this.fury = fury;
+        }
     }
 
 }

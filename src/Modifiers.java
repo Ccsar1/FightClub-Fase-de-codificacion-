@@ -1,7 +1,3 @@
-
-import java.io.*;
-import java.util.*;
-
 /**
  *
  */
@@ -17,45 +13,29 @@ public abstract class Modifiers {
      *
      */
     private String name;
-
-    /**
-     *
-     */
     private int value;
-
-    /**
-     *
-     */
     private TModifiers modifiersType;
 
-    /**
-     * @param value
-     */
     public void setValue(int value) {
-        // TODO implement here
+        this.value = value;
     }
 
-    /**
-     * @return
-     */
     public int getValue() {
-        // TODO implement here
-        return 0;
+        return this.value;
     }
 
     /**
      * @return
      */
     public TModifiers getModifiersType() {
-        // TODO implement here
-        return null;
+        return this.modifiersType;
     }
 
     /**
      * @param type
      */
     public void setModifiersType(TModifiers type) {
-        // TODO implement here
+        this.modifiersType = type;
     }
 
 }
