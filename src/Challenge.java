@@ -10,7 +10,12 @@ public class Challenge {
     /**
      * Default constructor
      */
-    public Challenge() {
+    public Challenge(Player challengerPlayer, Player challengedPlayer, CharacterUser challengerCharacter, int goldBet) {
+        this.challenger = challengerPlayer;
+        this.challenged = challengedPlayer;
+        this.challengerCharacter = challengerCharacter;
+        this.gold = goldBet;
+        this.valid = false;
     }
 
     /**
@@ -22,6 +27,8 @@ public class Challenge {
      *
      */
     private Player challenged;
+
+    private CharacterUser challengerCharacter;
 
     /**
      *
@@ -37,60 +44,39 @@ public class Challenge {
      * @return
      */
     public Player getChallenger() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param p
-     */
-    public void setChallenger(Player p) {
-        // TODO implement here
+        return this.challenger;
     }
 
     /**
      * @return
      */
     public Player getChallenged() {
-        // TODO implement here
-        return null;
+        return this.challenged;
     }
 
-    /**
-     * @param p
-     */
-    public void setChallenged(Player p) {
-        // TODO implement here
+    public CharacterUser getChallengerCharacter() {
+        return this.challengerCharacter;
     }
 
     /**
      * @return
      */
     public int getGold() {
-        // TODO implement here
-        return 0;
-    }
-
-    /**
-     * @param g
-     */
-    public void setGold(int g) {
-        // TODO implement here
+        return this.gold;
     }
 
     /**
      * @return
      */
     public boolean getValid() {
-        // TODO implement here
-        return false;
+        return this.valid;
     }
 
     /**
-     * @param v
+     *
      */
-    public void setValid(boolean v) {
-        // TODO implement here
+    public void setValid() {
+        this.valid = true;
     }
 
 }
