@@ -309,6 +309,7 @@ public class Player extends User {
                     Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold());
                     newFight.startFight();
                     newFight.showResult();
+                    super.dataBase.setFight(newFight);
                 } else {
                     int i;
                     do {
@@ -326,7 +327,9 @@ public class Player extends User {
                     CharacterUser selectedCharacter = this.characters.get(input - 1);
 
                     Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold() / 10);
+                    newFight.giveUp();
                     newFight.showResult();
+                    super.dataBase.setFight(newFight);
                 }
             }
         } while (challenge != null);
