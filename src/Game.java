@@ -40,6 +40,9 @@ public class Game {
             } else {
                 System.out.println("Incorrect password!");
             }
+        } else if (dataBase.isUserBlock(nick)) {
+            System.out.println("This account has been blocked");
+
         } else {
             System.out.println("That nickname doesn't exist!");
         }
