@@ -16,7 +16,7 @@ public class Player extends User {
         Random rand = new Random();
         StringBuilder newNumber;
 
-        boolean registerExists = false;
+        boolean numberExists = false;
 
         do {
             newNumber = new StringBuilder();
@@ -32,10 +32,11 @@ public class Player extends User {
             char letter3 = (char) (rand.nextInt(26) + 'A');
             newNumber.append(letter3);
 
-            //registerExists = super.dataBase.registerNumberExists(newNumber);
-        } while (registerExists);
+            numberExists = super.dataBase.registerNumberExists(newNumber);
+        } while (numberExists);
 
         registerNumber = newNumber.toString();
+        characters = new ArrayList<>();
     }
 
     /**
@@ -51,82 +52,307 @@ public class Player extends User {
     /**
      *
      */
-    private boolean block;
-
-    /**
-     *
-     */
     private void registerCharacter() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Character> characterArray = super.dataBase.getCharacters();
+        int input = 1;
+        int i;
+        do {
+            System.out.println("Choose your character");
+            i = 1;
+            for (Character character : characterArray) {
+                System.out.println(i + ". " + character.getName());
+                i++;
+            }
+            input = scanner.nextInt();
+            if (input < 1 || input > characterArray.size()) {
+                System.out.println(input + " is not a valid option");
+            }
+
+        } while (input < 1 || input > characterArray.size());
+        Character selectedCharacter = characterArray.get(input - 1);
+        CharacterUser newCharacter = new CharacterUser(selectedCharacter);
+        this.characters.add(newCharacter);
     }
 
     /**
      *
      */
     private void deleteCharacter() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Select the character you want to delete");
+        int i = 1;
+        for (CharacterUser character : this.characters) {
+            System.out.println(i + ". " + character.getName());
+            i++;
+        }
+        int input = scanner.nextInt();
+        if (input >= 1 && input <= this.characters.size()) {
+            this.characters.remove(input - 1);
+        } else {
+            System.out.println(input + " is not a valid option, so no character was deleted");
+        }
     }
 
     /**
      *
      */
     private void chooseEquipment() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        Scanner scanner = new Scanner(System.in);
+        int input = 1;
+        int i;
+        do {
+            System.out.println("Select a character to change its equipment");
+            i = 1;
+            for (CharacterUser character : this.characters) {
+                System.out.println(i + ". " + character.getName());
+                i++;
+            }
+            input = scanner.nextInt();
+            if (input < 1 || input > this.characters.size()) {
+                System.out.println(input + " is not a valid option");
+            }
+        } while (input < 1 || input > this.characters.size());
+        CharacterUser selectedCharacter = this.characters.get(input - 1);
+
+        ArrayList<Weapons> posibleWeapons = selectedCharacter.getWeapons();
+        do {
+            System.out.println("Select a weapon");
+            i = 1;
+            for (Weapons weapon : posibleWeapons) {
+                System.out.println(i + ". " + weapon.getName());
+                i++;
+            }
+            input = scanner.nextInt();
+            if (input < 1 || input > posibleWeapons.size()) {
+                System.out.println(input + " is not a valid option");
+            }
+        } while (input < 1 || input > posibleWeapons.size());
+        Weapons selectedWeapon = posibleWeapons.get(input - 1);
+        selectedCharacter.setWeapon(selectedWeapon);
+        if (selectedWeapon.getType() == 1) {
+            do {
+                System.out.println("Select a secondary weapon");
+                i = 1;
+                for (Weapons weapon : posibleWeapons) {
+                    System.out.println(i + ". " + weapon.getName());
+                    i++;
+                }
+                input = scanner.nextInt();
+                if (input < 1 || input > posibleWeapons.size()) {
+                    System.out.println(input + " is not a valid option");
+                }
+            } while (input < 1 || input > posibleWeapons.size());
+            Weapons secondaryWeapon = posibleWeapons.get(input - 1);
+            selectedCharacter.setWeapon(secondaryWeapon);
+        }
+
+        ArrayList<Armor> posibleArmors = selectedCharacter.getArmors();
+        do {
+            System.out.println("Select an armor");
+            i = 1;
+            for (Armor armor : posibleArmors) {
+                System.out.println(i + ". " + armor.getName());
+                i++;
+            }
+            input = scanner.nextInt();
+            if (input < 1 || input > posibleArmors.size()) {
+                System.out.println(input + " is not a valid option");
+            }
+        } while (input < 1 || input > posibleArmors.size());
+        Armor selectedArmor = posibleArmors.get(input - 1);
+        selectedCharacter.setArmor(selectedArmor);
     }
 
     /**
      *
      */
     private void createChallenge() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        if (!this.characters.isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Write the nickname of the player you want to fight: ");
+            String challengedNick = scanner.nextLine();
+            Player challengedPlayer = super.dataBase.getPlayerByNick(challengedNick);
+            if (challengedPlayer != null) {
+                if (!challengedPlayer.getCharacters().isEmpty()) {
+                    int input = 1;
+                    int i;
+                    do {
+                        System.out.println("Choose your character");
+                        i = 1;
+                        for (CharacterUser character : this.characters) {
+                            System.out.println(i + ". " + character.getName());
+                            i++;
+                        }
+                        input = scanner.nextInt();
+                        if (input < 1 || input > this.characters.size()) {
+                            System.out.println(input + " is not a valid option");
+                        }
+                    } while (input < 1 || input > this.characters.size());
+                    CharacterUser challengerCharacter = this.characters.get(input - 1);
+                    int goldBet = 0;
+                    do {
+                        System.out.println("How much gold do you want to bet? You have " + challengerCharacter.getGold());
+                        goldBet = scanner.nextInt();
+                        if (goldBet < 0 || goldBet > challengerCharacter.getGold()) {
+                            System.out.println(goldBet + " is not a valid amount");
+                        }
+                    } while (goldBet < 0 || goldBet > challengerCharacter.getGold());
+                    Challenge newChallenge = new Challenge(this, challengedPlayer, challengerCharacter, goldBet);
+                    super.dataBase.setChallenge(newChallenge);
+                } else {
+                    System.out.println("The player " + challengedNick + " does not have any character");
+                }
+            } else {
+                System.out.println("The player " + challengedNick + " does not exist");
+            }
+        } else {
+            System.out.println("You should create at least one character before you enter a fight");
+        }
+
     }
 
     /**
      *
      */
     private void showHistory() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
-    }
-
-    /**
-     * @return
-     */
-    public boolean showMenuPlayer() {
-        // TODO implement here
-        return false;
+        super.dataBase.getFights(this);
     }
 
     /**
      *
      */
     private void showRanking() {
-        // TODO implement here
-        System.out.println("Not Implemented Yet");
+        super.dataBase.getRanking();
     }
 
     /**
      *
      */
     private void challengeMenu() {
-        System.out.println("Not Implemented Yet");
+        Scanner scanner = new Scanner(System.in);
+        Challenge challenge;
+        int input;
+        do {
+            challenge = super.dataBase.getChallengeByChallenged(this);
+            if (challenge != null) {
+                System.out.println(challenge.getChallenger().getNick() + " has challenged you to a fight!");
+                do {
+                    System.out.println("Do you accept? 1. Yes 2. No");
+                    input = scanner.nextInt();
+                } while (input != 1 && input != 2);
+                if (input == 1) {
+                    int i;
+                    do {
+                        System.out.println("Choose your character");
+                        i = 1;
+                        for (CharacterUser character : this.characters) {
+                            System.out.println(i + ". " + character.getName());
+                            i++;
+                        }
+                        input = scanner.nextInt();
+                        if (input < 1 || input > this.characters.size()) {
+                            System.out.println(input + " is not a valid option");
+                        }
+                    } while (input < 1 || input > this.characters.size());
+                    CharacterUser selectedCharacter = this.characters.get(input - 1);
+
+                    ArrayList<Weapons> posibleWeapons = selectedCharacter.getWeapons();
+                    do {
+                        System.out.println("Select a weapon");
+                        i = 1;
+                        for (Weapons weapon : posibleWeapons) {
+                            System.out.println(i + ". " + weapon.getName());
+                            i++;
+                        }
+                        input = scanner.nextInt();
+                        if (input < 1 || input > posibleWeapons.size()) {
+                            System.out.println(input + " is not a valid option");
+                        }
+                    } while (input < 1 || input > posibleWeapons.size());
+                    Weapons selectedWeapon = posibleWeapons.get(input - 1);
+                    selectedCharacter.setWeapon(selectedWeapon);
+                    if (selectedWeapon.getType() == 1) {
+                        do {
+                            System.out.println("Select a secondary weapon");
+                            i = 1;
+                            for (Weapons weapon : posibleWeapons) {
+                                System.out.println(i + ". " + weapon.getName());
+                                i++;
+                            }
+                            input = scanner.nextInt();
+                            if (input < 1 || input > posibleWeapons.size()) {
+                                System.out.println(input + " is not a valid option");
+                            }
+                        } while (input < 1 || input > posibleWeapons.size());
+                        Weapons secondaryWeapon = posibleWeapons.get(input - 1);
+                        selectedCharacter.setWeapon(secondaryWeapon);
+                    }
+
+                    ArrayList<Armor> posibleArmors = selectedCharacter.getArmors();
+                    do {
+                        System.out.println("Select an armor");
+                        i = 1;
+                        for (Armor armor : posibleArmors) {
+                            System.out.println(i + ". " + armor.getName());
+                            i++;
+                        }
+                        input = scanner.nextInt();
+                        if (input < 1 || input > posibleArmors.size()) {
+                            System.out.println(input + " is not a valid option");
+                        }
+                    } while (input < 1 || input > posibleArmors.size());
+                    Armor selectedArmor = posibleArmors.get(input - 1);
+                    selectedCharacter.setArmor(selectedArmor);
+
+                    Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold());
+                    newFight.startFight();
+                    newFight.showResult();
+                    super.dataBase.setFight(newFight);
+                } else {
+                    int i;
+                    do {
+                        System.out.println("Choose a character that will pay for not fighting");
+                        i = 1;
+                        for (CharacterUser character : this.characters) {
+                            System.out.println(i + ". " + character.getName());
+                            i++;
+                        }
+                        input = scanner.nextInt();
+                        if (input < 1 || input > this.characters.size()) {
+                            System.out.println(input + " is not a valid option");
+                        }
+                    } while (input < 1 || input > this.characters.size());
+                    CharacterUser selectedCharacter = this.characters.get(input - 1);
+
+                    Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold() / 10);
+                    newFight.giveUp();
+                    newFight.showResult();
+                    super.dataBase.setFight(newFight);
+                }
+            }
+        } while (challenge != null);
+    }
+
+    private void notifyFightResult() {
+        ArrayList<Fight> fightsArray = getNotNotifiedFights(this);
+        for (Fight fight : fightsArray) {
+            fight.showResult();
+            fight.setNotified();
+        }
     }
 
     /**
      * @return
      */
-    public CharacterUser getCharacter() {
-        // TODO implement here
-        return null;
+    public ArrayList<CharacterUser> getCharacters() {
+        return characters;
     }
 
     @Override
     public boolean showMenu() {
         System.out.println("Welcome " + super.getName());
+        this.notifyFightResult();
         this.challengeMenu();
         Scanner scanner = new Scanner(System.in);
         int exit = 0;
