@@ -40,75 +40,102 @@ public class CharacterUser {
         return this.gold;
     }
 
-    public int[] calculateAttack(Character character) {
+    public int calculateAttack(Character character) {
 
+        int attack = 0;
+        int attacker = 0;
+        for (Weapons weapon : this.weaponActive){
+            int att_mod = weapon.getDefenceModifier();
+            attacker = attacker + att_mod;
+        }
+        SpecialAbility hability = character.getSpecialAbilities();
         switch (character.getType()){
             case Hunter:
-                Hunter hunter = new Hunter();
-                int attack = character.getPower() + Equipment.getAttackModifier() + hunter.getWillPower();
+                Hunter hunter = (Hunter)character;
+                Talent talent = (Talent)hability;
+                attack = character.getPower() + hunter.getWillpower() + armorActive.getAttackModifier() + attacker + talent.getAttackValue();
 
 
             case Lycanthrope:
                 int furia = 0;
-                Don don = new Don();
-                if (don.getFury() >= Lycanthrope.getFury()){
-                    furia = don.getFury();
-                    Lycanthrope.setFury(Lycanthrope.getFury() - don.getFury());
+                Don don = (Don)hability;
+                Lycanthrope lycanthrope = (Lycanthrope)character;
+
+                if (don.getFury() >= lycanthrope.getFury()){
+                    furia = 0;
                 } else {
-                    break;
+                    furia = don.getAttackValue();
                 }
-                int attack = character.getPower() + furia + Equipment.getAttackModifier() + Lycanthrope.getFury();
+                attack = character.getPower() + furia + armorActive.getAttackModifier()+ attacker + lycanthrope.getFury();
 
 
             case Vampire:
-                if (Disciplines.getCost() > Vampire.getBlood()){
-                    int disciplina = 0;
+                Vampire vampire = (Vampire) character;
+                Disciplines discipline = (Disciplines)hability;
+                int extra;
+                int disciplina;
+                if (discipline.getCost() > vampire.getBlood()){
+                    disciplina = 0;
                 } else {
-                    int disciplina = Disciplines.getCost();
-                    Vampire.setBlood(Vampire.getBlood() - disciplina);
+                    disciplina = discipline.getAttackValue();
+                    vampire.setBlood(vampire.getBlood() - discipline.getCost());
                 }
 
-                if (Vampire.getBlood() < 5){
-                    int extra = 0;
+                if (vampire.getBlood() < 5){
+                    extra = 0;
                 } else {
-                    int extra = 2;
+                    extra = 2;
                 }
 
-                int attack = character.getPower() + Equipment.getAttackModifier() + disciplina + extra;
+                attack = character.getPower() + disciplina + armorActive.getAttackModifier() + attacker + extra;
 
         }
         return attack;
     }
 
     public int calculateDefense(){
+        int defense = 0;
+        int defender = 0;
+        for (Weapons weapon : this.weaponActive){
+            int def_mod = weapon.getDefenceModifier();
+            defender = defender + def_mod;
+        }
+        SpecialAbility hability = character.getSpecialAbilities();
         switch (character.getType()){
-
             case Hunter:
-                int defense = character.getPower() + talento + Equipment.getDefenceModifier() + Hunter.getWillPower();
+                Hunter hunter = (Hunter)character;
+                Talent talento = (Talent)hability;
+                defense = character.getPower() + talento.getDefenceValue() + armorActive.getDefenceModifier() + defender + hunter.getWillpower();
 
             case Vampire:
-                if (Disciplines.getCost() > Vampire.getBlood()){
-                    int disciplina = 0;
+                Vampire vampire = (Vampire)character;
+                int disciplina;
+                int extra;
+                Disciplines discipline = (Disciplines)hability;
+                if (discipline.getCost() > vampire.getBlood()){
+                    disciplina = 0;
                 } else {
-                    int disciplina = Disciplines.getCost();
-                    Vampire.setBlood(Vampire.getBlood() - disciplina);
+                    disciplina = discipline.getDefenceValue();
+                    vampire.setBlood(vampire.getBlood() - discipline.getCost());
                 }
 
-                if (Vampire.getBlood() < 5){
-                    int extra = 0;
+                if (vampire.getBlood() < 5){
+                    extra = 0;
                 } else {
-                    int extra = 2;
+                    extra = 2;
                 }
-                int defense = character.getPower() + disciplina + Equipment.getDefenceModifier() + extra;
+                defense = character.getPower() + disciplina + armorActive.getDefenceModifier() + defender + extra;
 
             case Lycanthrope:
-                if (Don.getFury() > Lycanthrope.getFury()){
-                    int furia = 0;
+                Lycanthrope lycanthrope = (Lycanthrope)character;
+                int furia;
+                Don don = (Don)hability;
+                if (don.getFury() > lycanthrope.getFury()){
+                    furia = 0;
                 } else {
-                    int furia = Don.getFury();
-                    Lycanthrope.setFury(Lycanthrope.getFury() - Don.getFury());
+                    furia = don.getDefenceValue();
                 }
-                int defense = character.getPower() + furia + Equipment.getDefenceModifier() + Lycanthrope.getFury();
+                defense = character.getPower() + furia + armorActive.getDefenceModifier() + defender + lycanthrope.getFury();
 
         }
 
@@ -141,5 +168,9 @@ public class CharacterUser {
 
     public void setArmor(Armor armor){
         this.armorActive = armor;
+    }
+
+    public void addGold(int more){
+        this.setGold(this.gold + more);
     }
 }
