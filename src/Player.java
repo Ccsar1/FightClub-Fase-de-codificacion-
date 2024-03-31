@@ -36,7 +36,6 @@ public class Player extends User {
         } while (numberExists);
 
         registerNumber = newNumber.toString();
-        block = false;
         characters = new ArrayList<>();
     }
 
@@ -339,6 +338,7 @@ public class Player extends User {
         ArrayList<Fight> fightsArray = getNotNotifiedFights(this);
         for (Fight fight : fightsArray) {
             fight.showResult();
+            fight.setNotified();
         }
     }
 
