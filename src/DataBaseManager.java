@@ -1,17 +1,20 @@
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 
 public class DataBaseManager implements Serializable{
 
-    private static final long serialVersionUID = 7608283362899377929L;
     private ArrayList<Character> charDB = new ArrayList<>();
     private ArrayList<Fight> fightDB = new ArrayList<>();
-    private ArrayList<User> userDB = new ArrayList<>();
-    private ArrayList<Equipment> equipmentDB = new ArrayList<>();
+    private ArrayList<Weaknesses> weaknessesDB = new ArrayList<>();
+
+    private ArrayList<Strengths> strengthsDB = new ArrayList<>();
+    private ArrayList<Player> playerDB = new ArrayList<>();
+    private ArrayList<Operator> operatorDB = new ArrayList<>();
     private ArrayList<Challenge> challengeDB = new ArrayList<>();
-    private ArrayList<User> userBlockDB = new ArrayList<>();
+    private ArrayList<Player> userBlockDB = new ArrayList<>();
 
 
     public DataBaseManager() {
@@ -21,81 +24,73 @@ public class DataBaseManager implements Serializable{
 
 
     public void loadFiles() {
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("datos2.txt"))) {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("FightClub.ser"))) {
             DataBaseManager savedData = (DataBaseManager) inputStream.readObject();
-            this.userDB = savedData.userDB;
+            this.playerDB = savedData.playerDB;
+            this.weaknessesDB = savedData.weaknessesDB;
+            this.strengthsDB = savedData.strengthsDB;
+            this.operatorDB = savedData.operatorDB;
             this.userBlockDB = savedData.userBlockDB;
             this.charDB = savedData.charDB;
             this.fightDB = savedData.fightDB;
             this.challengeDB = savedData.challengeDB;
-            this.equipmentDB = savedData.equipmentDB;
+
         } catch (FileNotFoundException e) {
 
-            this.userDB = new ArrayList<>();
+            this.playerDB = new ArrayList<>();
+            this.weaknessesDB = new ArrayList<>();
+            this.strengthsDB = new ArrayList<>();
+            this.operatorDB = new ArrayList<>();
             this.userBlockDB = new ArrayList<>();
             this.charDB = new ArrayList<>();
             this.fightDB = new ArrayList<>();
             this.challengeDB = new ArrayList<>();
-            this.equipmentDB = new ArrayList<>();
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public void saveFiles() {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("datos2.txt"))) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("FightClub.ser"))) {
             outputStream.writeObject(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean setCharDB(Character character) {
-        for (Character personaje : charDB) {
-            if (personaje.equals(character)) {
-                return false;
-            }
-        }
+    public void setCharDB(Character character) {
         charDB.add(character);
         saveFiles();
-        return true;
+
     }
 
     public void setFightDB(Fight fight) {
         fightDB.add(fight);
         saveFiles();
+
     }
 
-    public void setUserDB(User user) {
-        for (User usuario : userDB) {
-            if (usuario.getNick().equals(user.getNick())) {
-                return;
-            }
-        }
-        for (User userBlock : userBlockDB) {
-            if (userBlock.getNick().equals(user.getNick())) {
-                return;
-            }
-        }
-        userDB.add(user);
+    public void setPlayerDB(Player player) {
+        playerDB.add(player);
         saveFiles();
     }
 
-    public void getUsersDB() {
-        for (User user : userDB) {
-            System.out.println("Name " + user.getName() + ",nick: " + user.getNick() + ",password: " + user.getPassword() + ",register number: " + user.getRegister_number());
+    public void getPlayersDB() {
+        for (Player player : playerDB) {
+            System.out.println("Name " + player.getName() + ",nick: " + player.getNick() + ",password: " + player.getPassword() + ",register number: " + player.getRegister_number());
         }
     }
 
-    public void getUsersBlockDB() {
-        for (User user : userBlockDB) {
-            System.out.println("Name " + user.getName() + ",nick: " + user.getNick() + ",password: " + user.getPassword() + ",register number: " + user.getRegister_number());
-        }
-    }
-
-    public void setEquipmentDB(Equipment equipment) {
-        equipmentDB.add(equipment);
+    public void setOperatorDB(Operator operator) {
+        operatorDB.add(operator);
         saveFiles();
+    }
+
+    public void getOpeartorsDB() {
+        for (Operator operator : operatorDB) {
+            System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick() + ",password: " + operator.getPassword());
+        }
     }
 
     public void setChallengeDB(Challenge challenge) {
@@ -104,10 +99,17 @@ public class DataBaseManager implements Serializable{
     }
 
     public User getUserByNick(String nick) {
-        for (User user : userDB) {
+        for (Player player : playerDB) {
 
-            if (user.getNick().equals(nick)) {
-                return user;
+            if (player.getNick().equals(nick)) {
+                return player;
+            }
+
+        }
+        for (Operator operator : operatorDB) {
+
+            if (operator.getNick().equals(nick)) {
+                return operator;
             }
 
         }
@@ -115,73 +117,104 @@ public class DataBaseManager implements Serializable{
 
     }
 
+    public Player getPlayerByNick(String nick) {
+        for (Player player : playerDB) {
 
-    public void blockUser(String nick) {
-        for (User user : userDB) {
-            if (user.getNick().equals(nick)) {
-                userDB.remove(user);
-                userBlockDB.add(user);
-                saveFiles();
-                return;
+            if (player.getNick().equals(nick)) {
+                return player;
             }
+
         }
+        return null;
 
     }
 
-    public void unlockUser(String nick) {
-        for (User user : userBlockDB) {
-            if (user.getNick().equals(nick)) {
-                userBlockDB.remove(user);
-                userDB.add(user);
+    public ArrayList<Player> getAllPlayers (){
+        return playerDB;
+    }
+    public ArrayList<Player> getAllBlock (){
+        return userBlockDB;
+    }
+
+    public void blockUser(Player player) {
+                playerDB.remove(player);
+                userBlockDB.add(player);
                 saveFiles();
-                return;
-            }
-        }
+
 
     }
 
-    public void deleteUser(String nick) {
-        Iterator<User> iterator = userDB.iterator();
+    public void unlockUser(Player player) {
+                userBlockDB.remove(player);
+                playerDB.add(player);
+                saveFiles();
+
+    }
+
+    public void deleteUser(User user) {
+        Iterator<Player> iterator = playerDB.iterator();
         while (iterator.hasNext()) {
-            User user = iterator.next();
-            if (user.getNick().equals(nick)) {
+            Player player = iterator.next();
+            if (player.equals(user)) {
                 iterator.remove();
+                return;
             }
         }
-        Iterator<User> iteratorBlock = userBlockDB.iterator();
+        Iterator<Player> iteratorBlock = userBlockDB.iterator();
         while (iteratorBlock.hasNext()) {
-            User user = iteratorBlock.next();
-            if (user.getNick().equals(nick)) {
+            Player player = iteratorBlock.next();
+            if (player.equals(user)) {
                 iteratorBlock.remove();
+                return;
             }
         }
-        saveFiles();
+        Iterator<Operator> iteratorOperator = operatorDB.iterator();
+        while (iteratorBlock.hasNext()) {
+            Operator operator = iteratorOperator.next();
+            if (operator.equals(user)) {
+                iteratorOperator.remove();
+                return;
+            }
+        }
+
     }
 
+
+
+    public Character getCharacterByName(String name){
+        for (Character character : charDB) {
+           if (character.getName().equals(name)){
+               return character;
+           }
+        }
+        return null;
+    }
     public void getRanking() {
-        Collections.sort(charDB, new Comparator<Character>() {
+        ArrayList<CharacterUser>allcharacters= new ArrayList<>();
+
+        for (Player player:playerDB){
+            allcharacters.addAll(player.getPersonajes());
+        }
+        Collections.sort(allcharacters, new Comparator<CharacterUser>() {
             @Override
-            public int compare(Character o1, Character o2) {
+            public int compare(CharacterUser o1, CharacterUser o2) {
                 return Integer.compare(o2.getGold(), o1.getGold());
             }
         });
-    }
-
-    public void deleteCharacter(String name) {
-        for (Character character : charDB) {
-            if (character.getName().equals(name)) {
-                charDB.remove(character);
-                saveFiles();
-                return;
-            }
-
+        System.out.println("RANKING");
+        System.out.println("--------");
+        int posicion=1;
+        for (CharacterUser character:allcharacters){
+            System.out.println(posicion+": Name: "+character.getName()+",Gold: "+character.getGold());
+            posicion++;
         }
+
 
     }
 
     public boolean isUserBlock (String nick){
-        for (User user:userDB){
-            if (user.getNick().equals(nick)){
+        for (Player player: playerDB){
+            if (player.getNick().equals(nick)){
                 return true;
             }
         }
@@ -196,6 +229,84 @@ public class DataBaseManager implements Serializable{
         }
         return false;
     }
+
+    public void setChallenge(Challenge challenge){
+        for (Challenge chal:challengeDB){
+            if ((chal.getChallenged().equals(challenge.getChallenged())) && (chal.getChallenger().equals(challenge.getChallenger()))){
+                return;
+            }
+        }
+    challengeDB.add(challenge);
+    }
+
+    public Challenge getChallengeByChallenger(Player player){
+        for (Challenge challenge: challengeDB){
+            if ((challenge.getChallenger().equals(player)) && (challenge.getValid())){
+                challengeDB.remove(challenge);
+                saveFiles();
+                return challenge;
+            }
+        }
+        return null;
+    }
+
+
+    public Challenge getChallengeByChallenged(Player player){
+        for (Challenge challenge: challengeDB){
+            if ((challenge.getChallenged().equals(player)) && (challenge.getValid())){
+                challengeDB.remove(challenge);
+                saveFiles();
+                return challenge;
+            }
+        }
+        return null;
+
+    }
+
+    public ArrayList<Challenge> getNonValidatedChallenges(){
+        ArrayList<Challenge>nonValidatedChallenges=new ArrayList<>();
+        for (Challenge challenge: challengeDB){
+            if (!challenge.getValid()){
+                nonValidatedChallenges.add(challenge);
+            }
+        }
+        return nonValidatedChallenges;
+
+    }
+
+    public ArrayList<Weaknesses> getAllWeaknesses(){
+        return weaknessesDB;
+    }
+
+    public ArrayList<Strengths> getAllStrengths(){
+        return strengthsDB;
+    }
+
+    public void setWeaknessesDB(Weaknesses weaknesses){
+        weaknessesDB.add(weaknesses);
+    }
+
+    public void setStrengthsDBDB(Strengths strengths){
+        strengthsDB.add(strengths);
+    }
+
+    public void deleteChallenge(Challenge challengeToDelete){
+        for (Challenge challenge: challengeDB){
+            if (challenge.equals(challengeToDelete)){
+                challengeDB.remove(challenge);
+            }
+        }
+    }
+
+public ArrayList<Fight> getNotNotifiedFights(Player player){
+        ArrayList<Fight>nonNotified=new ArrayList<>();
+        for(Fight fights:fightDB){
+            if ((!fights.getNotified())&&(fights.getChallenger().getName().equals(player.getName()))){
+                nonNotified.add(fights);
+            }
+        }
+        return nonNotified;
+}
 }
 
 
