@@ -11,6 +11,9 @@ public class Round {
     CharacterUser characterChallenger;
     CharacterUser characterChallenged;
 
+    private boolean challengerAttack=false;
+    private boolean challengedAttack=false;
+
 
     public Round(CharacterUser characterChallenger, CharacterUser characterChallenged) {
         this.characterChallenger=characterChallenger;
@@ -58,26 +61,31 @@ public class Round {
             }
         }
 
+        if (attackChallengerExists>=defenceChallengedExists){
+            characterChallenged.doDamage();
+            SetchallengerAttack();
+        }
+        if (attackChallengedExists>=defenceChallengerExists){
+            characterChallenger.doDamage();
+            SetchallengedAttack();
+        }
+
 
     }
 
-
-    public void showRound() {
-        // TODO implement here
+    public void SetchallengerAttack(){
+        this.challengerAttack=true;
     }
 
-    /**
-     *
-     */
-    public void getAttacker() {
-        // TODO implement here
+    public void SetchallengedAttack(){
+        this.challengedAttack=true;
+    }
+    public boolean challengerAttack(){
+        return this.challengerAttack;
     }
 
-    /**
-     *
-     */
-    public void getDefender() {
-        // TODO implement here
+    public boolean challengedAttack(){
+        return this.challengedAttack;
     }
 
 }
