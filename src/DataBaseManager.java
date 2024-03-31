@@ -78,7 +78,7 @@ public class DataBaseManager implements Serializable{
 
     public void getPlayersDB() {
         for (Player player : playerDB) {
-            System.out.println("Name " + player.getName() + ",nick: " + player.getNick() + ",password: " + player.getPassword() + ",register number: " + player.getRegister_number());
+            System.out.println("Name " + player.getName() + ",nick: " + player.getNick());
         }
     }
 
@@ -89,7 +89,7 @@ public class DataBaseManager implements Serializable{
 
     public void getOpeartorsDB() {
         for (Operator operator : operatorDB) {
-            System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick() + ",password: " + operator.getPassword());
+            System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick());
         }
     }
 
@@ -193,7 +193,7 @@ public class DataBaseManager implements Serializable{
         ArrayList<CharacterUser>allcharacters= new ArrayList<>();
 
         for (Player player:playerDB){
-            allcharacters.addAll(player.getPersonajes());
+            allcharacters.addAll(player.getCharacters());
         }
         Collections.sort(allcharacters, new Comparator<CharacterUser>() {
             @Override
@@ -223,7 +223,7 @@ public class DataBaseManager implements Serializable{
 
     public boolean checkExistsCharacter(String nick){
         for (Character character:charDB){
-            if (character.getNick().equals(nick)){
+            if (character.getName().equals(nick)){
                 return true;
             }
         }
