@@ -142,7 +142,7 @@ public class CharacterEditor {
             System.out.println("Write the new power: ");
             power = scanner.nextInt();
             if ((power<1)||(power>5)){
-                System.out.println("Name already used, try it again!");
+                System.out.println("write the correct values, try it again!");
             }
         }while((power<1) || (power>5));
         character.setPower(power);

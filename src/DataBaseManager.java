@@ -87,7 +87,7 @@ public class DataBaseManager implements Serializable{
         saveFiles();
     }
 
-    public void getOpeartorsDB() {
+    public void getOperatorsDB() {
         for (Operator operator : operatorDB) {
             System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick());
         }
@@ -103,6 +103,13 @@ public class DataBaseManager implements Serializable{
 
             if (player.getNick().equals(nick)) {
                 return player;
+            }
+
+        }
+        for (Player block : userBlockDB) {
+
+            if (block.getNick().equals(nick)) {
+                return block;
             }
 
         }
@@ -136,20 +143,7 @@ public class DataBaseManager implements Serializable{
         return userBlockDB;
     }
 
-    public void blockUser(Player player) {
-                playerDB.remove(player);
-                userBlockDB.add(player);
-                saveFiles();
 
-
-    }
-
-    public void unlockUser(Player player) {
-                userBlockDB.remove(player);
-                playerDB.add(player);
-                saveFiles();
-
-    }
 
     public void deleteUser(User user) {
         Iterator<Player> iterator = playerDB.iterator();
@@ -319,7 +313,7 @@ public class DataBaseManager implements Serializable{
         weaknessesDB.add(weaknesses);
     }
 
-    public void setStrengthsDBDB(Strengths strengths){
+    public void setStrengthsDB(Strengths strengths){
         strengthsDB.add(strengths);
     }
 
