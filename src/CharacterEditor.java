@@ -10,7 +10,7 @@ public class CharacterEditor {
     private DataBaseManager dataBase;
     public CharacterEditor() {
     }
-    public void showMenuEditor() throws IOException {
+    public void showMenuEditor() {
         System.out.println("Character editor");
 
 
@@ -75,7 +75,7 @@ public class CharacterEditor {
         }
 
     }
-    public void showMenuAddProperties() throws IOException {
+    public void showMenuAddProperties() {
         System.out.println("Character add properties");
 
 

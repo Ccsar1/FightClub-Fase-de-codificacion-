@@ -8,8 +8,8 @@ import java.util.*;
 public class Don extends SpecialAbility {
 
     private int fury;
-    public Don(String name, int attack, int defence, TAbility type, int fury) {
-        super(name,attack,defence,type);
+    public Don(String name, int attack, int defence, int fury) {
+        super(name,attack,defence,TAbility.Don);
         this.fury=fury;
     }
 
@@ -21,9 +21,6 @@ public class Don extends SpecialAbility {
         return this.fury;
     }
 
-    @Override
-    public void execute() {
 
-    }
 
 }

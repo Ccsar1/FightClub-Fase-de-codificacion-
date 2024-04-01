@@ -230,6 +230,39 @@ public class DataBaseManager implements Serializable{
         return false;
     }
 
+    public boolean checkExistsNick(String nick){
+        for (Player player:playerDB){
+            if (player.getName().equals(nick)){
+                return true;
+            }
+        }
+        for (Operator operator:operatorDB){
+            if (operator.getName().equals(nick)){
+                return true;
+            }
+        }
+        for (Player playerBlock:userBlockDB){
+            if (playerBlock.getName().equals(nick)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean registerNumberExists (String register_number){
+        for (Player player: playerDB){
+            if (player.getRegisterNumber().equals(register_number)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<Character> getCharacters(){
+        return charDB;
+    }
+
+
     public void setChallenge(Challenge challenge){
         for (Challenge chal:challengeDB){
             if ((chal.getChallenged().equals(challenge.getChallenged())) && (chal.getChallenger().equals(challenge.getChallenger()))){
