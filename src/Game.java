@@ -2,31 +2,15 @@
 import java.io.*;
 import java.util.*;
 
-/**
- *
- */
 public class Game {
 
-    /**
-     * Default constructor
-     */
     public Game() {
     }
 
-    /**
-     *
-     */
     private User user;
 
-    /**
-     *
-     */
     private DataBaseManager dataBase;
 
-    /**
-     * @param nick
-     * @param pass
-     */
     private void login(String nick, String pass) {
         this.user = dataBase.getUserByNick(nick);
         if (this.user != null) {
@@ -49,33 +33,25 @@ public class Game {
 
     }
 
-    /**
-     * @param name
-     * @param nick
-     * @param pass
-     * @param type
-     * @return
-     */
     private void register(String name, String nick, String pass, TUser type) {
-        boolean validNick = this.dataBase.validNick(nick);
-        if (validNick) {
+        if (!this.dataBase.checkExistsNick(nick)) {
             switch (type) {
                 case TUser.Player:
                     this.user = new Player(name, nick, pass, dataBase);
+                    Player player = (Player) this.user;
+                    this.dataBase.setPlayerDB(player);
                     break;
                 case TUser.Operator:
                     this.user = new Operator(name, nick, pass, dataBase);
+                    Operator operator = (Operator) this.user;
+                    this.dataBase.setOperatorDB(operator);
                     break;
             }
-            this.dataBase.addUser(this.user);
         } else {
             System.out.println("That nickname already exists");
         }
     }
 
-    /**
-     *
-     */
     public void showWelcome() throws IOException {
         System.out.println("WELCOME TO FIGHT CLUB!!");
 
@@ -113,9 +89,6 @@ public class Game {
         this.dataBase.saveFiles();
     }
 
-    /**
-     *
-     */
     private void showMenuLogin() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Write your nickname: ");
@@ -125,9 +98,6 @@ public class Game {
         this.login(nick, pass);
     }
 
-    /**
-     *
-     */
     private void showMenuRegister() {
         Scanner scanner = new Scanner(System.in);
         TUser userType = null;
