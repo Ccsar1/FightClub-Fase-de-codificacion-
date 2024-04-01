@@ -191,7 +191,10 @@ public class Player extends User {
     }
 
     private void showHistory() {
-        super.dataBase.getFights(this);
+        ArrayList<Fight> fightArray = super.dataBase.getFights(this);
+        for (Fight fight : fightArray) {
+            fight.showPayment();
+        }
     }
 
     private void showRanking() {
