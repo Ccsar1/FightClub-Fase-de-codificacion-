@@ -2,14 +2,8 @@
 import java.io.*;
 import java.util.*;
 
-/**
- *
- */
 public class Player extends User {
 
-    /**
-     * Default constructor
-     */
     public Player(String username, String nick, String pass, DataBaseManager db) {
         super(username, nick, pass, TUser.Player, db);
 
@@ -32,26 +26,18 @@ public class Player extends User {
             char letter3 = (char) (rand.nextInt(26) + 'A');
             newNumber.append(letter3);
 
-            numberExists = super.dataBase.registerNumberExists(newNumber);
+            this.registerNumber = newNumber.toString();
+
+            numberExists = super.dataBase.registerNumberExists(registerNumber);
         } while (numberExists);
 
-        registerNumber = newNumber.toString();
         characters = new ArrayList<>();
     }
 
-    /**
-     *
-     */
     private String registerNumber;
 
-    /**
-     *
-     */
     private ArrayList<CharacterUser> characters;
 
-    /**
-     *
-     */
     private void registerCharacter() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Character> characterArray = super.dataBase.getCharacters();
@@ -75,9 +61,6 @@ public class Player extends User {
         this.characters.add(newCharacter);
     }
 
-    /**
-     *
-     */
     private void deleteCharacter() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select the character you want to delete");
@@ -94,9 +77,6 @@ public class Player extends User {
         }
     }
 
-    /**
-     *
-     */
     private void chooseEquipment() {
         Scanner scanner = new Scanner(System.in);
         int input = 1;
@@ -115,6 +95,7 @@ public class Player extends User {
         } while (input < 1 || input > this.characters.size());
         CharacterUser selectedCharacter = this.characters.get(input - 1);
 
+        selectedCharacter.deleteWeapons();
         ArrayList<Weapons> posibleWeapons = selectedCharacter.getWeapons();
         do {
             System.out.println("Select a weapon");
@@ -129,7 +110,7 @@ public class Player extends User {
             }
         } while (input < 1 || input > posibleWeapons.size());
         Weapons selectedWeapon = posibleWeapons.get(input - 1);
-        selectedCharacter.setWeapon(selectedWeapon);
+        selectedCharacter.setWeapons(selectedWeapon);
         if (selectedWeapon.getType() == 1) {
             do {
                 System.out.println("Select a secondary weapon");
@@ -144,7 +125,7 @@ public class Player extends User {
                 }
             } while (input < 1 || input > posibleWeapons.size());
             Weapons secondaryWeapon = posibleWeapons.get(input - 1);
-            selectedCharacter.setWeapon(secondaryWeapon);
+            selectedCharacter.setWeapons(secondaryWeapon);
         }
 
         ArrayList<Armor> posibleArmors = selectedCharacter.getArmors();
@@ -164,9 +145,6 @@ public class Player extends User {
         selectedCharacter.setArmor(selectedArmor);
     }
 
-    /**
-     *
-     */
     private void createChallenge() {
         if (!this.characters.isEmpty()) {
             Scanner scanner = new Scanner(System.in);
@@ -212,23 +190,17 @@ public class Player extends User {
 
     }
 
-    /**
-     *
-     */
     private void showHistory() {
-        super.dataBase.getFights(this);
+        ArrayList<Fight> fightArray = super.dataBase.getFights(this);
+        for (Fight fight : fightArray) {
+            fight.showPayment();
+        }
     }
 
-    /**
-     *
-     */
     private void showRanking() {
         super.dataBase.getRanking();
     }
 
-    /**
-     *
-     */
     private void challengeMenu() {
         Scanner scanner = new Scanner(System.in);
         Challenge challenge;
@@ -257,6 +229,7 @@ public class Player extends User {
                     } while (input < 1 || input > this.characters.size());
                     CharacterUser selectedCharacter = this.characters.get(input - 1);
 
+                    selectedCharacter.deleteWeapons();
                     ArrayList<Weapons> posibleWeapons = selectedCharacter.getWeapons();
                     do {
                         System.out.println("Select a weapon");
@@ -271,7 +244,7 @@ public class Player extends User {
                         }
                     } while (input < 1 || input > posibleWeapons.size());
                     Weapons selectedWeapon = posibleWeapons.get(input - 1);
-                    selectedCharacter.setWeapon(selectedWeapon);
+                    selectedCharacter.setWeapons(selectedWeapon);
                     if (selectedWeapon.getType() == 1) {
                         do {
                             System.out.println("Select a secondary weapon");
@@ -286,7 +259,7 @@ public class Player extends User {
                             }
                         } while (input < 1 || input > posibleWeapons.size());
                         Weapons secondaryWeapon = posibleWeapons.get(input - 1);
-                        selectedCharacter.setWeapon(secondaryWeapon);
+                        selectedCharacter.setWeapons(secondaryWeapon);
                     }
 
                     ArrayList<Armor> posibleArmors = selectedCharacter.getArmors();
@@ -308,7 +281,7 @@ public class Player extends User {
                     Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold());
                     newFight.startFight();
                     newFight.showResult();
-                    super.dataBase.setFight(newFight);
+                    super.dataBase.setFightDB(newFight);
                 } else {
                     int i;
                     do {
@@ -328,25 +301,26 @@ public class Player extends User {
                     Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold() / 10);
                     newFight.giveUp();
                     newFight.showResult();
-                    super.dataBase.setFight(newFight);
+                    super.dataBase.setFightDB(newFight);
                 }
             }
         } while (challenge != null);
     }
 
     private void notifyFightResult() {
-        ArrayList<Fight> fightsArray = getNotNotifiedFights(this);
+        ArrayList<Fight> fightsArray = super.dataBase.getNotNotifiedFights(this);
         for (Fight fight : fightsArray) {
             fight.showResult();
             fight.setNotified();
         }
     }
 
-    /**
-     * @return
-     */
     public ArrayList<CharacterUser> getCharacters() {
         return characters;
+    }
+
+    public String getRegisterNumber() {
+        return this.registerNumber;
     }
 
     @Override

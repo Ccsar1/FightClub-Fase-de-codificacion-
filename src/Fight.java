@@ -83,4 +83,13 @@ public class Fight {
     public Player getChallenger(){
         return this.challengerPlayer;
     }
+
+    public void showPayment() {
+        switch (this.result) {
+            case 1:
+                System.out.println(this.challengedPlayer + " pays " + this.gold + " to " + this.challengerPlayer);
+            case 2:
+                System.out.println(this.challengerPlayer + " pays " + this.gold + " to " + this.challengedPlayer);
+        }
+    }
 }

@@ -2,21 +2,12 @@
 import java.io.*;
 import java.util.*;
 
-/**
- *
- */
 public class Operator extends User {
 
-    /**
-     * Default constructor
-     */
     public Operator(String username, String nick, String pass, DataBaseManager db) {
         super(username, nick, pass, TUser.Operator, db);
     }
 
-    /**
-     *
-     */
     public void createCharacter() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Give a name to the new character");
@@ -35,6 +26,7 @@ public class Operator extends User {
             typeIndex = scanner.nextInt();
         } while (typeIndex < 1 || typeIndex > 3);
         Character newCharacter;
+        SpecialAbility specialAbility;
         switch (typeIndex) {
             case 1:
                 System.out.println("Write the name of its discipline");
@@ -54,8 +46,9 @@ public class Operator extends User {
                 do {
                     disciplineCost = scanner.nextInt();
                 } while (disciplineCost < 1 || disciplineCost > 3);
-                SpecialAbility specialAbility = new Disciplines(disciplineName, disciplineAttack, disciplineDefence, disciplineCost);
+                specialAbility = new Disciplines(disciplineName, disciplineAttack, disciplineDefence, disciplineCost);
                 newCharacter = new Vampire(charName, charPower, specialAbility);
+                super.dataBase.setCharDB(newCharacter);
                 break;
             case 2:
                 System.out.println("Write the name of its gift");
@@ -72,8 +65,9 @@ public class Operator extends User {
                 } while (giftDefence < 1 || giftDefence > 3);
                 System.out.println("Write minimum fury value to use " + giftName);
                 int giftFury = scanner.nextInt();
-                SpecialAbility specialAbility = new Gift(giftName, giftAttack, giftDefence, giftFury);
+                specialAbility = new Don(giftName, giftAttack, giftDefence, giftFury);
                 newCharacter = new Lycanthrope(charName, charPower, specialAbility);
+                super.dataBase.setCharDB(newCharacter);
                 break;
             case 3:
                 System.out.println("Write the name of its talent");
@@ -88,23 +82,17 @@ public class Operator extends User {
                 do {
                     talentDefence = scanner.nextInt();
                 } while (talentDefence < 1 || talentDefence > 3);
-                SpecialAbility specialAbility = new Talent(talentName, talentAttack, talentDefence);
+                specialAbility = new Talent(talentName, talentAttack, talentDefence);
                 newCharacter = new Hunter(charName, charPower, specialAbility);
+                super.dataBase.setCharDB(newCharacter);
         }
-        super.dataBase.setCharacter(newCharacter);
     }
 
-    /**
-     *
-     */
     public void editCharacter() {
         CharacterEditor characterEditor = new CharacterEditor();
         characterEditor.showMenuEditor();
     }
 
-    /**
-     *
-     */
     public void validateChallenge() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Challenge> challengesArray = super.dataBase.getNonValidatedChallenges();
@@ -135,7 +123,7 @@ public class Operator extends User {
             if (input == 1) {
                 System.out.println("Choose one of the following strengths to be present in the fight");
                 int j = 1;
-                ArrayList<Strengths> strengthsArray = super.dataBase.getStrengths();
+                ArrayList<Strengths> strengthsArray = super.dataBase.getAllStrengths();
                 for (Strengths strength : strengthsArray) {
                     System.out.println(j + ". " + strength.getName());
                     j++;
@@ -146,7 +134,7 @@ public class Operator extends User {
                 }
                 System.out.println("Choose one of the following weaknesses to be present in the fight");
                 j = 1;
-                ArrayList<Weaknesses> weaknessesArray = super.dataBase.getWeaknesses();
+                ArrayList<Weaknesses> weaknessesArray = super.dataBase.getAllWeaknesses();
                 for (Weaknesses weakness : weaknessesArray) {
                     System.out.println(j + ". " + weakness.getName());
                     j++;
@@ -159,11 +147,8 @@ public class Operator extends User {
         } while (input != 3);
     }
 
-    /**
-     *
-     */
     public void blockUser() {
-        ArrayList<Player> playersArray = super.dataBase.getPlayersDB();
+        ArrayList<Player> playersArray = super.dataBase.getAllPlayers();
         System.out.println("Select a player to block its account");
         int i = 1;
         for (Player player : playersArray) {
@@ -175,11 +160,8 @@ public class Operator extends User {
         }
     }
 
-    /**
-     *
-     */
     public void unlockUser() {
-        ArrayList<Player> blockedPlayersArray = super.dataBase.getUsersBlockDB();
+        ArrayList<Player> blockedPlayersArray = super.dataBase.getAllBlock();
         System.out.println("Select a player to unlock its account");
         int i = 1;
         for (Player blockedPlayer : blockedPlayersArray) {
