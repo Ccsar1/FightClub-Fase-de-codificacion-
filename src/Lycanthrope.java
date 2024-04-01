@@ -7,6 +7,9 @@ public class Lycanthrope extends Character {
      * Default constructor
      */
     public Lycanthrope() {
+        this.height = height;
+        this.weight = weight;
+        this.fury = fury;
     }
 
     /**
@@ -14,16 +17,32 @@ public class Lycanthrope extends Character {
      */
     private int fury = 0;
 
+    public int getHeight() {
+        return this.height;
+    }
+
+    public void setHeight(int alt){
+        this.height = alt;
+    }
+
+    public int getWeight() {
+        return this.weight;
+    }
+
+    public void setWeight(int pes){
+        this.weight = pes;
+    }
+
     /**
      *
      */
 
-    private int height;
+    private int height = 170;
 
     /**
      *
      */
-    private int weight;
+    private int weight = 70;
 
     /**
      *

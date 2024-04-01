@@ -11,6 +11,7 @@ public class Hunter extends Character {
      * Default constructor
      */
     public Hunter() {
+
     }
 
     /**

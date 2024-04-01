@@ -34,6 +34,10 @@ public abstract class Modifiers {
     /**
      * @param type
      */
+
+    public String getName(){
+        return this.name;
+    }
     public void setModifiersType(TModifiers type) {
         this.modifiersType = type;
     }

@@ -10,7 +10,10 @@ public class CharacterUser {
     /**
      * Default constructor
      */
-    public CharacterUser() {
+    public CharacterUser(Character character1) {
+        this.gold = gold;
+        this.hp = hp;
+        this.character = character1;
     }
 
     private Character character;
@@ -24,8 +27,8 @@ public class CharacterUser {
     private int gold = 150;
 
 
-    public void doDamage(int dam) {
-        this.hp = this.hp - dam;
+    public void doDamage() {
+        this.hp = this.hp - 1;
     }
 
     public void removeGold(int minus) {
@@ -40,7 +43,7 @@ public class CharacterUser {
         return this.gold;
     }
 
-    public int calculateAttack(Character character) {
+    public int calculateAttack() {
 
         int attack = 0;
         int attacker = 0;
@@ -153,12 +156,12 @@ public class CharacterUser {
         this.gold = gold;
     }
 
-    public Weapons getWeapons(){
-        Weapons armas = character.getWeapons();
+    public ArrayList<Weapons> getWeapons(){
+        ArrayList <Weapons> armas = character.getWeapons();
         return armas;
     }
 
-    public Weapons setWeapons(Weapons arma){
+    public void setWeapons(Weapons arma){
         weaponActive.add(arma);
     }
 
@@ -168,6 +171,10 @@ public class CharacterUser {
 
     public void setArmor(Armor armor){
         this.armorActive = armor;
+    }
+
+    public Armor getArmor(){
+        return character.getArmor();
     }
 
     public void addGold(int more){

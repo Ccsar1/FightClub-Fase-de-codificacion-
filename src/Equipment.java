@@ -9,6 +9,7 @@ public abstract class Equipment {
     public Equipment() {
     }
 
+    private TEquipment typeEquipment;
     /**
      *
      */
@@ -52,4 +53,16 @@ public abstract class Equipment {
         return this.defenceModifier;
     }
 
+
+    public TEquipment getTypeEquipment() {
+        return typeEquipment;
+    }
+
+    public void setTypeEquipment(TEquipment typeEquipment) {
+        this.typeEquipment = typeEquipment;
+    }
+
+    public String getName(){
+        return this.name;
+    }
 }

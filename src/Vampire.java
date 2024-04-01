@@ -11,6 +11,8 @@ public class Vampire extends Character {
      * Default constructor
      */
     public Vampire() {
+        this.age = age;
+        this.blood = blood;
     }
 
     /**
@@ -21,7 +23,7 @@ public class Vampire extends Character {
     /**
      *
      */
-    private int age;
+    private int age = 150;
 
     /**
      *
