@@ -316,6 +316,10 @@ public class Player extends User {
         return characters;
     }
 
+    public String getRegisterNumber() {
+        return this.registerNumber;
+    }
+
     @Override
     public boolean showMenu() {
         System.out.println("Welcome " + super.getName());
