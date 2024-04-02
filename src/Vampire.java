@@ -15,15 +15,9 @@ public class Vampire extends Character {
         this.blood = blood;
     }
 
-    /**
-     *
-     */
-    private int blood = 0;
 
-    /**
-     *
-     */
-    private int age = 150;
+    private int blood;
+    private int age;
 
     /**
      *

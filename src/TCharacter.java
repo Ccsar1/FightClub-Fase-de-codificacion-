@@ -1,9 +1,5 @@
 
-/**
- *
- */
+
 public enum TCharacter {
-    Vampire,
-    Lycanthrope,
-    Hunter
+    Vampire, Lycanthrope, Hunter
 }

@@ -2,35 +2,17 @@
 import java.io.*;
 import java.util.*;
 
-/**
- *
- */
 public class Demons extends Minions {
 
-    /**
-     * Default constructor
-     */
+
     public Demons() {
     }
-
-    /**
-     *
-     */
     private String pact;
-
-    /**
-     * @return
-     */
     public String getPact() {
-        // TODO implement here
-        return "";
+        return pact;
     }
-
-    /**
-     * @param pact
-     */
     public void setPact(String pact) {
-        // TODO implement here
+        this.pact=pact;
     }
 
 }
