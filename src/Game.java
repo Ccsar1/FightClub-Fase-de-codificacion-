@@ -52,7 +52,7 @@ public class Game {
         }
     }
 
-    public void showWelcome() throws IOException {
+    public void showWelcome() {
         System.out.println("WELCOME TO FIGHT CLUB!!");
 
         this.dataBase = new DataBaseManager();
