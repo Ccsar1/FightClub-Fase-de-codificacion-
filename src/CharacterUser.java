@@ -11,8 +11,8 @@ public class CharacterUser {
      * Default constructor
      */
     public CharacterUser(Character character1) {
-        this.gold = gold;
-        this.hp = hp;
+        this.gold = 150;
+        this.resetHp();
         this.character = character1;
     }
 
@@ -22,9 +22,9 @@ public class CharacterUser {
 
     private Armor armorActive;
 
-    private int hp = 5;
+    private int hp;
 
-    private int gold = 150;
+    private int gold;
 
 
     public void doDamage() {
@@ -179,5 +179,9 @@ public class CharacterUser {
 
     public void addGold(int more){
         this.setGold(this.gold + more);
+    }
+
+    public void resetHp() {
+        this.hp = this.character.getHp();
     }
 }
