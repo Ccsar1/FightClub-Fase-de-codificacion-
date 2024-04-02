@@ -78,7 +78,7 @@ public class DataBaseManager implements Serializable{
 
     public void getPlayersDB() {
         for (Player player : playerDB) {
-            System.out.println("Name " + player.getName() + ",nick: " + player.getNick() + ",password: " + player.getPassword() + ",register number: " + player.getRegister_number());
+            System.out.println("Name " + player.getName() + ",nick: " + player.getNick());
         }
     }
 
@@ -87,9 +87,9 @@ public class DataBaseManager implements Serializable{
         saveFiles();
     }
 
-    public void getOpeartorsDB() {
+    public void getOperatorsDB() {
         for (Operator operator : operatorDB) {
-            System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick() + ",password: " + operator.getPassword());
+            System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick());
         }
     }
 
@@ -103,6 +103,13 @@ public class DataBaseManager implements Serializable{
 
             if (player.getNick().equals(nick)) {
                 return player;
+            }
+
+        }
+        for (Player block : userBlockDB) {
+
+            if (block.getNick().equals(nick)) {
+                return block;
             }
 
         }
@@ -136,20 +143,7 @@ public class DataBaseManager implements Serializable{
         return userBlockDB;
     }
 
-    public void blockUser(Player player) {
-                playerDB.remove(player);
-                userBlockDB.add(player);
-                saveFiles();
 
-
-    }
-
-    public void unlockUser(Player player) {
-                userBlockDB.remove(player);
-                playerDB.add(player);
-                saveFiles();
-
-    }
 
     public void deleteUser(User user) {
         Iterator<Player> iterator = playerDB.iterator();
@@ -193,7 +187,7 @@ public class DataBaseManager implements Serializable{
         ArrayList<CharacterUser>allcharacters= new ArrayList<>();
 
         for (Player player:playerDB){
-            allcharacters.addAll(player.getPersonajes());
+            allcharacters.addAll(player.getCharacters());
         }
         Collections.sort(allcharacters, new Comparator<CharacterUser>() {
             @Override
@@ -223,12 +217,45 @@ public class DataBaseManager implements Serializable{
 
     public boolean checkExistsCharacter(String nick){
         for (Character character:charDB){
-            if (character.getNick().equals(nick)){
+            if (character.getName().equals(nick)){
                 return true;
             }
         }
         return false;
     }
+
+    public boolean checkExistsNick(String nick){
+        for (Player player:playerDB){
+            if (player.getName().equals(nick)){
+                return true;
+            }
+        }
+        for (Operator operator:operatorDB){
+            if (operator.getName().equals(nick)){
+                return true;
+            }
+        }
+        for (Player playerBlock:userBlockDB){
+            if (playerBlock.getName().equals(nick)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean registerNumberExists (String register_number){
+        for (Player player: playerDB){
+            if (player.getRegisterNumber().equals(register_number)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<Character> getCharacters(){
+        return charDB;
+    }
+
 
     public void setChallenge(Challenge challenge){
         for (Challenge chal:challengeDB){
@@ -286,7 +313,7 @@ public class DataBaseManager implements Serializable{
         weaknessesDB.add(weaknesses);
     }
 
-    public void setStrengthsDBDB(Strengths strengths){
+    public void setStrengthsDB(Strengths strengths){
         strengthsDB.add(strengths);
     }
 

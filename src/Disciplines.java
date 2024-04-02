@@ -8,8 +8,8 @@ import java.util.*;
 public class Disciplines extends SpecialAbility {
 
     private int cost;
-    public Disciplines(String name, int attack, int defence, TAbility type,int cost) {
-        super(name,attack,defence,type);
+    public Disciplines(String name, int attack, int defence,int cost) {
+        super(name,attack,defence,TAbility.Disciplines);
         this.cost=cost;
     }
 
@@ -25,8 +25,5 @@ public class Disciplines extends SpecialAbility {
         return this.cost;
     }
 
-    @Override
-    public void execute() {
 
-    }
 }

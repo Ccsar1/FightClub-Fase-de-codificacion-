@@ -7,12 +7,8 @@ import java.util.*;
  */
 public class Talent extends SpecialAbility {
 
-    public Talent(String name, int attack, int defence, TAbility type) {
-        super(name,attack,defence,type);
+    public Talent(String name, int attack, int defence) {
+        super(name,attack,defence,TAbility.Talent);
     }
 
-    @Override
-    public void execute() {
-
-    }
 }
