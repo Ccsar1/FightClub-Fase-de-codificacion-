@@ -1,14 +1,10 @@
-
-import java.io.*;
-import java.util.*;
-
 /**
  *
  */
-public class Don extends SpecialAbility {
+public class Gift extends SpecialAbility {
 
     private int fury;
-    public Don(String name, int attack, int defence, int fury) {
+    public Gift(String name, int attack, int defence, int fury) {
         super(name,attack,defence,TAbility.Don);
         this.fury=fury;
     }
