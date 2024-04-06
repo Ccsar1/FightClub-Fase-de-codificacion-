@@ -1,5 +1,4 @@
 
-import java.util.Random;
 import java.util.ArrayList;
 
 /**
@@ -10,10 +9,11 @@ public class CharacterUser {
     /**
      * Default constructor
      */
-    public CharacterUser(Character character1) {
+    public CharacterUser(Character character) {
         this.gold = 150;
-        this.resetHp();
-        this.character = character1;
+        this.character = character;
+        this.resetValues();
+
     }
 
     private Character character;
@@ -26,13 +26,19 @@ public class CharacterUser {
 
     private int gold;
 
+    private int blood;
+
+    private int fury;
+
+    private int willpower;
+
 
     public void doDamage() {
-        this.hp = this.hp - 1;
+        this.hp -= 1;
     }
 
     public void removeGold(int minus) {
-        this.gold = this.gold - minus;
+        this.gold -= minus;
     }
 
     public int getHP() {
@@ -46,114 +52,88 @@ public class CharacterUser {
     public int calculateAttack() {
 
         int attack = 0;
-        int attacker = 0;
+        int equipmentAttack = 0;
         for (Weapons weapon : this.weaponActive){
-            int att_mod = weapon.getDefenceModifier();
-            attacker = attacker + att_mod;
+            equipmentAttack += weapon.getAttackModifier();
         }
-        SpecialAbility hability = character.getSpecialAbilities();
-        switch (character.getType()){
-            case Hunter:
-                Hunter hunter = (Hunter)character;
-                Talent talent = (Talent)hability;
-                attack = character.getPower() + hunter.getWillpower() + armorActive.getAttackModifier() + attacker + talent.getAttackValue();
 
+        equipmentAttack += this.armorActive.getAttackModifier();
 
-            case Lycanthrope:
-                int furia = 0;
-                Don don = (Don)hability;
-                Lycanthrope lycanthrope = (Lycanthrope)character;
+        SpecialAbility ability = character.getSpecialAbilities();
+        switch (this.character.getType()){
+            case TCharacter.Hunter:
+                Hunter hunter = (Hunter) this.character;
+                Talent talent = (Talent) ability;
+                attack = character.getPower() + this.willpower + equipmentAttack + talent.getAttackValue();
+                break;
 
-                if (don.getFury() >= lycanthrope.getFury()){
-                    furia = 0;
-                } else {
-                    furia = don.getAttackValue();
+            case TCharacter.Lycanthrope:
+                Gift gift = (Gift) ability;
+                int giftAttack = 0;
+                if (this.fury >= gift.getFury()) {
+                    giftAttack = gift.getAttackValue();
                 }
-                attack = character.getPower() + furia + armorActive.getAttackModifier()+ attacker + lycanthrope.getFury();
+                attack = character.getPower() + giftAttack + equipmentAttack + this.fury;
+                break;
 
-
-            case Vampire:
-                Vampire vampire = (Vampire) character;
-                Disciplines discipline = (Disciplines)hability;
-                int extra;
-                int disciplina;
-                if (discipline.getCost() > vampire.getBlood()){
-                    disciplina = 0;
-                } else {
-                    disciplina = discipline.getAttackValue();
-                    vampire.setBlood(vampire.getBlood() - discipline.getCost());
+            case TCharacter.Vampire:
+                Disciplines discipline = (Disciplines) ability;
+                int disciplineAttack = 0;
+                if (this.blood > discipline.getCost()){
+                    disciplineAttack = discipline.getAttackValue();
+                    this.blood -= discipline.getCost();
                 }
-
-                if (vampire.getBlood() < 5){
-                    extra = 0;
-                } else {
+                int extra = 0;
+                if (this.blood > 5){
                     extra = 2;
                 }
-
-                attack = character.getPower() + disciplina + armorActive.getAttackModifier() + attacker + extra;
-
+                attack = character.getPower() + disciplineAttack + equipmentAttack + extra;
         }
         return attack;
     }
 
     public int calculateDefense(){
         int defense = 0;
-        int defender = 0;
+        int equipmentDefense = 0;
         for (Weapons weapon : this.weaponActive){
-            int def_mod = weapon.getDefenceModifier();
-            defender = defender + def_mod;
+            equipmentDefense += weapon.getDefenseModifier();
         }
-        SpecialAbility hability = character.getSpecialAbilities();
-        switch (character.getType()){
-            case Hunter:
-                Hunter hunter = (Hunter)character;
-                Talent talento = (Talent)hability;
-                defense = character.getPower() + talento.getDefenceValue() + armorActive.getDefenceModifier() + defender + hunter.getWillpower();
+        equipmentDefense += this.armorActive.getDefenseModifier();
 
-            case Vampire:
-                Vampire vampire = (Vampire)character;
-                int disciplina;
-                int extra;
-                Disciplines discipline = (Disciplines)hability;
-                if (discipline.getCost() > vampire.getBlood()){
-                    disciplina = 0;
-                } else {
-                    disciplina = discipline.getDefenceValue();
-                    vampire.setBlood(vampire.getBlood() - discipline.getCost());
+        SpecialAbility ability = this.character.getSpecialAbilities();
+        switch (this.character.getType()){
+            case TCharacter.Hunter:
+                Talent talent = (Talent) ability;
+                defense = this.character.getPower() + talent.getDefenseValue() + equipmentDefense + this.willpower;
+                break;
+
+            case TCharacter.Vampire:
+                Disciplines discipline = (Disciplines) ability;
+                int disciplineDefense = 0;
+                if (this.blood > discipline.getCost()){
+                    disciplineDefense = discipline.getDefenseValue();
+                    this.blood -= discipline.getCost();
                 }
-
-                if (vampire.getBlood() < 5){
-                    extra = 0;
-                } else {
+                int extra = 0;
+                if (this.blood > 5){
                     extra = 2;
                 }
-                defense = character.getPower() + disciplina + armorActive.getDefenceModifier() + defender + extra;
+                defense = this.character.getPower() + disciplineDefense + equipmentDefense + extra;
+                break;
 
-            case Lycanthrope:
-                Lycanthrope lycanthrope = (Lycanthrope)character;
-                int furia;
-                Don don = (Don)hability;
-                if (don.getFury() > lycanthrope.getFury()){
-                    furia = 0;
-                } else {
-                    furia = don.getDefenceValue();
+            case TCharacter.Lycanthrope:
+                Gift gift = (Gift) ability;
+                int abilityDefense = 0;
+                if (this.fury >= gift.getFury()) {
+                    abilityDefense = gift.getDefenseValue();
                 }
-                defense = character.getPower() + furia + armorActive.getDefenceModifier() + defender + lycanthrope.getFury();
-
+                defense = character.getPower() + abilityDefense + armorActive.getDefenseModifier() + equipmentDefense + this.fury;
         }
-
-
         return defense;
     }
 
     public String getName() {
-        String name = character.getName();
-        return name;
-    }
-
-
-    public void setGold(int gold) {
-        this.gold = gold;
+        return this.character.getName();
     }
 
     public ArrayList<Weapons> getWeapons(){
@@ -178,10 +158,40 @@ public class CharacterUser {
     }
 
     public void addGold(int more){
-        this.setGold(this.gold + more);
+        this.gold += more;
     }
 
-    public void resetHp() {
+    public void resetValues() {
         this.hp = this.character.getHp();
+        this.blood = 0;
+        this.fury = 0;
+        if (this.character.getType() == TCharacter.Hunter) {
+            Hunter hunter = (Hunter) this.character;
+            this.willpower = hunter.getWillpower();
+        }
+    }
+
+    public void gainBlood() {
+        if (this.character.getType() == TCharacter.Vampire) {
+            if (this.blood < 10) {
+                this.blood += 4;
+            }
+        }
+    }
+
+    public void gainFury() {
+        if (this.character.getType() == TCharacter.Lycanthrope) {
+            if (this.fury < 3) {
+                this.fury += 1;
+            }
+        }
+    }
+
+    public void loseWillpower() {
+        if (this.character.getType() == TCharacter.Hunter) {
+            if (this.willpower > 0) {
+                this.willpower -= 1;
+            }
+        }
     }
 }

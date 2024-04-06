@@ -63,21 +63,27 @@ public class Round {
 
         if (attackChallengerExists>=defenceChallengedExists){
             characterChallenged.doDamage();
+            characterChallenged.gainFury();
+            characterChallenged.loseWillpower();
+            characterChallenger.gainBlood();
             SetchallengerAttack();
         }
         if (attackChallengedExists>=defenceChallengerExists){
             characterChallenger.doDamage();
+            characterChallenger.gainFury();
+            characterChallenger.loseWillpower();
+            characterChallenged.gainBlood();
             SetchallengedAttack();
         }
 
 
     }
 
-    public void SetchallengerAttack(){
+    private void SetchallengerAttack(){
         this.challengerAttack=true;
     }
 
-    public void SetchallengedAttack(){
+    private void SetchallengedAttack(){
         this.challengedAttack=true;
     }
     public boolean challengerAttack(){

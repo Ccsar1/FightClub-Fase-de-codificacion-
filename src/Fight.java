@@ -49,8 +49,8 @@ public class Fight {
         } else {
             this.result = 0;
         }
-        characterChallenged.resetHp();
-        characterChallenger.resetHp();
+        characterChallenged.resetValues();
+        characterChallenger.resetValues();
 
     }
 
