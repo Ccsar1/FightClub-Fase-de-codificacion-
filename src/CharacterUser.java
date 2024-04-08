@@ -1,19 +1,12 @@
 
 import java.util.ArrayList;
 
-/**
- *
- */
 public class CharacterUser {
 
-    /**
-     * Default constructor
-     */
     public CharacterUser(Character character) {
         this.gold = 150;
         this.character = character;
         this.resetValues();
-
     }
 
     private Character character;
@@ -23,6 +16,8 @@ public class CharacterUser {
     private Armor armorActive;
 
     private int hp;
+
+    private int minionHP;
 
     private int gold;
 
@@ -34,7 +29,11 @@ public class CharacterUser {
 
 
     public void doDamage() {
-        this.hp -= 1;
+        if (this.minionHP > 0) {
+            this.minionHP -= 1;
+        } else {
+            this.hp -= 1;
+        }
     }
 
     public void removeGold(int minus) {
@@ -168,6 +167,7 @@ public class CharacterUser {
         this.hp = this.character.getHp();
         this.blood = 0;
         this.fury = 0;
+        this.minionHP = this.character.getMinionHP();
         if (this.character.getType() == TCharacter.Hunter) {
             Hunter hunter = (Hunter) this.character;
             this.willpower = hunter.getWillpower();
@@ -197,4 +197,5 @@ public class CharacterUser {
             }
         }
     }
+
 }

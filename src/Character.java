@@ -85,5 +85,11 @@ public abstract class Character {
     public int getHp() {
         return this.hp;
     }
-
+    public int getMinionHP() {
+        int totalSum = 0;
+        for (Minions minion : minions) {
+            totalSum += minion.getHP();
+        }
+        return totalSum;
+    }
 }
