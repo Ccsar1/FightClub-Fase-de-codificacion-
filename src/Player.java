@@ -111,7 +111,7 @@ public class Player extends User {
         } while (input < 1 || input > posibleWeapons.size());
         Weapons selectedWeapon = posibleWeapons.get(input - 1);
         selectedCharacter.setWeapons(selectedWeapon);
-        if (selectedWeapon.getType() == 1) {
+        if (selectedWeapon.getWeaponType() == 1) {
             do {
                 System.out.println("Select a secondary weapon");
                 i = 1;
@@ -245,7 +245,7 @@ public class Player extends User {
                     } while (input < 1 || input > posibleWeapons.size());
                     Weapons selectedWeapon = posibleWeapons.get(input - 1);
                     selectedCharacter.setWeapons(selectedWeapon);
-                    if (selectedWeapon.getType() == 1) {
+                    if (selectedWeapon.getWeaponType() == 1) {
                         do {
                             System.out.println("Select a secondary weapon");
                             i = 1;

@@ -4,28 +4,27 @@ import java.util.*;
 
 public abstract class Minions {
 
-    public Minions() {
+    public Minions(String name, int hp, TMinion type) {
+        this.name = name;
+        this.hp = hp;
+        this.type = type;
     }
     private String name;
     private int hp;
-    private TMinion minionType;
+    private final TMinion type;
     public String getName() {
-        return name;
+        return this.name;
     }
     public int getHP() {
-        return hp;
+        return this.hp;
     }
     public void setName(String name) {
         this.name=name;
     }
-    public void setHP(int HP) {
+    public void setHP(int hp) {
      this.hp=hp;
     }
-    public TMinion getMinionType() {
-        return minionType;
+    public TMinion getType() {
+        return this.type;
     }
-    public void setMinionType(TMinion minion) {
-        this.minionType=TMinion;
-    }
-
 }

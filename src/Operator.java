@@ -1,5 +1,4 @@
 
-import java.io.*;
 import java.util.*;
 
 public class Operator extends User {
@@ -12,6 +11,11 @@ public class Operator extends User {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Give a name to the new character");
         String charName = scanner.nextLine();
+        System.out.println("Write the health with which " + charName + " will start each fight (must be between 1 and 5");
+        int hp;
+        do {
+            hp = scanner.nextInt();
+        } while (hp < 1 || hp > 5);
         System.out.println("Write a power value for " + charName + " (must be between 1 and 5");
         int charPower;
         do {
@@ -29,6 +33,8 @@ public class Operator extends User {
         SpecialAbility specialAbility;
         switch (typeIndex) {
             case 1:
+                System.out.println("Write its age");
+                int age = scanner.nextInt();
                 System.out.println("Write the name of its discipline");
                 String disciplineName = scanner.nextLine();
                 System.out.println("Write the attack value of " + disciplineName + " (must be between 1 and 3");
@@ -47,10 +53,14 @@ public class Operator extends User {
                     disciplineCost = scanner.nextInt();
                 } while (disciplineCost < 1 || disciplineCost > 3);
                 specialAbility = new Disciplines(disciplineName, disciplineAttack, disciplineDefence, disciplineCost);
-                newCharacter = new Vampire(charName, charPower, specialAbility);
+                newCharacter = new Vampire(charName, charPower, hp, specialAbility, age);
                 super.dataBase.setCharDB(newCharacter);
                 break;
             case 2:
+                System.out.println("Write its height");
+                int height = scanner.nextInt();
+                System.out.println("Write its weight");
+                int weight = scanner.nextInt();
                 System.out.println("Write the name of its gift");
                 String giftName = scanner.nextLine();
                 System.out.println("Write the attack value of " + giftName + " (must be between 1 and 3");
@@ -65,11 +75,16 @@ public class Operator extends User {
                 } while (giftDefence < 1 || giftDefence > 3);
                 System.out.println("Write minimum fury value to use " + giftName);
                 int giftFury = scanner.nextInt();
-                specialAbility = new Don(giftName, giftAttack, giftDefence, giftFury);
-                newCharacter = new Lycanthrope(charName, charPower, specialAbility);
+                specialAbility = new Gift(giftName, giftAttack, giftDefence, giftFury);
+                newCharacter = new Lycanthrope(charName, charPower, hp, specialAbility, height, weight);
                 super.dataBase.setCharDB(newCharacter);
                 break;
             case 3:
+                System.out.println("Write the willpower value with which " + charName + " will start each fight (must be between 0 and 3");
+                int willpower;
+                do {
+                    willpower = scanner.nextInt();
+                } while (willpower < 0 || willpower > 3);
                 System.out.println("Write the name of its talent");
                 String talentName = scanner.nextLine();
                 System.out.println("Write the attack value of " + talentName + " (must be between 1 and 3");
@@ -83,7 +98,7 @@ public class Operator extends User {
                     talentDefence = scanner.nextInt();
                 } while (talentDefence < 1 || talentDefence > 3);
                 specialAbility = new Talent(talentName, talentAttack, talentDefence);
-                newCharacter = new Hunter(charName, charPower, specialAbility);
+                newCharacter = new Hunter(charName, charPower, hp, specialAbility, willpower);
                 super.dataBase.setCharDB(newCharacter);
         }
     }

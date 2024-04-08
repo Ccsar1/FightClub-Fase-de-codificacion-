@@ -2,15 +2,10 @@
 import java.io.*;
 import java.util.*;
 
-/**
- *
- */
 public class Armor extends Equipment {
 
-    /**
-     * Default constructor
-     */
-    public Armor() {
+    public Armor(String name, int attack, int defense) {
+        super(name, attack, defense, TEquipment.Armor);
     }
 
 }

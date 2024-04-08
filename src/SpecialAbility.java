@@ -39,7 +39,7 @@ public abstract class SpecialAbility {
             throw new IllegalArgumentException("El valor debe estar entre 1 y 3.");
         }
     }
-    public int getDefenceValue(){
+    public int getDefenseValue(){
         return this.defenceValue;
     }
     public void setTypeAbility(TAbility type){

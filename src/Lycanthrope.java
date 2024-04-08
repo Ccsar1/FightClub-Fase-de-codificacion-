@@ -1,21 +1,21 @@
-
-import java.io.*;
-import java.util.*;
-
 public class Lycanthrope extends Character {
-    public Lycanthrope() {
+    public Lycanthrope(String name, int power, int hp, SpecialAbility specialAbility, int height, int weight) {
+        super(name, power, hp, specialAbility, TCharacter.Lycanthrope);
+        this.height = height;
+        this.weight = weight;
     }
-    private int fury;
     private int height;
     private int weight;
-    private Don lycanthropeAbility;
-    public int getFury() {
-
-        return fury;
+    public int getHeight() {
+        return this.height;
     }
-
-    public void setFury(int fury) {
-        this.fury=fury;
+    public int getWeight() {
+        return this.weight;
     }
-
+    public void setHeight(int newHeight) {
+        this.height = newHeight;
+    }
+    public void setWeight(int newWeight) {
+        this.weight = newWeight;
+    }
 }

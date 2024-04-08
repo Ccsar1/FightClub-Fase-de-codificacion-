@@ -39,6 +39,10 @@ public class CharacterUser {
 
     public void removeGold(int minus) {
         this.gold -= minus;
+        if (this.gold < 0) {
+            this.gold = 0;
+
+        }
     }
 
     public int getHP() {
@@ -137,23 +141,22 @@ public class CharacterUser {
     }
 
     public ArrayList<Weapons> getWeapons(){
-        ArrayList <Weapons> armas = character.getWeapons();
-        return armas;
+        return this.character.getWeapons();
     }
 
-    public void setWeapons(Weapons arma){
-        weaponActive.add(arma);
+    public void setWeapons(Weapons weapon){
+        this.weaponActive.add(weapon);
     }
 
     public void deleteWeapons(){
-        weaponActive = new ArrayList<>();
+        this.weaponActive = new ArrayList<>();
     }
 
     public void setArmor(Armor armor){
         this.armorActive = armor;
     }
 
-    public Armor getArmor(){
+    public ArrayList<Armor> getArmors(){
         return character.getArmor();
     }
 

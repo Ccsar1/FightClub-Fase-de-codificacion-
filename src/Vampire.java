@@ -10,45 +10,19 @@ public class Vampire extends Character {
     /**
      * Default constructor
      */
-    public Vampire() {
+    public Vampire(String name, int power, int hp, SpecialAbility specialAbility, int age) {
+        super(name, power, hp, specialAbility, TCharacter.Vampire);
         this.age = age;
-        this.blood = blood;
     }
 
-
-    private int blood;
     private int age;
 
-    /**
-     *
-     */
-    private Disciplines vampireAbility;
-
-    /**
-     * @return
-     */
-    public boolean checkHumanMinion() {
-        return (Minions.getMinionType() == Humans);
+    public int getAge() {
+        return this.age;
     }
 
-    /**
-     * @return
-     */
-    public int getBlood() {
-        return this.blood;
-    }
-
-    /**
-     * @param blood
-     */
-    public void setBlood(int blood) {
-        if (blood > 10) {
-            this.blood = 10;
-        } else if (blood < 0) {
-            this.blood = 0;
-        } else{
-            this.blood = blood;
-        }
+    public void setAge(int newAge) {
+        this.age = newAge;
     }
 
 }

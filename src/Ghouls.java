@@ -3,15 +3,17 @@ import java.io.*;
 import java.util.*;
 
 public class Ghouls extends Minions {
-    public Ghouls() {
+    public Ghouls(String name, int hp, int dependence) {
+        super(name, hp, TMinion.Ghouls);
+        this.dependence = dependence;
     }
-    private int dependencies;
-    public int getDependencies() {
-        return dependencies;
+    private int dependence;
+    public int getDependence() {
+        return dependence;
     }
 
-    public void setDependencies(int dependencies) {
-        this.dependencies=dependencies;
+    public void setDependence(int dependence) {
+        this.dependence=dependence;
     }
 
 }

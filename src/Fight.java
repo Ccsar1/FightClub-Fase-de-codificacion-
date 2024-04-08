@@ -86,6 +86,10 @@ public class Fight {
         return this.challengerPlayer;
     }
 
+    public Player getChallenged() {
+        return this.challengedPlayer;
+    }
+
     public void showPayment() {
         switch (this.result) {
             case 1:

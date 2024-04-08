@@ -1,65 +1,40 @@
-/**
- *
- */
+
 public abstract class Equipment {
 
-    /**
-     * Default constructor
-     */
-    public Equipment() {
+    public Equipment(String name, int attack, int defense, TEquipment type) {
+        this.name = name;
+        this.attackModifier = attack;
+        this.defenseModifier = defense;
+        this.typeEquipment = type;
     }
 
     private TEquipment typeEquipment;
-    /**
-     *
-     */
+
     private String name;
 
-    /**
-     *
-     */
     private int attackModifier;
 
-    /**
-     *
-     */
-    private int defenceModifier;
+    private int defenseModifier;
 
-    /**
-     * @param i
-     */
     public void setAttackModifier(int i) {
         this.attackModifier = i;
     }
 
-    /**
-     *
-     */
     public int getAttackModifier() {
         return this.attackModifier;
     }
 
-    /**
-     * @param i
-     */
-    public void setDefenceModifier(int i) {
-        this.defenceModifier = i;
+    public void setDefenseModifier(int i) {
+        this.defenseModifier = i;
     }
 
-    /**
-     *
-     */
-    public int getDefenceModifier() {
-        return this.defenceModifier;
+    public int getDefenseModifier() {
+        return this.defenseModifier;
     }
 
 
     public TEquipment getTypeEquipment() {
         return typeEquipment;
-    }
-
-    public void setTypeEquipment(TEquipment typeEquipment) {
-        this.typeEquipment = typeEquipment;
     }
 
     public String getName(){

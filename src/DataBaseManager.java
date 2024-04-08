@@ -106,13 +106,6 @@ public class DataBaseManager implements Serializable{
             }
 
         }
-        for (Player block : userBlockDB) {
-
-            if (block.getNick().equals(nick)) {
-                return block;
-            }
-
-        }
         for (Operator operator : operatorDB) {
 
             if (operator.getNick().equals(nick)) {
@@ -154,16 +147,8 @@ public class DataBaseManager implements Serializable{
                 return;
             }
         }
-        Iterator<Player> iteratorBlock = userBlockDB.iterator();
-        while (iteratorBlock.hasNext()) {
-            Player player = iteratorBlock.next();
-            if (player.equals(user)) {
-                iteratorBlock.remove();
-                return;
-            }
-        }
         Iterator<Operator> iteratorOperator = operatorDB.iterator();
-        while (iteratorBlock.hasNext()) {
+        while (iteratorOperator.hasNext()) {
             Operator operator = iteratorOperator.next();
             if (operator.equals(user)) {
                 iteratorOperator.remove();
@@ -325,15 +310,35 @@ public class DataBaseManager implements Serializable{
         }
     }
 
-public ArrayList<Fight> getNotNotifiedFights(Player player){
-        ArrayList<Fight>nonNotified=new ArrayList<>();
-        for(Fight fights:fightDB){
-            if ((!fights.getNotified())&&(fights.getChallenger().getName().equals(player.getName()))){
-                nonNotified.add(fights);
+    public ArrayList<Fight> getNotNotifiedFights(Player player){
+            ArrayList<Fight>nonNotified=new ArrayList<>();
+            for(Fight fights:fightDB){
+                if ((!fights.getNotified())&&(fights.getChallenger().getName().equals(player.getName()))){
+                    nonNotified.add(fights);
+                }
+            }
+            return nonNotified;
+    }
+
+    public void blockUser(Player player) {
+        this.playerDB.remove(player);
+        this.userBlockDB.add(player);
+    }
+
+    public void unlockUser(Player player) {
+        this.userBlockDB.remove(player);
+        this.playerDB.add(player);
+    }
+
+    public ArrayList<Fight> getFights(Player player) {
+        ArrayList<Fight> selection = new ArrayList<>();
+        for (Fight fight : fightDB) {
+            if ((player == fight.getChallenger()) || (player == fight.getChallenged())) {
+                selection.add(fight);
             }
         }
-        return nonNotified;
-}
+        return selection;
+    }
 }
 
 
