@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public abstract class Equipment {
+public abstract class Equipment implements Serializable {
 
     public Equipment(String name, int attack, int defense, TEquipment type) {
         this.name = name;

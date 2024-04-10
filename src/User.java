@@ -5,7 +5,7 @@ import java.util.*;
 /**
  *
  */
-public abstract class User {
+public abstract class User implements Serializable {
 
     /**
      * Default constructor

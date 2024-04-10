@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class Fight {
+public class Fight implements Serializable {
 
     private Player challengerPlayer;
     private Player challengedPlayer;

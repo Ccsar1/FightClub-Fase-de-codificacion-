@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public abstract class Modifiers {
+public abstract class Modifiers implements Serializable {
 
     public Modifiers(String name, int value, TModifiers type) {
         this.name = name;

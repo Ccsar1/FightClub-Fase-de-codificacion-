@@ -5,7 +5,7 @@ import java.util.*;
 /**
  *
  */
-public class Round {
+public class Round implements Serializable {
 
     Random random=new Random();
     CharacterUser characterChallenger;

@@ -2,7 +2,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Challenge {
+public class Challenge implements Serializable {
 
     public Challenge(Player challengerPlayer, Player challengedPlayer, CharacterUser challengerCharacter, int goldBet) {
         this.challenger = challengerPlayer;

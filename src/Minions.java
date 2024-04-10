@@ -2,7 +2,7 @@
 import java.io.*;
 import java.util.*;
 
-public abstract class Minions {
+public abstract class Minions implements Serializable {
 
     public Minions(String name, int hp, TMinion type) {
         this.name = name;

@@ -1,7 +1,8 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CharacterUser {
+public class CharacterUser implements Serializable {
 
     public CharacterUser(Character character) {
         this.gold = 150;
