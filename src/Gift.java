@@ -5,7 +5,7 @@ public class Gift extends SpecialAbility {
 
     private int fury;
     public Gift(String name, int attack, int defence, int fury) {
-        super(name,attack,defence,TAbility.Don);
+        super(name,attack,defence,TAbility.Gift);
         this.fury=fury;
     }
 

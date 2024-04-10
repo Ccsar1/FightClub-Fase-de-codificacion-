@@ -32,7 +32,7 @@ public abstract class SpecialAbility {
     public int getAttackValue(){
         return this.attackValue;
     }
-    public void setDefenceValue(int defence){
+    public void setDefenseValue(int defence){
         if (defence>=1 && defence<=3){
             this.defenceValue=defence;
         }else{

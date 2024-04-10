@@ -4,6 +4,6 @@
  */
 public enum TAbility {
     Disciplines,
-    Don,
+    Gift,
     Talent
 }

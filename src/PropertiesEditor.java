@@ -5,7 +5,6 @@ import java.util.*;
 public class PropertiesEditor {
 
     Scanner scanner = new Scanner(System.in);
-    private Character character;
     private DataBaseManager dataBase;
 
     public PropertiesEditor(DataBaseManager dataBase) {
@@ -960,18 +959,279 @@ public class PropertiesEditor {
     }
 
     private void editSpecialAbility(SpecialAbility specialAbility) {
+        int input;
+        switch (specialAbility.getTypeAbility()) {
+            case Gift:
+                Gift gift = (Gift) specialAbility;
+                input = 0;
 
+                while (input != 5) {
+                    System.out.println("The ability " + gift.getName() + " has an attack value of " + gift.getAttackValue() + ", a defense value of " + gift.getDefenseValue() + " and can be used with a minimum fury of " + gift.getFury());
+
+                    System.out.println("1. Edit name");
+                    System.out.println("2. Edit attack value");
+                    System.out.println("3. Edit defense value");
+                    System.out.println("4. Edit minimum fury");
+                    System.out.println("5. Go back");
+
+                    input = scanner.nextInt();
+
+                    switch (input) {
+                        case 1:
+                            System.out.println("Write the new name");
+                            String name = scanner.nextLine();
+                            gift.setName(name);
+                            break;
+                        case 2:
+                            System.out.println("Write the new attack value (can be between 1 and 3");
+                            int attack;
+                            do {
+                                attack = scanner.nextInt();
+                            } while (attack < 1 || attack > 3);
+                            gift.setAttackValue(attack);
+                            break;
+                        case 3:
+                            System.out.println("Write the new defense value (can be between 1 and 3");
+                            int defense;
+                            do {
+                                defense = scanner.nextInt();
+                            } while (defense < 1 || defense > 3);
+                            gift.setDefenseValue(defense);
+                            break;
+                        case 4:
+                            System.out.println("Write the new minimum fury value (can be between 0 and 3");
+                            int fury;
+                            do {
+                                fury = scanner.nextInt();
+                            } while (fury < 0 || fury > 3);
+                            gift.setFury(fury);
+                            break;
+                        case 5:
+                            break;
+                        default:
+                            System.out.println(input + " is not a valid option");
+                    }
+                }
+                break;
+            case Disciplines:
+                Disciplines disciplines = (Disciplines) specialAbility;
+                input = 0;
+
+                while (input != 5) {
+                    System.out.println("The ability " + disciplines.getName() + " has an attack value of " + disciplines.getAttackValue() + ", a defense value of " + disciplines.getDefenseValue() + " and has a blood cost of " + disciplines.getCost());
+
+                    System.out.println("1. Edit name");
+                    System.out.println("2. Edit attack value");
+                    System.out.println("3. Edit defense value");
+                    System.out.println("4. Edit blood cost");
+                    System.out.println("5. Go back");
+
+                    input = scanner.nextInt();
+
+                    switch (input) {
+                        case 1:
+                            System.out.println("Write the new name");
+                            String name = scanner.nextLine();
+                            disciplines.setName(name);
+                            break;
+                        case 2:
+                            System.out.println("Write the new attack value (can be between 1 and 3");
+                            int attack;
+                            do {
+                                attack = scanner.nextInt();
+                            } while (attack < 1 || attack > 3);
+                            disciplines.setAttackValue(attack);
+                            break;
+                        case 3:
+                            System.out.println("Write the new defense value (can be between 1 and 3");
+                            int defense;
+                            do {
+                                defense = scanner.nextInt();
+                            } while (defense < 1 || defense > 3);
+                            disciplines.setDefenseValue(defense);
+                            break;
+                        case 4:
+                            System.out.println("Write the blood cost (can be between 1 and 3");
+                            int blood;
+                            do {
+                                blood = scanner.nextInt();
+                            } while (blood < 1 || blood > 3);
+                            disciplines.setCost(blood);
+                            break;
+                        case 5:
+                            break;
+                        default:
+                            System.out.println(input + " is not a valid option");
+                    }
+                }
+                break;
+            case Talent:
+                Talent talent = (Talent) specialAbility;
+                input = 0;
+
+                while (input != 4) {
+                    System.out.println("The ability " + talent.getName() + " has an attack value of " + talent.getAttackValue() + " and a defense value of " + talent.getDefenseValue());
+
+                    System.out.println("1. Edit name");
+                    System.out.println("2. Edit attack value");
+                    System.out.println("3. Edit defense value");
+                    System.out.println("4. Go back");
+
+                    input = scanner.nextInt();
+
+                    switch (input) {
+                        case 1:
+                            System.out.println("Write the new name");
+                            String name = scanner.nextLine();
+                            talent.setName(name);
+                            break;
+                        case 2:
+                            System.out.println("Write the new attack value (can be between 1 and 3");
+                            int attack;
+                            do {
+                                attack = scanner.nextInt();
+                            } while (attack < 1 || attack > 3);
+                            talent.setAttackValue(attack);
+                            break;
+                        case 3:
+                            System.out.println("Write the new defense value (can be between 1 and 3");
+                            int defense;
+                            do {
+                                defense = scanner.nextInt();
+                            } while (defense < 1 || defense > 3);
+                            talent.setDefenseValue(defense);
+                            break;
+                        case 4:
+                            break;
+                        default:
+                            System.out.println(input + " is not a valid option");
+                    }
+                }
+                break;
+        }
     }
 
-    private void editMinionsList(ArrayList<Minions> minionsArray, boolean isVampire) {
-
+    private void editMinionsList(ArrayList<Minions> minionsArray, boolean vampireMaster) {
+        boolean goBack = false;
+        while (!goBack) {
+            System.out.println("0. Add an existing minion");
+            int i = 1;
+            for (Minions minion : minionsArray) {
+                System.out.println(i + ". Remove " + minion.getName() + " from this list");
+            }
+            System.out.println(minionsArray.size() + 1 + ". Go back");
+            int input;
+            do {
+                input = scanner.nextInt();
+            } while (input < 0 || input > minionsArray.size() + 1);
+            if (input == minionsArray.size() + 1) {
+                goBack = true;
+            } else if (input == 0) {
+                boolean goBack2 = false;
+                while (!goBack2) {
+                    ArrayList<Minions> minionsDB = this.dataBase.getMinions();
+                    int j = 1;
+                    for (Minions minion : minionsDB) {
+                        System.out.println(j + ". Add " + minion.getName());
+                    }
+                    System.out.println(minionsDB.size() + 1 + ". Go back");
+                    int input2;
+                    do {
+                        input2 = scanner.nextInt();
+                    } while (input2 < 1 || input2 > minionsDB.size() + 1);
+                    if (input2 == minionsDB.size() + 1) {
+                        goBack2 = true;
+                    } else {
+                        if (vampireMaster && (minionsDB.get(input2 - 1).getType() == TMinion.Humans)) {
+                            System.out.println("You are trying to assign a human minion to a vampire master, that cant end well!!");
+                        } else {
+                            minionsArray.add(minionsDB.get(input2 - 1));
+                        }
+                    }
+                }
+            } else {
+                minionsArray.remove(input - 1);
+            }
+        }
     }
 
     private void editWeaponsList(ArrayList<Weapons> weaponsArray) {
-
+        boolean goBack = false;
+        while (!goBack) {
+            System.out.println("0. Add an existing weapon");
+            int i = 1;
+            for (Weapons weapon : weaponsArray) {
+                System.out.println(i + ". Remove " + weapon.getName() + " from this list");
+            }
+            System.out.println(weaponsArray.size() + 1 + ". Go back");
+            int input;
+            do {
+                input = scanner.nextInt();
+            } while (input < 0 || input > weaponsArray.size() + 1);
+            if (input == weaponsArray.size() + 1) {
+                goBack = true;
+            } else if (input == 0) {
+                boolean goBack2 = false;
+                while (!goBack2) {
+                    ArrayList<Weapons> weaponsDB = this.dataBase.getWeaponsDB();
+                    int j = 1;
+                    for (Weapons weapon : weaponsDB) {
+                        System.out.println(j + ". Add " + weapon.getName());
+                    }
+                    System.out.println(weaponsDB.size() + 1 + ". Go back");
+                    int input2;
+                    do {
+                        input2 = scanner.nextInt();
+                    } while (input2 < 1 || input2 > weaponsDB.size() + 1);
+                    if (input2 == weaponsDB.size() + 1) {
+                        goBack2 = true;
+                    } else {
+                        weaponsArray.add(weaponsDB.get(input2 - 1));
+                    }
+                }
+            } else {
+                weaponsArray.remove(input - 1);
+            }
+        }
     }
 
     private void editArmorsList(ArrayList<Armor> armorsArray) {
-
+        boolean goBack = false;
+        while (!goBack) {
+            System.out.println("0. Add an existing armor");
+            int i = 1;
+            for (Armor armor : armorsArray) {
+                System.out.println(i + ". Remove " + armor.getName() + " from this list");
+            }
+            System.out.println(armorsArray.size() + 1 + ". Go back");
+            int input;
+            do {
+                input = scanner.nextInt();
+            } while (input < 0 || input > armorsArray.size() + 1);
+            if (input == armorsArray.size() + 1) {
+                goBack = true;
+            } else if (input == 0) {
+                boolean goBack2 = false;
+                while (!goBack2) {
+                    ArrayList<Armor> armorsDB = this.dataBase.getArmorsDB();
+                    int j = 1;
+                    for (Armor armor : armorsDB) {
+                        System.out.println(j + ". Add " + armor.getName());
+                    }
+                    System.out.println(armorsDB.size() + 1 + ". Go back");
+                    int input2;
+                    do {
+                        input2 = scanner.nextInt();
+                    } while (input2 < 1 || input2 > armorsDB.size() + 1);
+                    if (input2 == armorsDB.size() + 1) {
+                        goBack2 = true;
+                    } else {
+                        armorsArray.add(armorsDB.get(input2 - 1));
+                    }
+                }
+            } else {
+                armorsArray.remove(input - 1);
+            }
+        }
     }
 }
