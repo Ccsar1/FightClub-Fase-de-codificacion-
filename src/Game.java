@@ -67,6 +67,7 @@ public class Game {
 
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
+            scanner.nextLine();
 
             switch (input) {
                 case 1:
@@ -78,6 +79,7 @@ public class Game {
                 case 3:
                     System.out.println("Please enter 1 to confirm exit");
                     exit = scanner.nextInt();
+                    scanner.nextLine();
                     if (exit == 1) {
                         System.out.println("Byebye!");
                     }

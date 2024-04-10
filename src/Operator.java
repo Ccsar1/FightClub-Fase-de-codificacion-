@@ -21,6 +21,7 @@ public class Operator extends User {
             System.out.println("3. Go back");
             do {
                 input = scanner.nextInt();
+                scanner.nextLine();
             } while (input < 1 || input > 3);
             switch (input) {
                 case 1:
@@ -43,6 +44,7 @@ public class Operator extends User {
                     j++;
                 }
                 int strengthIndex = scanner.nextInt();
+                scanner.nextLine();
                 if (strengthIndex >= 0 && strengthIndex <= strengthsArray.size()) {
                     challenge.setStrength(strengthsArray.get(strengthIndex));
                 }
@@ -54,6 +56,7 @@ public class Operator extends User {
                     j++;
                 }
                 int weaknessIndex = scanner.nextInt();
+                scanner.nextLine();
                 if (weaknessIndex >= 0 && weaknessIndex <= weaknessesArray.size()) {
                     challenge.setWeakness(weaknessesArray.get(weaknessIndex));
                 }
@@ -71,6 +74,7 @@ public class Operator extends User {
             i++;
         }
         i = scanner.nextInt();
+        scanner.nextLine();
         if (i > 1 && i < playersArray.size()) {
             super.dataBase.blockUser(playersArray.get(i - 1));
         }
@@ -86,6 +90,7 @@ public class Operator extends User {
             i++;
         }
         i = scanner.nextInt();
+        scanner.nextLine();
         if (i > 1 && i <= blockedPlayersArray.size()) {
             super.dataBase.unlockUser(blockedPlayersArray.get(i - 1));
         }
@@ -105,6 +110,7 @@ public class Operator extends User {
             System.out.println("6. Delete user");
 
             int input = scanner.nextInt();
+            scanner.nextLine();
 
             switch (input) {
                 case 1:
@@ -123,10 +129,12 @@ public class Operator extends User {
                 case 5:
                     System.out.println("Press 1 to confirm exit");
                     exit = scanner.nextInt();
+                    scanner.nextLine();
                     break;
                 case 6:
                     System.out.println("Press 1 to exit and delete your user");
                     exit = scanner.nextInt();
+                    scanner.nextLine();
                     if (exit == 1) {
                         return true;
                     }

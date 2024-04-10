@@ -86,7 +86,6 @@ public class DataBaseManager implements Serializable{
 
     public void setPlayerDB(Player player) {
         playerDB.add(player);
-        saveFiles();
     }
 
     public void getPlayersDB() {
@@ -97,7 +96,6 @@ public class DataBaseManager implements Serializable{
 
     public void setOperatorDB(Operator operator) {
         operatorDB.add(operator);
-        saveFiles();
     }
 
     public void getOperatorsDB() {

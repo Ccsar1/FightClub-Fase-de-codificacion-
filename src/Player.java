@@ -51,6 +51,7 @@ public class Player extends User {
                 i++;
             }
             input = scanner.nextInt();
+            scanner.nextLine();
             if (input < 1 || input > characterArray.size()) {
                 System.out.println(input + " is not a valid option");
             }
@@ -70,6 +71,7 @@ public class Player extends User {
             i++;
         }
         int input = scanner.nextInt();
+        scanner.nextLine();
         if (input >= 1 && input <= this.characters.size()) {
             this.characters.remove(input - 1);
         } else {
@@ -89,6 +91,7 @@ public class Player extends User {
                 i++;
             }
             input = scanner.nextInt();
+            scanner.nextLine();
             if (input < 1 || input > this.characters.size()) {
                 System.out.println(input + " is not a valid option");
             }
@@ -105,6 +108,7 @@ public class Player extends User {
                 i++;
             }
             input = scanner.nextInt();
+            scanner.nextLine();
             if (input < 1 || input > posibleWeapons.size()) {
                 System.out.println(input + " is not a valid option");
             }
@@ -120,6 +124,7 @@ public class Player extends User {
                     i++;
                 }
                 input = scanner.nextInt();
+                scanner.nextLine();
                 if (input < 1 || input > posibleWeapons.size()) {
                     System.out.println(input + " is not a valid option");
                 }
@@ -137,6 +142,7 @@ public class Player extends User {
                 i++;
             }
             input = scanner.nextInt();
+            scanner.nextLine();
             if (input < 1 || input > posibleArmors.size()) {
                 System.out.println(input + " is not a valid option");
             }
@@ -163,6 +169,7 @@ public class Player extends User {
                             i++;
                         }
                         input = scanner.nextInt();
+                        scanner.nextLine();
                         if (input < 1 || input > this.characters.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -172,6 +179,7 @@ public class Player extends User {
                     do {
                         System.out.println("How much gold do you want to bet? You have " + challengerCharacter.getGold());
                         goldBet = scanner.nextInt();
+                        scanner.nextLine();
                         if (goldBet < 0 || goldBet > challengerCharacter.getGold()) {
                             System.out.println(goldBet + " is not a valid amount");
                         }
@@ -212,6 +220,7 @@ public class Player extends User {
                 do {
                     System.out.println("Do you accept? 1. Yes 2. No");
                     input = scanner.nextInt();
+                    scanner.nextLine();
                 } while (input != 1 && input != 2);
                 if (input == 1) {
                     int i;
@@ -223,6 +232,7 @@ public class Player extends User {
                             i++;
                         }
                         input = scanner.nextInt();
+                        scanner.nextLine();
                         if (input < 1 || input > this.characters.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -239,6 +249,7 @@ public class Player extends User {
                             i++;
                         }
                         input = scanner.nextInt();
+                        scanner.nextLine();
                         if (input < 1 || input > posibleWeapons.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -254,6 +265,7 @@ public class Player extends User {
                                 i++;
                             }
                             input = scanner.nextInt();
+                            scanner.nextLine();
                             if (input < 1 || input > posibleWeapons.size()) {
                                 System.out.println(input + " is not a valid option");
                             }
@@ -271,6 +283,7 @@ public class Player extends User {
                             i++;
                         }
                         input = scanner.nextInt();
+                        scanner.nextLine();
                         if (input < 1 || input > posibleArmors.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -292,6 +305,7 @@ public class Player extends User {
                             i++;
                         }
                         input = scanner.nextInt();
+                        scanner.nextLine();
                         if (input < 1 || input > this.characters.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -341,6 +355,7 @@ public class Player extends User {
             System.out.println("8. Delete user");
 
             int input = scanner.nextInt();
+            scanner.nextLine();
 
             switch (input) {
                 case 1:
@@ -364,10 +379,12 @@ public class Player extends User {
                 case 7:
                     System.out.println("Press 1 to confirm exit");
                     exit = scanner.nextInt();
+                    scanner.nextLine();
                     break;
                 case 8:
                     System.out.println("Press 1 to exit and delete your user");
                     exit = scanner.nextInt();
+                    scanner.nextLine();
                     if (exit == 1) {
                         return true;
                     }
