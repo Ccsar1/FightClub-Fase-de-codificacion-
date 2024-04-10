@@ -7,107 +7,6 @@ public class Operator extends User {
         super(username, nick, pass, TUser.Operator, db);
     }
 
-    public void createCharacter() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Give a name to the new character");
-        String charName = scanner.nextLine();
-        System.out.println("Write the health with which " + charName + " will start each fight (must be between 1 and 5");
-        int hp;
-        do {
-            hp = scanner.nextInt();
-        } while (hp < 1 || hp > 5);
-        System.out.println("Write a power value for " + charName + " (must be between 1 and 5");
-        int charPower;
-        do {
-            charPower = scanner.nextInt();
-        } while (charPower < 1 || charPower > 5);
-        System.out.println("What type of character is it?");
-        System.out.println("1. Vampire");
-        System.out.println("2. Lycanthrope");
-        System.out.println("3. Hunter");
-        int typeIndex;
-        do {
-            typeIndex = scanner.nextInt();
-        } while (typeIndex < 1 || typeIndex > 3);
-        Character newCharacter;
-        SpecialAbility specialAbility;
-        switch (typeIndex) {
-            case 1:
-                System.out.println("Write its age");
-                int age = scanner.nextInt();
-                System.out.println("Write the name of its discipline");
-                String disciplineName = scanner.nextLine();
-                System.out.println("Write the attack value of " + disciplineName + " (must be between 1 and 3");
-                int disciplineAttack;
-                do {
-                    disciplineAttack = scanner.nextInt();
-                } while (disciplineAttack < 1 || disciplineAttack > 3);
-                System.out.println("Write the defence value of " + disciplineName + " (must be between 1 and 3");
-                int disciplineDefence;
-                do {
-                    disciplineDefence = scanner.nextInt();
-                } while (disciplineDefence < 1 || disciplineDefence > 3);
-                System.out.println("Write the blood cost of " + disciplineName + " (must be between 1 and 3");
-                int disciplineCost;
-                do {
-                    disciplineCost = scanner.nextInt();
-                } while (disciplineCost < 1 || disciplineCost > 3);
-                specialAbility = new Disciplines(disciplineName, disciplineAttack, disciplineDefence, disciplineCost);
-                newCharacter = new Vampire(charName, charPower, hp, specialAbility, age);
-                super.dataBase.setCharDB(newCharacter);
-                break;
-            case 2:
-                System.out.println("Write its height");
-                int height = scanner.nextInt();
-                System.out.println("Write its weight");
-                int weight = scanner.nextInt();
-                System.out.println("Write the name of its gift");
-                String giftName = scanner.nextLine();
-                System.out.println("Write the attack value of " + giftName + " (must be between 1 and 3");
-                int giftAttack;
-                do {
-                    giftAttack = scanner.nextInt();
-                } while (giftAttack < 1 || giftAttack > 3);
-                System.out.println("Write the defence value of " + giftName + " (must be between 1 and 3");
-                int giftDefence;
-                do {
-                    giftDefence = scanner.nextInt();
-                } while (giftDefence < 1 || giftDefence > 3);
-                System.out.println("Write minimum fury value to use " + giftName);
-                int giftFury = scanner.nextInt();
-                specialAbility = new Gift(giftName, giftAttack, giftDefence, giftFury);
-                newCharacter = new Lycanthrope(charName, charPower, hp, specialAbility, height, weight);
-                super.dataBase.setCharDB(newCharacter);
-                break;
-            case 3:
-                System.out.println("Write the willpower value with which " + charName + " will start each fight (must be between 0 and 3");
-                int willpower;
-                do {
-                    willpower = scanner.nextInt();
-                } while (willpower < 0 || willpower > 3);
-                System.out.println("Write the name of its talent");
-                String talentName = scanner.nextLine();
-                System.out.println("Write the attack value of " + talentName + " (must be between 1 and 3");
-                int talentAttack;
-                do {
-                    talentAttack = scanner.nextInt();
-                } while (talentAttack < 1 || talentAttack > 3);
-                System.out.println("Write the defence value of " + talentName + " (must be between 1 and 3");
-                int talentDefence;
-                do {
-                    talentDefence = scanner.nextInt();
-                } while (talentDefence < 1 || talentDefence > 3);
-                specialAbility = new Talent(talentName, talentAttack, talentDefence);
-                newCharacter = new Hunter(charName, charPower, hp, specialAbility, willpower);
-                super.dataBase.setCharDB(newCharacter);
-        }
-    }
-
-    public void editCharacter() {
-        CharacterEditor characterEditor = new CharacterEditor();
-        characterEditor.showMenuEditor();
-    }
-
     public void validateChallenge() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Challenge> challengesArray = super.dataBase.getNonValidatedChallenges();
@@ -163,6 +62,7 @@ public class Operator extends User {
     }
 
     public void blockUser() {
+        Scanner scanner = new Scanner(System.in);
         ArrayList<Player> playersArray = super.dataBase.getAllPlayers();
         System.out.println("Select a player to block its account");
         int i = 1;
@@ -170,12 +70,14 @@ public class Operator extends User {
             System.out.println(i + ". " + player);
             i++;
         }
+        i = scanner.nextInt();
         if (i > 1 && i < playersArray.size()) {
             super.dataBase.blockUser(playersArray.get(i - 1));
         }
     }
 
     public void unlockUser() {
+        Scanner scanner = new Scanner(System.in);
         ArrayList<Player> blockedPlayersArray = super.dataBase.getAllBlock();
         System.out.println("Select a player to unlock its account");
         int i = 1;
@@ -183,7 +85,8 @@ public class Operator extends User {
             System.out.println(i + ". " + blockedPlayer);
             i++;
         }
-        if (i > 1 && i < blockedPlayersArray.size()) {
+        i = scanner.nextInt();
+        if (i > 1 && i <= blockedPlayersArray.size()) {
             super.dataBase.unlockUser(blockedPlayersArray.get(i - 1));
         }
     }
@@ -194,37 +97,34 @@ public class Operator extends User {
         Scanner scanner = new Scanner(System.in);
         int exit = 0;
         while (exit != 1) {
-            System.out.println("1. Create a character");
-            System.out.println("2. Edit a character");
-            System.out.println("3. Validate challenges");
-            System.out.println("4. Block players");
-            System.out.println("5. Unblock players");
-            System.out.println("6. Exit");
-            System.out.println("7. Delete user");
+            System.out.println("1. Create or edit properties of the game");
+            System.out.println("2. Validate challenges");
+            System.out.println("3. Block players");
+            System.out.println("4. Unblock players");
+            System.out.println("5. Exit");
+            System.out.println("6. Delete user");
 
             int input = scanner.nextInt();
 
             switch (input) {
                 case 1:
-                    this.createCharacter();
+                    PropertiesEditor propertiesEditor = new PropertiesEditor(super.dataBase);
+                    propertiesEditor.showMenu();
                     break;
                 case 2:
-                    this.editCharacter();
-                    break;
-                case 3:
                     this.validateChallenge();
                     break;
-                case 4:
+                case 3:
                     this.blockUser();
                     break;
-                case 5:
+                case 4:
                     this.unlockUser();
                     break;
-                case 6:
+                case 5:
                     System.out.println("Press 1 to confirm exit");
                     exit = scanner.nextInt();
                     break;
-                case 7:
+                case 6:
                     System.out.println("Press 1 to exit and delete your user");
                     exit = scanner.nextInt();
                     if (exit == 1) {

@@ -6,15 +6,18 @@ import java.util.*;
 
 public class DataBaseManager implements Serializable{
 
-    private ArrayList<Character> charDB = new ArrayList<>();
-    private ArrayList<Fight> fightDB = new ArrayList<>();
-    private ArrayList<Weaknesses> weaknessesDB = new ArrayList<>();
+    private ArrayList<Character> charDB;
+    private ArrayList<Fight> fightDB;
+    private ArrayList<Weaknesses> weaknessesDB;
 
-    private ArrayList<Strengths> strengthsDB = new ArrayList<>();
-    private ArrayList<Player> playerDB = new ArrayList<>();
-    private ArrayList<Operator> operatorDB = new ArrayList<>();
-    private ArrayList<Challenge> challengeDB = new ArrayList<>();
-    private ArrayList<Player> userBlockDB = new ArrayList<>();
+    private ArrayList<Strengths> strengthsDB;
+    private ArrayList<Player> playerDB;
+    private ArrayList<Operator> operatorDB;
+    private ArrayList<Challenge> challengeDB;
+    private ArrayList<Player> userBlockDB;
+    private ArrayList<Weapons> weaponsDB;
+    private ArrayList<Armor> armorsDB;
+    private ArrayList<Minions> minionsDB;
 
 
     public DataBaseManager() {
@@ -34,6 +37,9 @@ public class DataBaseManager implements Serializable{
             this.charDB = savedData.charDB;
             this.fightDB = savedData.fightDB;
             this.challengeDB = savedData.challengeDB;
+            this.weaponsDB = savedData.weaponsDB;
+            this.armorsDB = savedData.armorsDB;
+            this.minionsDB = savedData.minionsDB;
 
         } catch (FileNotFoundException e) {
 
@@ -45,6 +51,9 @@ public class DataBaseManager implements Serializable{
             this.charDB = new ArrayList<>();
             this.fightDB = new ArrayList<>();
             this.challengeDB = new ArrayList<>();
+            this.weaponsDB = new ArrayList<>();
+            this.armorsDB = new ArrayList<>();
+            this.minionsDB = new ArrayList<>();
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -63,6 +72,10 @@ public class DataBaseManager implements Serializable{
         charDB.add(character);
         saveFiles();
 
+    }
+
+    public void removeCharacter(Character character) {
+        this.charDB.remove(character);
     }
 
     public void setFightDB(Fight fight) {
@@ -298,8 +311,16 @@ public class DataBaseManager implements Serializable{
         weaknessesDB.add(weaknesses);
     }
 
-    public void setStrengthsDB(Strengths strengths){
-        strengthsDB.add(strengths);
+    public void removeWeakness(Weaknesses weakness) {
+        this.weaknessesDB.remove(weakness);
+    }
+
+    public void setStrengths(Strengths strengths){
+        this.strengthsDB.add(strengths);
+    }
+
+    public void removeStrength(Strengths strength) {
+        this.strengthsDB.remove(strength);
     }
 
     public void deleteChallenge(Challenge challengeToDelete){
@@ -338,6 +359,42 @@ public class DataBaseManager implements Serializable{
             }
         }
         return selection;
+    }
+
+    public ArrayList<Weapons> getWeaponsDB() {
+        return this.weaponsDB;
+    }
+
+    public void setWeapon(Weapons weapon) {
+        this.weaponsDB.add(weapon);
+    }
+
+    public void removeWeapon(Weapons weapon) {
+        this.weaponsDB.remove(weapon);
+    }
+
+    public ArrayList<Armor> getArmorsDB() {
+        return this.armorsDB;
+    }
+
+    public void setArmor(Armor armor) {
+        this.armorsDB.add(armor);
+    }
+
+    public void removeArmor(Armor armor) {
+        this.armorsDB.remove(armor);
+    }
+
+    public ArrayList<Minions> getMinions() {
+        return this.minionsDB;
+    }
+
+    public void setMinion(Minions minion) {
+        this.minionsDB.add(minion);
+    }
+
+    public void removeMinion(Minions minion) {
+        this.minionsDB.remove(minion);
     }
 }
 

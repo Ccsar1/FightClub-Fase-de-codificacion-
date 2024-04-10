@@ -92,4 +92,8 @@ public abstract class Character {
         }
         return totalSum;
     }
+
+    public void setHP(int newHP) {
+        this.hp = newHP;
+    }
 }

@@ -1,7 +1,10 @@
 
 public abstract class Modifiers {
 
-    public Modifiers() {
+    public Modifiers(String name, int value, TModifiers type) {
+        this.name = name;
+        this.value = value;
+        this.modifiersType = type;
     }
 
     private String name;
@@ -23,8 +26,8 @@ public abstract class Modifiers {
     public String getName(){
         return this.name;
     }
-    public void setModifiersType(TModifiers type) {
-        this.modifiersType = type;
-    }
 
+    public void setName(String newName) {
+        this.name = newName;
+    }
 }

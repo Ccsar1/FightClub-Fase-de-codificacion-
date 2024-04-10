@@ -10,7 +10,8 @@ public class Strengths extends Modifiers {
     /**
      * Default constructor
      */
-    public Strengths() {
+    public Strengths(String name, int value) {
+        super(name, value, TModifiers.Strengths);
     }
 
 }
