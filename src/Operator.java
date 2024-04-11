@@ -46,7 +46,7 @@ public class Operator extends User {
                 int strengthIndex = scanner.nextInt();
                 scanner.nextLine();
                 if (strengthIndex >= 0 && strengthIndex <= strengthsArray.size()) {
-                    challenge.setStrength(strengthsArray.get(strengthIndex));
+                    challenge.setStrength(strengthsArray.get(strengthIndex - 1));
                 }
                 System.out.println("Choose one of the following weaknesses to be present in the fight");
                 j = 1;
@@ -58,7 +58,7 @@ public class Operator extends User {
                 int weaknessIndex = scanner.nextInt();
                 scanner.nextLine();
                 if (weaknessIndex >= 0 && weaknessIndex <= weaknessesArray.size()) {
-                    challenge.setWeakness(weaknessesArray.get(weaknessIndex));
+                    challenge.setWeakness(weaknessesArray.get(weaknessIndex - 1));
                 }
             }
         } while (input != 3);
