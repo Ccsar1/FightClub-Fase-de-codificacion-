@@ -71,7 +71,6 @@ public class DataBaseManager implements Serializable{
     public void setCharDB(Character character) {
         charDB.add(character);
         saveFiles();
-
     }
 
     public void removeCharacter(Character character) {
@@ -81,31 +80,15 @@ public class DataBaseManager implements Serializable{
     public void setFightDB(Fight fight) {
         fightDB.add(fight);
         saveFiles();
-
     }
 
     public void setPlayerDB(Player player) {
         playerDB.add(player);
-    }
-
-    public void getPlayersDB() {
-        for (Player player : playerDB) {
-            System.out.println("Name " + player.getName() + ",nick: " + player.getNick());
-        }
+        saveFiles();
     }
 
     public void setOperatorDB(Operator operator) {
         operatorDB.add(operator);
-    }
-
-    public void getOperatorsDB() {
-        for (Operator operator : operatorDB) {
-            System.out.println("Name " + operator.getName() + ",nick: " + operator.getNick());
-        }
-    }
-
-    public void setChallengeDB(Challenge challenge) {
-        challengeDB.add(challenge);
         saveFiles();
     }
 
@@ -155,6 +138,7 @@ public class DataBaseManager implements Serializable{
             Player player = iterator.next();
             if (player.equals(user)) {
                 iterator.remove();
+                saveFiles();
                 return;
             }
         }
@@ -163,22 +147,13 @@ public class DataBaseManager implements Serializable{
             Operator operator = iteratorOperator.next();
             if (operator.equals(user)) {
                 iteratorOperator.remove();
+                saveFiles();
                 return;
             }
         }
 
     }
 
-
-
-    public Character getCharacterByName(String name){
-        for (Character character : charDB) {
-           if (character.getName().equals(name)){
-               return character;
-           }
-        }
-        return null;
-    }
     public void getRanking() {
         ArrayList<CharacterUser>allcharacters= new ArrayList<>();
 
@@ -205,15 +180,6 @@ public class DataBaseManager implements Serializable{
     public boolean isUserBlock (String nick){
         for (Player player: playerDB){
             if (player.getNick().equals(nick)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkExistsCharacter(String nick){
-        for (Character character:charDB){
-            if (character.getName().equals(nick)){
                 return true;
             }
         }
@@ -259,20 +225,9 @@ public class DataBaseManager implements Serializable{
                 return;
             }
         }
-    challengeDB.add(challenge);
+        challengeDB.add(challenge);
+        saveFiles();
     }
-
-    public Challenge getChallengeByChallenger(Player player){
-        for (Challenge challenge: challengeDB){
-            if ((challenge.getChallenger().equals(player)) && (challenge.getValid())){
-                challengeDB.remove(challenge);
-                saveFiles();
-                return challenge;
-            }
-        }
-        return null;
-    }
-
 
     public Challenge getChallengeByChallenged(Player player){
         for (Challenge challenge: challengeDB){
@@ -294,7 +249,6 @@ public class DataBaseManager implements Serializable{
             }
         }
         return nonValidatedChallenges;
-
     }
 
     public ArrayList<Weaknesses> getAllWeaknesses(){
@@ -307,18 +261,22 @@ public class DataBaseManager implements Serializable{
 
     public void setWeaknessesDB(Weaknesses weaknesses){
         weaknessesDB.add(weaknesses);
+        saveFiles();
     }
 
     public void removeWeakness(Weaknesses weakness) {
         this.weaknessesDB.remove(weakness);
+        saveFiles();
     }
 
     public void setStrengths(Strengths strengths){
         this.strengthsDB.add(strengths);
+        saveFiles();
     }
 
     public void removeStrength(Strengths strength) {
         this.strengthsDB.remove(strength);
+        saveFiles();
     }
 
     public void deleteChallenge(Challenge challengeToDelete){
@@ -327,6 +285,7 @@ public class DataBaseManager implements Serializable{
                 challengeDB.remove(challenge);
             }
         }
+        saveFiles();
     }
 
     public ArrayList<Fight> getNotNotifiedFights(Player player){
@@ -342,11 +301,13 @@ public class DataBaseManager implements Serializable{
     public void blockUser(Player player) {
         this.playerDB.remove(player);
         this.userBlockDB.add(player);
+        saveFiles();
     }
 
     public void unlockUser(Player player) {
         this.userBlockDB.remove(player);
         this.playerDB.add(player);
+        saveFiles();
     }
 
     public ArrayList<Fight> getFights(Player player) {
@@ -365,10 +326,12 @@ public class DataBaseManager implements Serializable{
 
     public void setWeapon(Weapons weapon) {
         this.weaponsDB.add(weapon);
+        saveFiles();
     }
 
     public void removeWeapon(Weapons weapon) {
         this.weaponsDB.remove(weapon);
+        saveFiles();
     }
 
     public ArrayList<Armor> getArmorsDB() {
@@ -377,10 +340,12 @@ public class DataBaseManager implements Serializable{
 
     public void setArmor(Armor armor) {
         this.armorsDB.add(armor);
+        saveFiles();
     }
 
     public void removeArmor(Armor armor) {
         this.armorsDB.remove(armor);
+        saveFiles();
     }
 
     public ArrayList<Minions> getMinions() {
@@ -389,10 +354,12 @@ public class DataBaseManager implements Serializable{
 
     public void setMinion(Minions minion) {
         this.minionsDB.add(minion);
+        saveFiles();
     }
 
     public void removeMinion(Minions minion) {
         this.minionsDB.remove(minion);
+        saveFiles();
     }
 }
 

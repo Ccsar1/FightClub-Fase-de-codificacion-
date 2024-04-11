@@ -8,6 +8,7 @@ public class CharacterUser implements Serializable {
         this.gold = 150;
         this.character = character;
         this.resetValues();
+        this.weaponActive = new ArrayList<>();
     }
 
     private Character character;
