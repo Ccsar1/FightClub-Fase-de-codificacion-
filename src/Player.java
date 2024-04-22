@@ -39,7 +39,6 @@ public class Player extends User {
     private ArrayList<CharacterUser> characters;
 
     private void registerCharacter() {
-        Scanner scanner = new Scanner(System.in);
         ArrayList<Character> characterArray = super.dataBase.getCharacters();
         int input = 1;
         int i;
@@ -50,8 +49,7 @@ public class Player extends User {
                 System.out.println(i + ". " + character.getName());
                 i++;
             }
-            input = scanner.nextInt();
-            scanner.nextLine();
+            input = NumReader.readNumber();
             if (input < 1 || input > characterArray.size()) {
                 System.out.println(input + " is not a valid option");
             }
@@ -63,15 +61,13 @@ public class Player extends User {
     }
 
     private void deleteCharacter() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Select the character you want to delete");
         int i = 1;
         for (CharacterUser character : this.characters) {
             System.out.println(i + ". " + character.getName());
             i++;
         }
-        int input = scanner.nextInt();
-        scanner.nextLine();
+        int input = NumReader.readNumber();
         if (input >= 1 && input <= this.characters.size()) {
             this.characters.remove(input - 1);
         } else {
@@ -80,7 +76,6 @@ public class Player extends User {
     }
 
     private void chooseEquipment() {
-        Scanner scanner = new Scanner(System.in);
         int input = 1;
         int i;
         do {
@@ -90,8 +85,7 @@ public class Player extends User {
                 System.out.println(i + ". " + character.getName());
                 i++;
             }
-            input = scanner.nextInt();
-            scanner.nextLine();
+            input = NumReader.readNumber();
             if (input < 1 || input > this.characters.size()) {
                 System.out.println(input + " is not a valid option");
             }
@@ -107,8 +101,7 @@ public class Player extends User {
                 System.out.println(i + ". " + weapon.getName());
                 i++;
             }
-            input = scanner.nextInt();
-            scanner.nextLine();
+            input = NumReader.readNumber();
             if (input < 1 || input > posibleWeapons.size()) {
                 System.out.println(input + " is not a valid option");
             }
@@ -123,8 +116,7 @@ public class Player extends User {
                     System.out.println(i + ". " + weapon.getName());
                     i++;
                 }
-                input = scanner.nextInt();
-                scanner.nextLine();
+                input = NumReader.readNumber();
                 if (input < 1 || input > posibleWeapons.size()) {
                     System.out.println(input + " is not a valid option");
                 }
@@ -141,8 +133,7 @@ public class Player extends User {
                 System.out.println(i + ". " + armor.getName());
                 i++;
             }
-            input = scanner.nextInt();
-            scanner.nextLine();
+            input = NumReader.readNumber();
             if (input < 1 || input > posibleArmors.size()) {
                 System.out.println(input + " is not a valid option");
             }
@@ -168,8 +159,7 @@ public class Player extends User {
                             System.out.println(i + ". " + character.getName());
                             i++;
                         }
-                        input = scanner.nextInt();
-                        scanner.nextLine();
+                        input = NumReader.readNumber();
                         if (input < 1 || input > this.characters.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -178,8 +168,7 @@ public class Player extends User {
                     int goldBet = 0;
                     do {
                         System.out.println("How much gold do you want to bet? You have " + challengerCharacter.getGold());
-                        goldBet = scanner.nextInt();
-                        scanner.nextLine();
+                        goldBet = NumReader.readNumber();
                         if (goldBet < 0 || goldBet > challengerCharacter.getGold()) {
                             System.out.println(goldBet + " is not a valid amount");
                         }
@@ -210,7 +199,6 @@ public class Player extends User {
     }
 
     private void challengeMenu() {
-        Scanner scanner = new Scanner(System.in);
         Challenge challenge;
         int input;
         do {
@@ -219,8 +207,7 @@ public class Player extends User {
                 System.out.println(challenge.getChallenger().getNick() + " has challenged you to a fight!");
                 do {
                     System.out.println("Do you accept? 1. Yes 2. No");
-                    input = scanner.nextInt();
-                    scanner.nextLine();
+                    input = NumReader.readNumber();
                 } while (input != 1 && input != 2);
                 if (input == 1) {
                     int i;
@@ -231,8 +218,7 @@ public class Player extends User {
                             System.out.println(i + ". " + character.getName());
                             i++;
                         }
-                        input = scanner.nextInt();
-                        scanner.nextLine();
+                        input = NumReader.readNumber();
                         if (input < 1 || input > this.characters.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -248,8 +234,7 @@ public class Player extends User {
                             System.out.println(i + ". " + weapon.getName());
                             i++;
                         }
-                        input = scanner.nextInt();
-                        scanner.nextLine();
+                        input = NumReader.readNumber();
                         if (input < 1 || input > posibleWeapons.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -264,8 +249,7 @@ public class Player extends User {
                                 System.out.println(i + ". " + weapon.getName());
                                 i++;
                             }
-                            input = scanner.nextInt();
-                            scanner.nextLine();
+                            input = NumReader.readNumber();
                             if (input < 1 || input > posibleWeapons.size()) {
                                 System.out.println(input + " is not a valid option");
                             }
@@ -282,8 +266,7 @@ public class Player extends User {
                             System.out.println(i + ". " + armor.getName());
                             i++;
                         }
-                        input = scanner.nextInt();
-                        scanner.nextLine();
+                        input = NumReader.readNumber();
                         if (input < 1 || input > posibleArmors.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -304,8 +287,7 @@ public class Player extends User {
                             System.out.println(i + ". " + character.getName());
                             i++;
                         }
-                        input = scanner.nextInt();
-                        scanner.nextLine();
+                        input = NumReader.readNumber();
                         if (input < 1 || input > this.characters.size()) {
                             System.out.println(input + " is not a valid option");
                         }
@@ -342,7 +324,6 @@ public class Player extends User {
         System.out.println("Welcome " + super.getName());
         this.notifyFightResult();
         this.challengeMenu();
-        Scanner scanner = new Scanner(System.in);
         int exit = 0;
         while (exit != 1) {
             System.out.println("1. Add a character");
@@ -354,8 +335,7 @@ public class Player extends User {
             System.out.println("7. Exit");
             System.out.println("8. Delete user");
 
-            int input = scanner.nextInt();
-            scanner.nextLine();
+            int input = NumReader.readNumber();
 
             switch (input) {
                 case 1:
@@ -378,13 +358,11 @@ public class Player extends User {
                     break;
                 case 7:
                     System.out.println("Press 1 to confirm exit");
-                    exit = scanner.nextInt();
-                    scanner.nextLine();
+                    exit = NumReader.readNumber();
                     break;
                 case 8:
                     System.out.println("Press 1 to exit and delete your user");
-                    exit = scanner.nextInt();
-                    scanner.nextLine();
+                    exit = NumReader.readNumber();
                     if (exit == 1) {
                         return true;
                     }

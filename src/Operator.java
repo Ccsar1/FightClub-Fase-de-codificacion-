@@ -8,7 +8,6 @@ public class Operator extends User {
     }
 
     public void validateChallenge() {
-        Scanner scanner = new Scanner(System.in);
         ArrayList<Challenge> challengesArray = super.dataBase.getNonValidatedChallenges();
         int i = 0;
         int input;
@@ -20,8 +19,7 @@ public class Operator extends User {
             System.out.println("2. Delete challenge");
             System.out.println("3. Go back");
             do {
-                input = scanner.nextInt();
-                scanner.nextLine();
+                input = NumReader.readNumber();
             } while (input < 1 || input > 3);
             switch (input) {
                 case 1:
@@ -43,8 +41,7 @@ public class Operator extends User {
                     System.out.println(j + ". " + strength.getName());
                     j++;
                 }
-                int strengthIndex = scanner.nextInt();
-                scanner.nextLine();
+                int strengthIndex = NumReader.readNumber();;
                 if (strengthIndex >= 0 && strengthIndex <= strengthsArray.size()) {
                     challenge.setStrength(strengthsArray.get(strengthIndex - 1));
                 }
@@ -55,8 +52,7 @@ public class Operator extends User {
                     System.out.println(j + ". " + weakness.getName());
                     j++;
                 }
-                int weaknessIndex = scanner.nextInt();
-                scanner.nextLine();
+                int weaknessIndex = NumReader.readNumber();
                 if (weaknessIndex >= 0 && weaknessIndex <= weaknessesArray.size()) {
                     challenge.setWeakness(weaknessesArray.get(weaknessIndex - 1));
                 }
@@ -65,7 +61,6 @@ public class Operator extends User {
     }
 
     public void blockUser() {
-        Scanner scanner = new Scanner(System.in);
         ArrayList<Player> playersArray = super.dataBase.getAllPlayers();
         System.out.println("Select a player to block its account");
         int i = 1;
@@ -73,15 +68,13 @@ public class Operator extends User {
             System.out.println(i + ". " + player);
             i++;
         }
-        i = scanner.nextInt();
-        scanner.nextLine();
+        i = NumReader.readNumber();
         if (i > 1 && i < playersArray.size()) {
             super.dataBase.blockUser(playersArray.get(i - 1));
         }
     }
 
     public void unlockUser() {
-        Scanner scanner = new Scanner(System.in);
         ArrayList<Player> blockedPlayersArray = super.dataBase.getAllBlock();
         System.out.println("Select a player to unlock its account");
         int i = 1;
@@ -89,8 +82,7 @@ public class Operator extends User {
             System.out.println(i + ". " + blockedPlayer);
             i++;
         }
-        i = scanner.nextInt();
-        scanner.nextLine();
+        i = NumReader.readNumber();
         if (i > 1 && i <= blockedPlayersArray.size()) {
             super.dataBase.unlockUser(blockedPlayersArray.get(i - 1));
         }
@@ -99,7 +91,6 @@ public class Operator extends User {
     @Override
     public boolean showMenu() {
         System.out.println("Welcome " + super.getName());
-        Scanner scanner = new Scanner(System.in);
         int exit = 0;
         while (exit != 1) {
             System.out.println("1. Create or edit properties of the game");
@@ -109,8 +100,7 @@ public class Operator extends User {
             System.out.println("5. Exit");
             System.out.println("6. Delete user");
 
-            int input = scanner.nextInt();
-            scanner.nextLine();
+            int input = NumReader.readNumber();
 
             switch (input) {
                 case 1:
@@ -128,13 +118,11 @@ public class Operator extends User {
                     break;
                 case 5:
                     System.out.println("Press 1 to confirm exit");
-                    exit = scanner.nextInt();
-                    scanner.nextLine();
+                    exit = NumReader.readNumber();
                     break;
                 case 6:
                     System.out.println("Press 1 to exit and delete your user");
-                    exit = scanner.nextInt();
-                    scanner.nextLine();
+                    exit = NumReader.readNumber();
                     if (exit == 1) {
                         return true;
                     }

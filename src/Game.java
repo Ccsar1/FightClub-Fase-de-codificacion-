@@ -65,9 +65,7 @@ public class Game {
             System.out.println("2. Register");
             System.out.println("3. Exit");
 
-            Scanner scanner = new Scanner(System.in);
-            int input = scanner.nextInt();
-            scanner.nextLine();
+            int input = NumReader.readNumber();
 
             switch (input) {
                 case 1:
@@ -78,8 +76,7 @@ public class Game {
                     break;
                 case 3:
                     System.out.println("Please enter 1 to confirm exit");
-                    exit = scanner.nextInt();
-                    scanner.nextLine();
+                    exit = NumReader.readNumber();
                     if (exit == 1) {
                         System.out.println("Byebye!");
                     }
@@ -108,8 +105,7 @@ public class Game {
             System.out.println("Choose a role:");
             System.out.println("1. Player");
             System.out.println("2. Operator");
-            input = scanner.nextInt();
-            scanner.nextLine();
+            input = NumReader.readNumber();
             switch (input) {
                 case 1:
                     userType = TUser.Player;
