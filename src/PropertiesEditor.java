@@ -61,6 +61,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Weapons weapon : weaponsArray) {
                 System.out.println(i + ". View " + weapon.getName());
+                i++;
             }
             System.out.println(weaponsArray.size() + 1 + ". Go back");
             int input;
@@ -171,6 +172,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Armor armor : armorsArray) {
                 System.out.println(i + ". View " + armor.getName());
+                i++;
             }
             System.out.println(armorsArray.size() + 1 + ". Go back");
             int input;
@@ -265,6 +267,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Strengths strength : strengthsArray) {
                 System.out.println(i + ". View " + strength.getName());
+                i++;
             }
             System.out.println(strengthsArray.size() + 1 + ". Go back");
             int input;
@@ -343,6 +346,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Weaknesses weakness : weaknessesArray) {
                 System.out.println(i + ". View " + weakness.getName());
+                i++;
             }
             System.out.println(weaknessesArray.size() + 1 + ". Go back");
             int input;
@@ -421,6 +425,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Minions minion : minionsArray) {
                 System.out.println(i + ". View " + minion.getName());
+                i++;
             }
             System.out.println(minionsArray.size() + 1 + ". Go back");
             int input;
@@ -655,6 +660,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Character character : charactersArray) {
                 System.out.println(i + ". View " + character.getName());
+                i++;
             }
             System.out.println(charactersArray.size() + 1 + ". Go back");
             int input;
@@ -1194,6 +1200,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Minions minion : minionsArray) {
                 System.out.println(i + ". Remove " + minion.getName() + " from this list");
+                i++;
             }
             System.out.println(minionsArray.size() + 1 + ". Go back");
             int input;
@@ -1210,6 +1217,7 @@ public class PropertiesEditor {
                     int j = 1;
                     for (Minions minion : minionsDB) {
                         System.out.println(j + ". Add " + minion.getName());
+                        j++;
                     }
                     System.out.println(minionsDB.size() + 1 + ". Go back");
                     int input2;
@@ -1240,6 +1248,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Weapons weapon : weaponsArray) {
                 System.out.println(i + ". Remove " + weapon.getName() + " from this list");
+                i++;
             }
             System.out.println(weaponsArray.size() + 1 + ". Go back");
             int input;
@@ -1256,6 +1265,7 @@ public class PropertiesEditor {
                     int j = 1;
                     for (Weapons weapon : weaponsDB) {
                         System.out.println(j + ". Add " + weapon.getName());
+                        j++;
                     }
                     System.out.println(weaponsDB.size() + 1 + ". Go back");
                     int input2;
@@ -1282,6 +1292,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Armor armor : armorsArray) {
                 System.out.println(i + ". Remove " + armor.getName() + " from this list");
+                i++;
             }
             System.out.println(armorsArray.size() + 1 + ". Go back");
             int input;
@@ -1298,6 +1309,7 @@ public class PropertiesEditor {
                     int j = 1;
                     for (Armor armor : armorsDB) {
                         System.out.println(j + ". Add " + armor.getName());
+                        j++;
                     }
                     System.out.println(armorsDB.size() + 1 + ". Go back");
                     int input2;
