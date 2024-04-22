@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class CharacterUser implements Serializable {
 
-    public CharacterUser(Character character) {
+    public CharacterUser(Character character,String nick) {
         this.gold = 150;
         this.character = character;
         this.resetValues();
         this.weaponActive = new ArrayList<>();
+        this.userNick=nick;
     }
 
     private Character character;
@@ -29,6 +30,7 @@ public class CharacterUser implements Serializable {
 
     private int willpower;
 
+    private String userNick;
 
     public void doDamage() {
         if (this.minionHP > 0) {
@@ -46,6 +48,9 @@ public class CharacterUser implements Serializable {
         }
     }
 
+    public String getUserNick(){
+        return this.userNick;
+    }
     public int getHP() {
         return this.hp;
     }

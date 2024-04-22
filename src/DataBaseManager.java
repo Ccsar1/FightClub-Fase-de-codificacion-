@@ -75,6 +75,7 @@ public class DataBaseManager implements Serializable{
 
     public void removeCharacter(Character character) {
         this.charDB.remove(character);
+        saveFiles();
     }
 
     public void setFightDB(Fight fight) {
@@ -151,6 +152,7 @@ public class DataBaseManager implements Serializable{
                 return;
             }
         }
+        saveFiles();
 
     }
 
@@ -170,7 +172,7 @@ public class DataBaseManager implements Serializable{
         System.out.println("--------");
         int posicion=1;
         for (CharacterUser character:allcharacters){
-            System.out.println(posicion+": Name: "+character.getName()+",Gold: "+character.getGold());
+            System.out.println(posicion+": User: "+character.getUserNick()+", Name: "+character.getName()+",Gold: "+character.getGold());
             posicion++;
         }
 
@@ -178,7 +180,7 @@ public class DataBaseManager implements Serializable{
     }
 
     public boolean isUserBlock (String nick){
-        for (Player player: playerDB){
+        for (Player player: userBlockDB){
             if (player.getNick().equals(nick)){
                 return true;
             }
@@ -298,16 +300,18 @@ public class DataBaseManager implements Serializable{
             return nonNotified;
     }
 
-    public void blockUser(Player player) {
-        this.playerDB.remove(player);
-        this.userBlockDB.add(player);
+    public void blockUser(Player playerBlock) {
+        playerDB.remove(playerBlock);
+        userBlockDB.add(playerBlock);
         saveFiles();
+
     }
 
-    public void unlockUser(Player player) {
-        this.userBlockDB.remove(player);
-        this.playerDB.add(player);
+    public void unlockUser(Player playerBlock) {
+        playerDB.add(playerBlock);
+        userBlockDB.remove(playerBlock);
         saveFiles();
+
     }
 
     public ArrayList<Fight> getFights(Player player) {
@@ -361,6 +365,7 @@ public class DataBaseManager implements Serializable{
         this.minionsDB.remove(minion);
         saveFiles();
     }
+
 }
 
 

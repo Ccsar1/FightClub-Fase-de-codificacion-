@@ -58,7 +58,7 @@ public class Player extends User {
 
         } while (input < 1 || input > characterArray.size());
         Character selectedCharacter = characterArray.get(input - 1);
-        CharacterUser newCharacter = new CharacterUser(selectedCharacter);
+        CharacterUser newCharacter = new CharacterUser(selectedCharacter,super.getNick());
         this.characters.add(newCharacter);
     }
 

@@ -67,15 +67,20 @@ public class Operator extends User {
     public void blockUser() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Player> playersArray = super.dataBase.getAllPlayers();
+        if (playersArray.isEmpty()){
+            System.out.println("No players to block");
+            return;
+        }
         System.out.println("Select a player to block its account");
         int i = 1;
+
         for (Player player : playersArray) {
-            System.out.println(i + ". " + player);
+            System.out.println(i + ". " + player.getName());
             i++;
         }
         i = scanner.nextInt();
         scanner.nextLine();
-        if (i > 1 && i < playersArray.size()) {
+        if (i >= 1 && i <= playersArray.size()) {
             super.dataBase.blockUser(playersArray.get(i - 1));
         }
     }
@@ -86,12 +91,12 @@ public class Operator extends User {
         System.out.println("Select a player to unlock its account");
         int i = 1;
         for (Player blockedPlayer : blockedPlayersArray) {
-            System.out.println(i + ". " + blockedPlayer);
+            System.out.println(i + ". " + blockedPlayer.getName());
             i++;
         }
         i = scanner.nextInt();
         scanner.nextLine();
-        if (i > 1 && i <= blockedPlayersArray.size()) {
+        if (i >= 1 && i <= blockedPlayersArray.size()) {
             super.dataBase.unlockUser(blockedPlayersArray.get(i - 1));
         }
     }
