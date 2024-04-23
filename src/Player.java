@@ -351,8 +351,9 @@ public class Player extends User {
             System.out.println("4. Challenge another player");
             System.out.println("5. Check previous fights");
             System.out.println("6. Check global ranking");
-            System.out.println("7. Exit");
-            System.out.println("8. Delete user");
+            System.out.println("7. Check my gold");
+            System.out.println("8. Exit");
+            System.out.println("9. Delete user");
 
             int input = scanner.nextInt();
             scanner.nextLine();
@@ -377,11 +378,21 @@ public class Player extends User {
                     this.showRanking();
                     break;
                 case 7:
+                    if (characters.isEmpty()){
+                        System.out.println("You have to add characters to check their gold");
+                    } else {
+                        for (int i = 0; i < characters.size(); i++) {
+                            CharacterUser character = characters.get(i);
+                            System.out.println(character.getName() + "'s gold is " + character.getGold());
+                        }
+                    }
+                    break;
+                case 8:
                     System.out.println("Press 1 to confirm exit");
                     exit = scanner.nextInt();
                     scanner.nextLine();
                     break;
-                case 8:
+                case 9:
                     System.out.println("Press 1 to exit and delete your user");
                     exit = scanner.nextInt();
                     scanner.nextLine();
