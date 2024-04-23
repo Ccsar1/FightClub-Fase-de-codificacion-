@@ -190,7 +190,7 @@ public class Player extends User {
                     System.out.println("The player " + challengedNick + " does not have any character");
                 }
             } else if (challengedPlayer==this){
-                System.out.print("You can't challenge yourself");
+                System.out.println("You can't challenge yourself");
             }
             else {
                 System.out.println("The player " + challengedNick + " does not exist");
