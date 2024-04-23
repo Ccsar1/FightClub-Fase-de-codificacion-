@@ -154,8 +154,16 @@ public class Player extends User {
     private void createChallenge() {
         if (!this.characters.isEmpty()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Write the nickname of the player you want to fight: ");
-            String challengedNick = scanner.nextLine();
+            while (challengedNick="" || challengedNick=super.getNick()){
+                System.out.print("Write the nickname of the player you want to fight: ");
+                challengedNick = scanner.nextLine();
+                if (challengedNick =super.getNick()){
+                    System.out.print("You can't challenge yourself");
+                }
+                else if (challengedNick =""){
+                    System.out.print("Write a correct Nickname");
+                }
+            }
             Player challengedPlayer = super.dataBase.getPlayerByNick(challengedNick);
             if (challengedPlayer != null) {
                 if (!challengedPlayer.getCharacters().isEmpty()) {
