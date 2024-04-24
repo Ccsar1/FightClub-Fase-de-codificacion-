@@ -66,13 +66,13 @@ public class CharacterUser implements Serializable {
 
         SpecialAbility ability = character.getSpecialAbilities();
         switch (this.character.getType()){
-            case TCharacter.Hunter:
+            case Hunter:
                 Hunter hunter = (Hunter) this.character;
                 Talent talent = (Talent) ability;
                 attack = character.getPower() + this.willpower + equipmentAttack + talent.getAttackValue();
                 break;
 
-            case TCharacter.Lycanthrope:
+            case Lycanthrope:
                 Gift gift = (Gift) ability;
                 int giftAttack = 0;
                 if (this.fury >= gift.getFury()) {
@@ -81,7 +81,7 @@ public class CharacterUser implements Serializable {
                 attack = character.getPower() + giftAttack + equipmentAttack + this.fury;
                 break;
 
-            case TCharacter.Vampire:
+            case Vampire:
                 Disciplines discipline = (Disciplines) ability;
                 int disciplineAttack = 0;
                 if (this.blood > discipline.getCost()){
@@ -107,12 +107,12 @@ public class CharacterUser implements Serializable {
 
         SpecialAbility ability = this.character.getSpecialAbilities();
         switch (this.character.getType()){
-            case TCharacter.Hunter:
+            case Hunter:
                 Talent talent = (Talent) ability;
                 defense = this.character.getPower() + talent.getDefenseValue() + equipmentDefense + this.willpower;
                 break;
 
-            case TCharacter.Vampire:
+            case Vampire:
                 Disciplines discipline = (Disciplines) ability;
                 int disciplineDefense = 0;
                 if (this.blood > discipline.getCost()){
@@ -126,7 +126,7 @@ public class CharacterUser implements Serializable {
                 defense = this.character.getPower() + disciplineDefense + equipmentDefense + extra;
                 break;
 
-            case TCharacter.Lycanthrope:
+            case Lycanthrope:
                 Gift gift = (Gift) ability;
                 int abilityDefense = 0;
                 if (this.fury >= gift.getFury()) {

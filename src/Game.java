@@ -36,12 +36,12 @@ public class Game {
     private void register(String name, String nick, String pass, TUser type) {
         if (!this.dataBase.checkExistsNick(nick)) {
             switch (type) {
-                case TUser.Player:
+                case Player:
                     this.user = new Player(name, nick, pass, dataBase);
                     Player player = (Player) this.user;
                     this.dataBase.setPlayerDB(player);
                     break;
-                case TUser.Operator:
+                case Operator:
                     this.user = new Operator(name, nick, pass, dataBase);
                     Operator operator = (Operator) this.user;
                     this.dataBase.setOperatorDB(operator);
