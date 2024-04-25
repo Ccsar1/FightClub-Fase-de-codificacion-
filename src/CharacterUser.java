@@ -40,6 +40,9 @@ public class CharacterUser implements Serializable {
         }
     }
 
+    public boolean surviveMinionHP(){
+        return this.minionHP>0;
+    }
     public void removeGold(int minus) {
         this.gold -= minus;
         if (this.gold < 0) {

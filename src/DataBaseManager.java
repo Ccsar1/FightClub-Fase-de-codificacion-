@@ -282,12 +282,11 @@ public class DataBaseManager implements Serializable{
     }
 
     public void deleteChallenge(Challenge challengeToDelete){
-        for (Challenge challenge: challengeDB){
-            if (challenge.equals(challengeToDelete)){
-                challengeDB.remove(challenge);
-            }
-        }
+        challengeDB.remove(challengeToDelete);
         saveFiles();
+    }
+    public ArrayList<Challenge> getAllChallengeDB(){
+        return this.challengeDB;
     }
 
     public ArrayList<Fight> getNotNotifiedFights(Player player){
