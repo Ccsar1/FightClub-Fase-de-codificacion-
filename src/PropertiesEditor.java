@@ -722,7 +722,8 @@ public class PropertiesEditor {
                             demon.setPact(pact);
                             break;
                         case 4:
-                            this.editMinionsList(demon.getMinions(), false);
+                            this.editMinionsList(demon.getMinions(), false, demon.getName());
+                            break;
                         case 5:
                             this.dataBase.removeMinion(demon);
                             break;
@@ -978,7 +979,7 @@ public class PropertiesEditor {
                             this.editSpecialAbility(hunter.getSpecialAbilities());
                             break;
                         case 6:
-                            this.editMinionsList(hunter.getMinions(), false);
+                            this.editMinionsList(hunter.getMinions(), false,"");
                             break;
                         case 7:
                             this.editWeaponsList(hunter.getWeapons());
@@ -1070,7 +1071,7 @@ public class PropertiesEditor {
                             this.editSpecialAbility(lycanthrope.getSpecialAbilities());
                             break;
                         case 7:
-                            this.editMinionsList(lycanthrope.getMinions(), false);
+                            this.editMinionsList(lycanthrope.getMinions(), false,"");
                             break;
                         case 8:
                             this.editWeaponsList(lycanthrope.getWeapons());
@@ -1149,7 +1150,7 @@ public class PropertiesEditor {
                             this.editSpecialAbility(vampire.getSpecialAbilities());
                             break;
                         case 6:
-                            this.editMinionsList(vampire.getMinions(), true);
+                            this.editMinionsList(vampire.getMinions(), true,"");
                             break;
                         case 7:
                             this.editWeaponsList(vampire.getWeapons());
@@ -1358,7 +1359,7 @@ public class PropertiesEditor {
         }
     }
 
-    private void editMinionsList(ArrayList<Minions> minionsArray, boolean vampireMaster) {
+    private void editMinionsList(ArrayList<Minions> minionsArray, boolean vampireMaster, String nameMinion) {
         boolean goBack = false;
         while (!goBack) {
             System.out.println("0. Add an existing minion");
@@ -1395,7 +1396,11 @@ public class PropertiesEditor {
                     } else {
                         if (vampireMaster && (minionsDB.get(input2 - 1).getType() == TMinion.Humans)) {
                             System.out.println("You are trying to assign a human minion to a vampire master, that cant end well!!");
-                        } else {
+                        }else if ((minionsDB.get(input2-1).getName().equals(nameMinion))&&(!nameMinion.equals(""))){
+                            System.out.println("You can`t add yourself");
+                            return;
+
+                        }else{
                             for (Minions minion: minionsArray){
                                 if(minion.equals(minionsDB.get(input2-1))){
                                     System.out.println("Minion already add");

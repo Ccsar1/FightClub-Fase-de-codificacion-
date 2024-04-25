@@ -292,7 +292,7 @@ public class DataBaseManager implements Serializable{
     public ArrayList<Fight> getNotNotifiedFights(Player player){
             ArrayList<Fight>nonNotified=new ArrayList<>();
             for(Fight fights:fightDB){
-                if ((!fights.getNotified())&&(fights.getChallenger().getName().equals(player.getName()))){
+                if ((!fights.getNotified())&&(fights.getChallenger().equals(player))){
                     nonNotified.add(fights);
                 }
             }
@@ -306,6 +306,16 @@ public class DataBaseManager implements Serializable{
 
     }
 
+    public boolean userInChallenge (Player player){
+
+        for (Challenge challenge: challengeDB){
+            if(((challenge.getChallenged()==player)|| (challenge.getChallenger()==player))){
+                return true;
+            }
+        }
+        return false;
+
+    }
     public void unlockUser(Player playerBlock) {
         playerDB.add(playerBlock);
         userBlockDB.remove(playerBlock);

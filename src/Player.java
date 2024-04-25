@@ -159,60 +159,64 @@ public class Player extends User {
 
     private void createChallenge() {
         if (!this.characters.isEmpty()) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Write the nickname of the player you want to fight: ");
-            String challengedNick = scanner.nextLine();
-            Player challengedPlayer = super.dataBase.getPlayerByNick(challengedNick);
+            if (!super.dataBase.userInChallenge(this)) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Write the nickname of the player you want to fight: ");
+                String challengedNick = scanner.nextLine();
+                Player challengedPlayer = super.dataBase.getPlayerByNick(challengedNick);
 
-            if (challengedPlayer != null) {
-                if (!challengedPlayer.getCharacters().isEmpty()) {
-                    int input = 1;
-                    int i;
-                    do {
-                        System.out.println("Choose your character");
-                        i = 1;
-                        for (CharacterUser character : this.characters) {
-                            System.out.println(i + ". " + character.getName());
-                            i++;
-                        }
-                        input = scanner.nextInt();
-                        scanner.nextLine();
-                        if (input < 1 || input > this.characters.size()) {
-                            System.out.println(input + " is not a valid option");
-                        }
-                    } while (input < 1 || input > this.characters.size());
-                    CharacterUser challengerCharacter = this.characters.get(input - 1);
-                    ArrayList<CharacterUser> charactersChallengedNeed= challengedPlayer.getCharacters();
-                    int goldBet = 0;
-                    boolean foundPossibility=false;
-                    do {
-                        System.out.println("How much gold do you want to bet? You have " + challengerCharacter.getGold());
-                        goldBet = scanner.nextInt();
-                        scanner.nextLine();
-                        if (goldBet < 0 || goldBet > challengerCharacter.getGold()) {
-                            System.out.println(goldBet + " is not a valid amount");
-                        }else{
-                            for (CharacterUser characterTest: charactersChallengedNeed){
-                                if (characterTest.getGold()>goldBet){
-                                    foundPossibility=true;
+                if (challengedPlayer != null) {
+                    if (!challengedPlayer.getCharacters().isEmpty()) {
+                        int input = 1;
+                        int i;
+                        do {
+                            System.out.println("Choose your character");
+                            i = 1;
+                            for (CharacterUser character : this.characters) {
+                                System.out.println(i + ". " + character.getName());
+                                i++;
+                            }
+                            input = scanner.nextInt();
+                            scanner.nextLine();
+                            if (input < 1 || input > this.characters.size()) {
+                                System.out.println(input + " is not a valid option");
+                            }
+                        } while (input < 1 || input > this.characters.size());
+                        CharacterUser challengerCharacter = this.characters.get(input - 1);
+                        ArrayList<CharacterUser> charactersChallengedNeed = challengedPlayer.getCharacters();
+                        int goldBet = 0;
+                        boolean foundPossibility = false;
+                        do {
+                            System.out.println("How much gold do you want to bet? You have " + challengerCharacter.getGold());
+                            goldBet = scanner.nextInt();
+                            scanner.nextLine();
+                            if (goldBet < 0 || goldBet > challengerCharacter.getGold()) {
+                                System.out.println(goldBet + " is not a valid amount");
+                            } else {
+                                for (CharacterUser characterTest : charactersChallengedNeed) {
+                                    if (characterTest.getGold() > goldBet) {
+                                        foundPossibility = true;
+                                    }
+                                }
+                                if (!foundPossibility) {
+                                    System.out.println("None of the characters of " + challengedNick + " has the amount of the gold bet");
+                                    return;
                                 }
                             }
-                            if (!foundPossibility){
-                                System.out.println("None of the characters of "+challengedNick+" has the amount of the gold bet");
-                                return;
-                            }
-                        }
-                    } while (goldBet < 0 || goldBet > challengerCharacter.getGold());
-                    Challenge newChallenge = new Challenge(this, challengedPlayer, challengerCharacter, goldBet);
-                    super.dataBase.setChallenge(newChallenge);
+                        } while (goldBet < 0 || goldBet > challengerCharacter.getGold());
+                        Challenge newChallenge = new Challenge(this, challengedPlayer, challengerCharacter, goldBet);
+                        super.dataBase.setChallenge(newChallenge);
+                    } else {
+                        System.out.println("The player " + challengedNick + " does not have any character");
+                    }
                 } else {
-                    System.out.println("The player " + challengedNick + " does not have any character");
+                    System.out.println("The player " + challengedNick + " does not exist");
+                    return;
                 }
-            } else {
-                System.out.println("The player " + challengedNick + " does not exist");
-                return;
+            }else{
+                System.out.println("You have already send a challenge");
             }
-        } else {
+        }else {
             System.out.println("You should create at least one character before you enter a fight");
 
         }
