@@ -61,12 +61,16 @@ public class PropertiesEditor {
             int i = 1;
             for (Weapons weapon : weaponsArray) {
                 System.out.println(i + ". View " + weapon.getName());
+                i++;
             }
             System.out.println(weaponsArray.size() + 1 + ". Go back");
             int input;
             do {
                 input = scanner.nextInt();
                 scanner.nextLine();
+                if (input < 0 || input > weaponsArray.size() + 1){
+                    System.out.println("Not a correct value");
+                }
             } while (input < 0 || input > weaponsArray.size() + 1);
             if (input == weaponsArray.size() + 1) {
                 goBack = true;
@@ -86,18 +90,27 @@ public class PropertiesEditor {
         do {
             attack = scanner.nextInt();
             scanner.nextLine();
+            if (attack < 1 || attack > 3){
+                System.out.println("Not a correct value");
+            }
         } while (attack < 1 || attack > 3);
         System.out.println("Write the defense value (can be between 0 and 3)");
         int defense;
         do {
             defense = scanner.nextInt();
             scanner.nextLine();
+            if (defense < 0 || defense > 3){
+                System.out.println("Not a correct value");
+            }
         } while (defense < 0 || defense > 3);
         System.out.println("Is it held with 1 or 2 hands?");
         int type;
         do {
             type = scanner.nextInt();
             scanner.nextLine();
+            if (type < 1 || type > 2){
+                System.out.println("Not a correct value");
+            }
         } while (type < 1 || type > 2);
         Weapons weapon = new Weapons(name, attack, defense, type);
         this.dataBase.setWeapon(weapon);
@@ -131,6 +144,9 @@ public class PropertiesEditor {
                     do {
                         attack = scanner.nextInt();
                         scanner.nextLine();
+                        if (attack < 1 || attack > 3){
+                            System.out.println("Not a correct value");
+                        }
                     } while (attack < 1 || attack > 3);
                     weapon.setAttackModifier(attack);
                     break;
@@ -140,6 +156,9 @@ public class PropertiesEditor {
                     do {
                         defense = scanner.nextInt();
                         scanner.nextLine();
+                        if (defense < 0 || defense > 3){
+                            System.out.println("Not a correct value");
+                        }
                     } while (defense < 0 || defense > 3);
                     weapon.setDefenseModifier(defense);
                     break;
@@ -149,6 +168,9 @@ public class PropertiesEditor {
                     do {
                         type = scanner.nextInt();
                         scanner.nextLine();
+                        if (type < 1 || type > 2){
+                            System.out.println("Not a correct value");
+                        }
                     } while (type < 1 || type > 2);
                     weapon.setWeaponType(type);
                     break;
@@ -171,12 +193,16 @@ public class PropertiesEditor {
             int i = 1;
             for (Armor armor : armorsArray) {
                 System.out.println(i + ". View " + armor.getName());
+                i++;
             }
             System.out.println(armorsArray.size() + 1 + ". Go back");
             int input;
             do {
                 input = scanner.nextInt();
                 scanner.nextLine();
+                if (input < 0 || input > armorsArray.size() + 1){
+                    System.out.println("Not a correct value");
+                }
             } while (input < 0 || input > armorsArray.size() + 1);
             if (input == armorsArray.size() + 1) {
                 goBack = true;
@@ -196,12 +222,18 @@ public class PropertiesEditor {
         do {
             defense = scanner.nextInt();
             scanner.nextLine();
+            if (defense < 1 || defense > 3){
+                System.out.println("Not a correct value");
+            }
         } while (defense < 1 || defense > 3);
         System.out.println("Write the attack value (can be between 0 and 3)");
         int attack;
         do {
             attack = scanner.nextInt();
             scanner.nextLine();
+            if (attack < 0 || attack > 3){
+                System.out.println("Not a correct value");
+            }
         } while (attack < 0 || attack > 3);
         Armor armor = new Armor(name, attack, defense);
         this.dataBase.setArmor(armor);
@@ -234,6 +266,9 @@ public class PropertiesEditor {
                     do {
                         attack = scanner.nextInt();
                         scanner.nextLine();
+                        if (attack < 0 || attack > 3){
+                            System.out.println("Not a correct value");
+                        }
                     } while (attack < 0 || attack > 3);
                     armor.setAttackModifier(attack);
                     break;
@@ -243,6 +278,9 @@ public class PropertiesEditor {
                     do {
                         defense = scanner.nextInt();
                         scanner.nextLine();
+                        if (defense < 1 || defense > 3){
+                            System.out.println("Not a correct value");
+                        }
                     } while (defense < 1 || defense > 3);
                     armor.setDefenseModifier(defense);
                     break;
@@ -265,12 +303,16 @@ public class PropertiesEditor {
             int i = 1;
             for (Strengths strength : strengthsArray) {
                 System.out.println(i + ". View " + strength.getName());
+                i++;
             }
             System.out.println(strengthsArray.size() + 1 + ". Go back");
             int input;
             do {
                 input = scanner.nextInt();
                 scanner.nextLine();
+                if (input < 0 || input > strengthsArray.size()+1){
+                    System.out.println("Not a correct value");
+                }
             } while (input < 0 || input > strengthsArray.size() + 1);
             if (input == strengthsArray.size() + 1) {
                 goBack = true;
@@ -290,6 +332,9 @@ public class PropertiesEditor {
         do {
             value = scanner.nextInt();
             scanner.nextLine();
+            if (value < 1 || value > 5){
+                System.out.println("Not a correct value");
+            }
         } while (value < 1 || value > 5);
         Strengths strength = new Strengths(name, value);
         this.dataBase.setStrengths(strength);
@@ -321,7 +366,10 @@ public class PropertiesEditor {
                     do {
                         value = scanner.nextInt();
                         scanner.nextLine();
-                    } while (value < 0 || value > 3);
+                        if (value < 1 || value > 5){
+                            System.out.println("Not a correct value");
+                        }
+                    } while (value < 1 || value > 5);
                     strength.setValue(value);
                     break;
                 case 3:
@@ -343,12 +391,16 @@ public class PropertiesEditor {
             int i = 1;
             for (Weaknesses weakness : weaknessesArray) {
                 System.out.println(i + ". View " + weakness.getName());
+                i++;
             }
             System.out.println(weaknessesArray.size() + 1 + ". Go back");
             int input;
             do {
                 input = scanner.nextInt();
                 scanner.nextLine();
+                if (input < 0 || input > weaknessesArray.size() + 1){
+                    System.out.println("Not a correct value");
+                }
             } while (input < 0 || input > weaknessesArray.size() + 1);
             if (input == weaknessesArray.size() + 1) {
                 goBack = true;
@@ -368,6 +420,9 @@ public class PropertiesEditor {
         do {
             value = scanner.nextInt();
             scanner.nextLine();
+            if (value < 1 || value > 5){
+                System.out.println("Not a correct value");
+            }
         } while (value < 1 || value > 5);
         Weaknesses weakness = new Weaknesses(name, value);
         this.dataBase.setWeaknessesDB(weakness);
@@ -399,7 +454,10 @@ public class PropertiesEditor {
                     do {
                         value = scanner.nextInt();
                         scanner.nextLine();
-                    } while (value < 0 || value > 3);
+                        if (value < 1 || value > 5){
+                            System.out.println("Not a correct value");
+                        }
+                    } while (value < 1 || value > 5);
                     weakness.setValue(value);
                     break;
                 case 3:
@@ -421,12 +479,16 @@ public class PropertiesEditor {
             int i = 1;
             for (Minions minion : minionsArray) {
                 System.out.println(i + ". View " + minion.getName());
+                i++;
             }
             System.out.println(minionsArray.size() + 1 + ". Go back");
             int input;
             do {
                 input = scanner.nextInt();
                 scanner.nextLine();
+                if (input < 0 || input > minionsArray.size() + 1){
+                    System.out.println("Not a correct value");
+                }
             } while (input < 0 || input > minionsArray.size() + 1);
             if (input == minionsArray.size() + 1) {
                 goBack = true;
@@ -446,6 +508,9 @@ public class PropertiesEditor {
         do {
             hp = scanner.nextInt();
             scanner.nextLine();
+            if (hp < 1 || hp > 3){
+                System.out.println("Not a correct value");
+            }
         } while (hp < 1 || hp > 3);
         System.out.println("What type of minion is it?");
         System.out.println("1. Human");
@@ -455,6 +520,9 @@ public class PropertiesEditor {
         do {
             typeIndex = scanner.nextInt();
             scanner.nextLine();
+            if (typeIndex < 1 || typeIndex > 3){
+                System.out.println("Not a correct value");
+            }
         } while (typeIndex < 1 || typeIndex > 3);
         Minions minion;
         switch (typeIndex) {
@@ -467,6 +535,9 @@ public class PropertiesEditor {
                 do {
                     loyalty = scanner.nextInt();
                     scanner.nextLine();
+                    if (loyalty < 1 || loyalty > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (loyalty < 1 || loyalty > 3);
                 minion = new Humans(name, hp, loyalty);
                 this.dataBase.setMinion(minion);
@@ -477,6 +548,9 @@ public class PropertiesEditor {
                 do {
                     dependence = scanner.nextInt();
                     scanner.nextLine();
+                    if (dependence < 1 || dependence > 5){
+                        System.out.println("Not a correct value");
+                    }
                 } while (dependence < 1 || dependence > 5);
                 minion = new Ghouls(name, hp, dependence);
                 this.dataBase.setMinion(minion);
@@ -520,6 +594,9 @@ public class PropertiesEditor {
                             do {
                                 hp = scanner.nextInt();
                                 scanner.nextLine();
+                                if (hp < 1 || hp > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (hp < 1 || hp > 3);
                             human.setHP(hp);
                             break;
@@ -532,6 +609,9 @@ public class PropertiesEditor {
                             do {
                                 loyalty = scanner.nextInt();
                                 scanner.nextLine();
+                                if (loyalty < 1 || loyalty > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (loyalty < 1 || loyalty > 3);
                             human.setLoyalty(loyalty);
                             break;
@@ -573,6 +653,9 @@ public class PropertiesEditor {
                             do {
                                 hp = scanner.nextInt();
                                 scanner.nextLine();
+                                if (hp < 1 || hp > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (hp < 1 || hp > 3);
                             ghoul.setHP(hp);
                             break;
@@ -582,6 +665,9 @@ public class PropertiesEditor {
                             do {
                                 dependence = scanner.nextInt();
                                 scanner.nextLine();
+                                if (dependence < 1 || dependence > 5){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (dependence < 1 || dependence > 5);
                             ghoul.setDependence(dependence);
                             break;
@@ -624,6 +710,9 @@ public class PropertiesEditor {
                             do {
                                 hp = scanner.nextInt();
                                 scanner.nextLine();
+                                if (hp < 1 || hp > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (hp < 1 || hp > 3);
                             demon.setHP(hp);
                             break;
@@ -655,12 +744,16 @@ public class PropertiesEditor {
             int i = 1;
             for (Character character : charactersArray) {
                 System.out.println(i + ". View " + character.getName());
+                i++;
             }
             System.out.println(charactersArray.size() + 1 + ". Go back");
             int input;
             do {
                 input = scanner.nextInt();
                 scanner.nextLine();
+                if (input < 0 || input > charactersArray.size() + 1){
+                    System.out.println("Not a correct value");
+                }
             } while (input < 0 || input > charactersArray.size() + 1);
             if (input == charactersArray.size() + 1) {
                 goBack = true;
@@ -680,12 +773,18 @@ public class PropertiesEditor {
         do {
             hp = scanner.nextInt();
             scanner.nextLine();
+            if (hp < 1 || hp > 5){
+                System.out.println("Not a correct value");
+            }
         } while (hp < 1 || hp > 5);
         System.out.println("Write a power value for " + charName + " (must be between 1 and 5");
         int charPower;
         do {
             charPower = scanner.nextInt();
             scanner.nextLine();
+            if (charPower < 1 || charPower > 5){
+                System.out.println("Not a correct value");
+            }
         } while (charPower < 1 || charPower > 5);
         System.out.println("What type of character is it?");
         System.out.println("1. Vampire");
@@ -695,6 +794,9 @@ public class PropertiesEditor {
         do {
             typeIndex = scanner.nextInt();
             scanner.nextLine();
+            if (typeIndex < 1 || typeIndex > 3){
+                System.out.println("Not a correct value");
+            }
         } while (typeIndex < 1 || typeIndex > 3);
         Character newCharacter;
         SpecialAbility specialAbility;
@@ -710,18 +812,27 @@ public class PropertiesEditor {
                 do {
                     disciplineAttack = scanner.nextInt();
                     scanner.nextLine();
+                    if (disciplineAttack < 1 || disciplineAttack > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (disciplineAttack < 1 || disciplineAttack > 3);
                 System.out.println("Write the defence value of " + disciplineName + " (must be between 1 and 3");
                 int disciplineDefence;
                 do {
                     disciplineDefence = scanner.nextInt();
                     scanner.nextLine();
+                    if (disciplineDefence < 1 || disciplineDefence > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (disciplineDefence < 1 || disciplineDefence > 3);
                 System.out.println("Write the blood cost of " + disciplineName + " (must be between 1 and 3");
                 int disciplineCost;
                 do {
                     disciplineCost = scanner.nextInt();
                     scanner.nextLine();
+                    if (disciplineCost < 1 || disciplineCost > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (disciplineCost < 1 || disciplineCost > 3);
                 specialAbility = new Disciplines(disciplineName, disciplineAttack, disciplineDefence, disciplineCost);
                 newCharacter = new Vampire(charName, charPower, hp, specialAbility, age);
@@ -741,12 +852,18 @@ public class PropertiesEditor {
                 do {
                     giftAttack = scanner.nextInt();
                     scanner.nextLine();
+                    if (giftAttack < 1 || giftAttack > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (giftAttack < 1 || giftAttack > 3);
                 System.out.println("Write the defence value of " + giftName + " (must be between 1 and 3");
                 int giftDefence;
                 do {
                     giftDefence = scanner.nextInt();
                     scanner.nextLine();
+                    if (giftDefence < 1 || giftDefence > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (giftDefence < 1 || giftDefence > 3);
                 System.out.println("Write minimum fury value to use " + giftName);
                 int giftFury = scanner.nextInt();
@@ -761,6 +878,9 @@ public class PropertiesEditor {
                 do {
                     willpower = scanner.nextInt();
                     scanner.nextLine();
+                    if (willpower < 0 || willpower > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (willpower < 0 || willpower > 3);
                 System.out.println("Write the name of its talent");
                 String talentName = scanner.nextLine();
@@ -769,12 +889,18 @@ public class PropertiesEditor {
                 do {
                     talentAttack = scanner.nextInt();
                     scanner.nextLine();
+                    if (talentAttack < 1 || talentAttack > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (talentAttack < 1 || talentAttack > 3);
                 System.out.println("Write the defence value of " + talentName + " (must be between 1 and 3");
                 int talentDefence;
                 do {
                     talentDefence = scanner.nextInt();
                     scanner.nextLine();
+                    if (talentDefence < 1 || talentDefence > 3){
+                        System.out.println("Not a correct value");
+                    }
                 } while (talentDefence < 1 || talentDefence > 3);
                 specialAbility = new Talent(talentName, talentAttack, talentDefence);
                 newCharacter = new Hunter(charName, charPower, hp, specialAbility, willpower);
@@ -818,6 +944,9 @@ public class PropertiesEditor {
                             do {
                                 hp = scanner.nextInt();
                                 scanner.nextLine();
+                                if (hp < 1 || hp > 5){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (hp < 1 || hp > 5);
                             hunter.setHP(hp);
                             break;
@@ -827,6 +956,9 @@ public class PropertiesEditor {
                             do {
                                 power = scanner.nextInt();
                                 scanner.nextLine();
+                                if (power < 1 || power > 5){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (power < 1 || power > 5);
                             hunter.setPower(power);
                             break;
@@ -836,6 +968,9 @@ public class PropertiesEditor {
                             do {
                                 willpower = scanner.nextInt();
                                 scanner.nextLine();
+                                if (willpower < 1 || willpower > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (willpower < 0 || willpower > 3);
                             hunter.setWillpower(willpower);
                             break;
@@ -895,6 +1030,9 @@ public class PropertiesEditor {
                             do {
                                 hp = scanner.nextInt();
                                 scanner.nextLine();
+                                if (hp < 1 || hp > 5){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (hp < 1 || hp > 5);
                             lycanthrope.setHP(hp);
                             break;
@@ -904,6 +1042,9 @@ public class PropertiesEditor {
                             do {
                                 power = scanner.nextInt();
                                 scanner.nextLine();
+                                if (power < 1 || power > 5){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (power < 1 || power > 5);
                             lycanthrope.setPower(power);
                             break;
@@ -980,6 +1121,9 @@ public class PropertiesEditor {
                             do {
                                 hp = scanner.nextInt();
                                 scanner.nextLine();
+                                if (hp < 1 || hp > 5){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (hp < 1 || hp > 5);
                             vampire.setHP(hp);
                             break;
@@ -989,6 +1133,9 @@ public class PropertiesEditor {
                             do {
                                 power = scanner.nextInt();
                                 scanner.nextLine();
+                                if (power < 1 || power > 5){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (power < 1 || power > 5);
                             vampire.setPower(power);
                             break;
@@ -1054,6 +1201,9 @@ public class PropertiesEditor {
                             do {
                                 attack = scanner.nextInt();
                                 scanner.nextLine();
+                                if (attack < 1 || attack > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (attack < 1 || attack > 3);
                             gift.setAttackValue(attack);
                             break;
@@ -1063,6 +1213,9 @@ public class PropertiesEditor {
                             do {
                                 defense = scanner.nextInt();
                                 scanner.nextLine();
+                                if (defense < 1 || defense > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (defense < 1 || defense > 3);
                             gift.setDefenseValue(defense);
                             break;
@@ -1072,6 +1225,9 @@ public class PropertiesEditor {
                             do {
                                 fury = scanner.nextInt();
                                 scanner.nextLine();
+                                if (fury < 0 || fury > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (fury < 0 || fury > 3);
                             gift.setFury(fury);
                             break;
@@ -1110,6 +1266,9 @@ public class PropertiesEditor {
                             do {
                                 attack = scanner.nextInt();
                                 scanner.nextLine();
+                                if (attack < 1 || attack > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (attack < 1 || attack > 3);
                             disciplines.setAttackValue(attack);
                             break;
@@ -1119,6 +1278,9 @@ public class PropertiesEditor {
                             do {
                                 defense = scanner.nextInt();
                                 scanner.nextLine();
+                                if (defense < 1 || defense > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (defense < 1 || defense > 3);
                             disciplines.setDefenseValue(defense);
                             break;
@@ -1128,6 +1290,9 @@ public class PropertiesEditor {
                             do {
                                 blood = scanner.nextInt();
                                 scanner.nextLine();
+                                if (blood < 1 || blood > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (blood < 1 || blood > 3);
                             disciplines.setCost(blood);
                             break;
@@ -1165,6 +1330,9 @@ public class PropertiesEditor {
                             do {
                                 attack = scanner.nextInt();
                                 scanner.nextLine();
+                                if (attack < 1 || attack > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (attack < 1 || attack > 3);
                             talent.setAttackValue(attack);
                             break;
@@ -1174,6 +1342,9 @@ public class PropertiesEditor {
                             do {
                                 defense = scanner.nextInt();
                                 scanner.nextLine();
+                                if (defense < 1 || defense > 3){
+                                    System.out.println("Not a correct value");
+                                }
                             } while (defense < 1 || defense > 3);
                             talent.setDefenseValue(defense);
                             break;
@@ -1194,6 +1365,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Minions minion : minionsArray) {
                 System.out.println(i + ". Remove " + minion.getName() + " from this list");
+                i++;
             }
             System.out.println(minionsArray.size() + 1 + ". Go back");
             int input;
@@ -1210,6 +1382,7 @@ public class PropertiesEditor {
                     int j = 1;
                     for (Minions minion : minionsDB) {
                         System.out.println(j + ". Add " + minion.getName());
+                        j++;
                     }
                     System.out.println(minionsDB.size() + 1 + ". Go back");
                     int input2;
@@ -1223,6 +1396,12 @@ public class PropertiesEditor {
                         if (vampireMaster && (minionsDB.get(input2 - 1).getType() == TMinion.Humans)) {
                             System.out.println("You are trying to assign a human minion to a vampire master, that cant end well!!");
                         } else {
+                            for (Minions minion: minionsArray){
+                                if(minion.equals(minionsDB.get(input2-1))){
+                                    System.out.println("Minion already add");
+                                    return;
+                                }
+                            }
                             minionsArray.add(minionsDB.get(input2 - 1));
                         }
                     }
@@ -1256,6 +1435,7 @@ public class PropertiesEditor {
                     int j = 1;
                     for (Weapons weapon : weaponsDB) {
                         System.out.println(j + ". Add " + weapon.getName());
+                        j++;
                     }
                     System.out.println(weaponsDB.size() + 1 + ". Go back");
                     int input2;
@@ -1266,7 +1446,14 @@ public class PropertiesEditor {
                     if (input2 == weaponsDB.size() + 1) {
                         goBack2 = true;
                     } else {
+                        for (Weapons weaponn: weaponsArray){
+                            if(weaponn.equals(weaponsDB.get(input2-1))){
+                                System.out.println("Weapon already add");
+                                return;
+                            }
+                        }
                         weaponsArray.add(weaponsDB.get(input2 - 1));
+
                     }
                 }
             } else {
@@ -1282,6 +1469,7 @@ public class PropertiesEditor {
             int i = 1;
             for (Armor armor : armorsArray) {
                 System.out.println(i + ". Remove " + armor.getName() + " from this list");
+                i++;
             }
             System.out.println(armorsArray.size() + 1 + ". Go back");
             int input;
@@ -1298,6 +1486,7 @@ public class PropertiesEditor {
                     int j = 1;
                     for (Armor armor : armorsDB) {
                         System.out.println(j + ". Add " + armor.getName());
+                        j++;
                     }
                     System.out.println(armorsDB.size() + 1 + ". Go back");
                     int input2;
@@ -1308,6 +1497,12 @@ public class PropertiesEditor {
                     if (input2 == armorsDB.size() + 1) {
                         goBack2 = true;
                     } else {
+                        for (Armor armorr: armorsArray){
+                            if(armorr.equals(armorsDB.get(input2-1))){
+                                System.out.println("Armor already add");
+                                return;
+                            }
+                        }
                         armorsArray.add(armorsDB.get(input2 - 1));
                     }
                 }
