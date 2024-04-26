@@ -274,12 +274,12 @@ public class PropertiesEditor {
 
     private void editModifier(Modifiers modifier) {
         int input = 0;
-        while (input != 1 || input != 2) {
+        while (input != 1 && input != 2) {
             System.out.println("What do you want to do?");
             System.out.println("1. Edit the name");
             System.out.println("2. Delete " + modifier.getName());
             input = NumReader.readNumber();
-            if (input != 1 || input != 2) {
+            if (input != 1 && input != 2) {
                 System.out.println(input + " is not a valid option");
             }
         }
