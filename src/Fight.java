@@ -58,6 +58,7 @@ public class Fight implements Serializable {
     public void showResult() {
         if (!this.roundList.isEmpty()) {
             int i = 1;
+            Scanner escaner = new Scanner(System.in);
             for (Round round : this.roundList) {
                 System.out.println("Round " + i);
                 if (round.challengerAttack()) {
@@ -66,7 +67,13 @@ public class Fight implements Serializable {
                 if (round.challengedAttack()) {
                     System.out.println(challengedPlayer.getNick() + "'s character, " + characterChallenged.getName() + ", deals damage to " + challengerPlayer.getNick() + "'s character, " + characterChallenger.getName());
                 }
+                escaner.nextLine();
                 i++;
+            }
+            if (characterChallenger.getHP() == 0){
+                System.out.println(characterChallenged.getName() + "has won the fight");
+            } else if (characterChallenged.getHP() == 0){
+                System.out.println(characterChallenger.getName() + "has won the fight");
             }
 
         } else {

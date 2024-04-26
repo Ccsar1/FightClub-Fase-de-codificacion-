@@ -12,56 +12,62 @@ public class Operator extends User {
         ArrayList<Challenge> challengesArray = super.dataBase.getNonValidatedChallenges();
         int i = 0;
         int input;
-        do {
-            Challenge challenge = challengesArray.get(i);
-            System.out.println("The player " + challenge.getChallenger().getNick() + " has bet " + challenge.getGold() + " gold in a challenge against the player " + challenge.getChallenged().getNick());
-            System.out.println("Do you want to validate this challenge?");
-            System.out.println("1. Validate challenge");
-            System.out.println("2. Delete challenge");
-            System.out.println("3. Go back");
+        if (!challengesArray.isEmpty()) {
             do {
-                input = scanner.nextInt();
-                scanner.nextLine();
-            } while (input < 1 || input > 3);
-            switch (input) {
-                case 1:
-                    challenge.setValid();
-                    break;
-                case 2:
-                    super.dataBase.deleteChallenge(challenge);
-                    break;
-                case 3:
-                    break;
-                default:
-                    System.out.println(input + " is not a valid option");
-            }
-            if (input == 1) {
-                System.out.println("Choose one of the following strengths to be present in the fight");
-                int j = 1;
-                ArrayList<Strengths> strengthsArray = super.dataBase.getAllStrengths();
-                for (Strengths strength : strengthsArray) {
-                    System.out.println(j + ". " + strength.getName());
-                    j++;
+                Challenge challenge = challengesArray.get(i);
+                System.out.println("The player " + challenge.getChallenger().getNick() + " has bet " + challenge.getGold() + " gold in a challenge against the player " + challenge.getChallenged().getNick());
+                System.out.println("Do you want to validate this challenge?");
+                System.out.println("1. Validate challenge");
+                System.out.println("2. Delete challenge");
+                System.out.println("3. Go back");
+                do {
+                    input = scanner.nextInt();
+                    scanner.nextLine();
+                } while (input < 1 || input > 3);
+                switch (input) {
+                    case 1:
+                        challenge.setValid();
+                        break;
+                    case 2:
+                        super.dataBase.deleteChallenge(challenge);
+                        break;
+                    case 3:
+                        break;
+                    default:
+                        System.out.println(input + " is not a valid option");
                 }
-                int strengthIndex = scanner.nextInt();
-                scanner.nextLine();
-                if (strengthIndex >= 0 && strengthIndex <= strengthsArray.size()) {
-                    challenge.setStrength(strengthsArray.get(strengthIndex - 1));
+                if (input == 1) {
+                    System.out.println("Choose one of the following strengths to be present in the fight");
+                    int j = 1;
+                    ArrayList<Strengths> strengthsArray = super.dataBase.getAllStrengths();
+                    for (Strengths strength : strengthsArray) {
+                        System.out.println(j + ". " + strength.getName());
+                        j++;
+                    }
+                    int strengthIndex = scanner.nextInt();
+                    scanner.nextLine();
+                    if (strengthIndex >= 0 && strengthIndex <= strengthsArray.size()) {
+                        challenge.setStrength(strengthsArray.get(strengthIndex - 1));
+                    }
+                    System.out.println("Choose one of the following weaknesses to be present in the fight");
+                    j = 1;
+                    ArrayList<Weaknesses> weaknessesArray = super.dataBase.getAllWeaknesses();
+                    for (Weaknesses weakness : weaknessesArray) {
+                        System.out.println(j + ". " + weakness.getName());
+                        j++;
+                    }
+                    int weaknessIndex = scanner.nextInt();
+                    scanner.nextLine();
+                    if (weaknessIndex >= 0 && weaknessIndex <= weaknessesArray.size()) {
+                        challenge.setWeakness(weaknessesArray.get(weaknessIndex - 1));
+                    } else {
+                        System.out.println(weaknessIndex + " is not a valid option");
+                    }
                 }
-                System.out.println("Choose one of the following weaknesses to be present in the fight");
-                j = 1;
-                ArrayList<Weaknesses> weaknessesArray = super.dataBase.getAllWeaknesses();
-                for (Weaknesses weakness : weaknessesArray) {
-                    System.out.println(j + ". " + weakness.getName());
-                    j++;
-                }
-                int weaknessIndex = scanner.nextInt();
-                scanner.nextLine();
-                if (weaknessIndex >= 0 && weaknessIndex <= weaknessesArray.size()) {
-                    challenge.setWeakness(weaknessesArray.get(weaknessIndex - 1));
-                }
-            }
-        } while (input != 3);
+            } while (input != 3);
+        } else{
+            System.out.println("There are no challenges to validate");
+        }
     }
 
     public void blockUser() {
@@ -70,13 +76,15 @@ public class Operator extends User {
         System.out.println("Select a player to block its account");
         int i = 1;
         for (Player player : playersArray) {
-            System.out.println(i + ". " + player);
+            System.out.println(i + ". " + player.getName());
             i++;
         }
         i = scanner.nextInt();
         scanner.nextLine();
         if (i > 1 && i < playersArray.size()) {
-            super.dataBase.blockUser(playersArray.get(i - 1));
+            Player player = playersArray.get(i -1);
+            super.dataBase.blockUser(player);
+            System.out.println(player.getName() + " has been blocked");
         }
     }
 
@@ -86,7 +94,7 @@ public class Operator extends User {
         System.out.println("Select a player to unlock its account");
         int i = 1;
         for (Player blockedPlayer : blockedPlayersArray) {
-            System.out.println(i + ". " + blockedPlayer);
+            System.out.println(i + ". " + blockedPlayer.getName());
             i++;
         }
         i = scanner.nextInt();

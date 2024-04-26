@@ -43,23 +43,27 @@ public class Player extends User {
         ArrayList<Character> characterArray = super.dataBase.getCharacters();
         int input = 1;
         int i;
-        do {
-            System.out.println("Choose your character");
-            i = 1;
-            for (Character character : characterArray) {
-                System.out.println(i + ". " + character.getName());
-                i++;
-            }
-            input = scanner.nextInt();
-            scanner.nextLine();
-            if (input < 1 || input > characterArray.size()) {
-                System.out.println(input + " is not a valid option");
-            }
+        if (characterArray.isEmpty()) {
+            System.out.println("There are no characters available, notify the operator to create more");
+        } else {
+            do {
+                System.out.println("Choose your character");
+                i = 1;
+                for (Character character : characterArray) {
+                    System.out.println(i + ". " + character.getName());
+                    i++;
+                }
+                input = scanner.nextInt();
+                scanner.nextLine();
+                if (input < 1 || input > characterArray.size()) {
+                    System.out.println(input + " is not a valid option");
+                }
 
-        } while (input < 1 || input > characterArray.size());
-        Character selectedCharacter = characterArray.get(input - 1);
-        CharacterUser newCharacter = new CharacterUser(selectedCharacter);
-        this.characters.add(newCharacter);
+            } while (input < 1 || input > characterArray.size());
+            Character selectedCharacter = characterArray.get(input - 1);
+            CharacterUser newCharacter = new CharacterUser(selectedCharacter);
+            this.characters.add(newCharacter);
+        }
     }
 
     private void deleteCharacter() {
@@ -75,7 +79,7 @@ public class Player extends User {
         if (input >= 1 && input <= this.characters.size()) {
             this.characters.remove(input - 1);
         } else {
-            System.out.println(input + " is not a valid option, so no character was deleted");
+            System.out.println(input + " is not a valid option, no character was deleted");
         }
     }
 
@@ -83,72 +87,84 @@ public class Player extends User {
         Scanner scanner = new Scanner(System.in);
         int input = 1;
         int i;
-        do {
-            System.out.println("Select a character to change its equipment");
-            i = 1;
-            for (CharacterUser character : this.characters) {
-                System.out.println(i + ". " + character.getName());
-                i++;
-            }
-            input = scanner.nextInt();
-            scanner.nextLine();
-            if (input < 1 || input > this.characters.size()) {
-                System.out.println(input + " is not a valid option");
-            }
-        } while (input < 1 || input > this.characters.size());
-        CharacterUser selectedCharacter = this.characters.get(input - 1);
-
-        selectedCharacter.deleteWeapons();
-        ArrayList<Weapons> posibleWeapons = selectedCharacter.getWeapons();
-        do {
-            System.out.println("Select a weapon");
-            i = 1;
-            for (Weapons weapon : posibleWeapons) {
-                System.out.println(i + ". " + weapon.getName());
-                i++;
-            }
-            input = scanner.nextInt();
-            scanner.nextLine();
-            if (input < 1 || input > posibleWeapons.size()) {
-                System.out.println(input + " is not a valid option");
-            }
-        } while (input < 1 || input > posibleWeapons.size());
-        Weapons selectedWeapon = posibleWeapons.get(input - 1);
-        selectedCharacter.setWeapons(selectedWeapon);
-        if (selectedWeapon.getWeaponType() == 1) {
+        if (!characters.isEmpty()) {
             do {
-                System.out.println("Select a secondary weapon");
+                System.out.println("Select a character to change its equipment");
                 i = 1;
-                for (Weapons weapon : posibleWeapons) {
-                    System.out.println(i + ". " + weapon.getName());
+                for (CharacterUser character : this.characters) {
+                    System.out.println(i + ". " + character.getName());
                     i++;
                 }
                 input = scanner.nextInt();
                 scanner.nextLine();
-                if (input < 1 || input > posibleWeapons.size()) {
+                if (input < 1 || input > this.characters.size()) {
                     System.out.println(input + " is not a valid option");
                 }
-            } while (input < 1 || input > posibleWeapons.size());
-            Weapons secondaryWeapon = posibleWeapons.get(input - 1);
-            selectedCharacter.setWeapons(secondaryWeapon);
-        }
+            } while (input < 1 || input > this.characters.size());
+            CharacterUser selectedCharacter = this.characters.get(input - 1);
 
-        ArrayList<Armor> posibleArmors = selectedCharacter.getArmors();
-        do {
-            System.out.println("Select an armor");
-            i = 1;
-            for (Armor armor : posibleArmors) {
-                System.out.println(i + ". " + armor.getName());
-                i++;
+            selectedCharacter.deleteWeapons();
+            ArrayList<Weapons> posibleWeapons = selectedCharacter.getWeapons();
+            if(!posibleWeapons.isEmpty()){
+                do {
+                    System.out.println("Select a weapon");
+                    i = 1;
+                    for (Weapons weapon : posibleWeapons) {
+                        System.out.println(i + ". " + weapon.getName());
+                        i++;
+                    }
+                    input = scanner.nextInt();
+                    scanner.nextLine();
+                    if (input < 1 || input > posibleWeapons.size()) {
+                        System.out.println(input + " is not a valid option");
+                    }
+                } while (input < 1 || input > posibleWeapons.size());
+                Weapons selectedWeapon = posibleWeapons.get(input - 1);
+                selectedCharacter.setWeapons(selectedWeapon);
+                if (selectedWeapon.getWeaponType() == 1) {
+                    do {
+                        System.out.println("Select a secondary weapon");
+                        i = 1;
+                        for (Weapons weapon : posibleWeapons) {
+                            System.out.println(i + ". " + weapon.getName());
+                            i++;
+                        }
+                        input = scanner.nextInt();
+                        scanner.nextLine();
+                        if (input < 1 || input > posibleWeapons.size()) {
+                            System.out.println(input + " is not a valid option");
+                        }
+                    } while (input < 1 || input > posibleWeapons.size());
+                    Weapons secondaryWeapon = posibleWeapons.get(input - 1);
+                    selectedCharacter.setWeapons(secondaryWeapon);
+                }
+            } else{
+                System.out.println("There are no weapons to choose from. Assign a weapon to the character!");
             }
-            input = scanner.nextInt();
-            scanner.nextLine();
-            if (input < 1 || input > posibleArmors.size()) {
-                System.out.println(input + " is not a valid option");
-            }
-        } while (input < 1 || input > posibleArmors.size());
-        Armor selectedArmor = posibleArmors.get(input - 1);
-        selectedCharacter.setArmor(selectedArmor);
+
+            ArrayList<Armor> posibleArmors = selectedCharacter.getArmors();
+            if(!posibleArmors.isEmpty()){
+                do {
+                    System.out.println("Select an armor");
+                    i = 1;
+                    for (Armor armor : posibleArmors) {
+                        System.out.println(i + ". " + armor.getName());
+                        i++;
+                    }
+                    input = scanner.nextInt();
+                    scanner.nextLine();
+                    if (input < 1 || input > posibleArmors.size()) {
+                        System.out.println(input + " is not a valid option");
+                    }
+                } while (input < 1 || input > posibleArmors.size());
+                Armor selectedArmor = posibleArmors.get(input - 1);
+                selectedCharacter.setArmor(selectedArmor);
+                } else{
+                    System.out.println("There are no armors to choose from. Assign an armor to the character!");
+                }
+        }else{
+            System.out.println("There are no characters to choose from. Add a new characters!");
+        }
     }
 
     private void createChallenge() {
@@ -200,8 +216,12 @@ public class Player extends User {
 
     private void showHistory() {
         ArrayList<Fight> fightArray = super.dataBase.getFights(this);
-        for (Fight fight : fightArray) {
-            fight.showPayment();
+        if (fightArray.isEmpty()){
+            System.out.println("You haven't fight yet. Go and challenge another player!");
+        } else {
+            for (Fight fight : fightArray) {
+                fight.showPayment();
+            }
         }
     }
 
@@ -261,8 +281,10 @@ public class Player extends User {
                             System.out.println("Select a secondary weapon");
                             i = 1;
                             for (Weapons weapon : posibleWeapons) {
-                                System.out.println(i + ". " + weapon.getName());
-                                i++;
+                                if (weapon.getWeaponType() == 1){
+                                    System.out.println(i + ". " + weapon.getName());
+                                    i++;
+                                }
                             }
                             input = scanner.nextInt();
                             scanner.nextLine();
@@ -345,6 +367,7 @@ public class Player extends User {
         Scanner scanner = new Scanner(System.in);
         int exit = 0;
         while (exit != 1) {
+            System.out.println(" ");
             System.out.println("1. Add a character");
             System.out.println("2. Delete a character");
             System.out.println("3. Choose armor and weapons");

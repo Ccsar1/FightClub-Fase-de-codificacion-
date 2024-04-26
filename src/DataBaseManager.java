@@ -174,7 +174,6 @@ public class DataBaseManager implements Serializable{
             posicion++;
         }
 
-
     }
 
     public boolean isUserBlock (String nick){

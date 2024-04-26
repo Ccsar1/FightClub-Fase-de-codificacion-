@@ -1265,7 +1265,7 @@ public class PropertiesEditor {
                     } while (input2 < 1 || input2 > weaponsDB.size() + 1);
                     if (input2 == weaponsDB.size() + 1) {
                         goBack2 = true;
-                    } else {
+                    } else{
                         weaponsArray.add(weaponsDB.get(input2 - 1));
                     }
                 }
