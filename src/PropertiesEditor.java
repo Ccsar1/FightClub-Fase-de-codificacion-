@@ -720,7 +720,7 @@ public class PropertiesEditor {
                 Lycanthrope lycanthrope = (Lycanthrope) character;
                 input = 0;
 
-                while (input < 10 || input > 11) {
+                while (input < 11 || input > 12) {
                     System.out.println("The character " + lycanthrope.getName() + " has " + lycanthrope.getHp() + " of health, " + lycanthrope.getPower() + " of power, weights " + lycanthrope.getWeight() + " kgs and is " + lycanthrope.getHeight() + " cms tall");
 
                     System.out.println("1. Edit name");
@@ -799,7 +799,7 @@ public class PropertiesEditor {
                 Vampire vampire = (Vampire) character;
                 input = 0;
 
-                while (input < 9 || input > 10) {
+                while (input < 10 || input > 11) {
                     System.out.println("The character " + vampire.getName() + " has " + vampire.getHp() + " of health, " + vampire.getPower() + " of power and an age of " + vampire.getAge());
 
                     System.out.println("1. Edit name");
