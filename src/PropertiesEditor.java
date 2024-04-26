@@ -901,12 +901,12 @@ public class PropertiesEditor {
                 } while (input2 < 1 || input2 > modifiersDB.size() + 1);
                 if (input2 < modifiersDB.size() + 1) {
                     int modifierType = 0;
-                    while (modifierType != 1 || modifierType != 2) {
+                    while (modifierType != 1 && modifierType != 2) {
                         System.out.println("Is it a weakness or a strength");
                         System.out.println("1. Weakness");
                         System.out.println("2. Strength");
                         modifierType = NumReader.readNumber();
-                        if (modifierType != 1 || modifierType != 2) {
+                        if (modifierType != 1 && modifierType != 2) {
                             System.out.println(input + " is not a valid option");
                         }
                     }
