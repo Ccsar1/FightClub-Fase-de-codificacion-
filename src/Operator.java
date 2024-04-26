@@ -34,27 +34,16 @@ public class Operator extends User {
                     System.out.println(input + " is not a valid option");
             }
             if (input == 1) {
-                System.out.println("Choose one of the following strengths to be present in the fight");
+                System.out.println("Choose one of the following modifiers to be present in the fight");
                 int j = 1;
-                ArrayList<Strengths> strengthsArray = super.dataBase.getAllStrengths();
-                for (Strengths strength : strengthsArray) {
-                    System.out.println(j + ". " + strength.getName());
+                ArrayList<Modifiers> modifiersArray = super.dataBase.getAllModifiers();
+                for (Modifiers modifier : modifiersArray) {
+                    System.out.println(j + ". " + modifier.getName());
                     j++;
                 }
-                int strengthIndex = NumReader.readNumber();;
-                if (strengthIndex >= 0 && strengthIndex <= strengthsArray.size()) {
-                    challenge.setStrength(strengthsArray.get(strengthIndex - 1));
-                }
-                System.out.println("Choose one of the following weaknesses to be present in the fight");
-                j = 1;
-                ArrayList<Weaknesses> weaknessesArray = super.dataBase.getAllWeaknesses();
-                for (Weaknesses weakness : weaknessesArray) {
-                    System.out.println(j + ". " + weakness.getName());
-                    j++;
-                }
-                int weaknessIndex = NumReader.readNumber();
-                if (weaknessIndex >= 0 && weaknessIndex <= weaknessesArray.size()) {
-                    challenge.setWeakness(weaknessesArray.get(weaknessIndex - 1));
+                int modifierIndex = NumReader.readNumber();
+                if (modifierIndex >= 0 && modifierIndex <= modifiersArray.size()) {
+                    challenge.setModifier(modifiersArray.get(modifierIndex - 1));
                 }
             }
         } while (input != 3);

@@ -274,7 +274,7 @@ public class Player extends User {
                     Armor selectedArmor = posibleArmors.get(input - 1);
                     selectedCharacter.setArmor(selectedArmor);
 
-                    Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold());
+                    Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold(), challenge.getModifier());
                     newFight.startFight();
                     newFight.showResult();
                     super.dataBase.setFightDB(newFight);
@@ -294,7 +294,7 @@ public class Player extends User {
                     } while (input < 1 || input > this.characters.size());
                     CharacterUser selectedCharacter = this.characters.get(input - 1);
 
-                    Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold() / 10);
+                    Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold() / 10, challenge.getModifier());
                     newFight.giveUp();
                     newFight.showResult();
                     super.dataBase.setFightDB(newFight);
