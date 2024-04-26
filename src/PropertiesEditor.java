@@ -644,7 +644,7 @@ public class PropertiesEditor {
                 Hunter hunter = (Hunter) character;
                 input = 0;
 
-                while (input < 9 || input > 10) {
+                while (input < 10 || input > 11) {
                     System.out.println("The character " + hunter.getName() + " has " + hunter.getHp() + " of health, " + hunter.getPower() + " of power and " + hunter.getWillpower() + " of willpower");
 
                     System.out.println("1. Edit name");
