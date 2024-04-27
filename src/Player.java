@@ -42,22 +42,26 @@ public class Player extends User {
         ArrayList<Character> characterArray = super.dataBase.getCharacters();
         int input = 1;
         int i;
-        do {
-            System.out.println("Choose your character");
-            i = 1;
-            for (Character character : characterArray) {
-                System.out.println(i + ". " + character.getName());
-                i++;
-            }
-            input = NumReader.readNumber();
-            if (input < 1 || input > characterArray.size()) {
-                System.out.println(input + " is not a valid option");
-            }
+        if (characterArray.isEmpty()) {
+            System.out.println("There are no characters available");
+        } else {
+            do {
+                System.out.println("Choose your character");
+                i = 1;
+                for (Character character : characterArray) {
+                    System.out.println(i + ". " + character.getName());
+                    i++;
+                }
+                input = NumReader.readNumber();
+                if (input < 1 || input > characterArray.size()) {
+                    System.out.println(input + " is not a valid option");
+                }
 
-        } while (input < 1 || input > characterArray.size());
-        Character selectedCharacter = characterArray.get(input - 1);
-        CharacterUser newCharacter = new CharacterUser(selectedCharacter);
-        this.characters.add(newCharacter);
+            } while (input < 1 || input > characterArray.size());
+            Character selectedCharacter = characterArray.get(input - 1);
+            CharacterUser newCharacter = new CharacterUser(selectedCharacter);
+            this.characters.add(newCharacter);
+        }
     }
 
     private void deleteCharacter() {
