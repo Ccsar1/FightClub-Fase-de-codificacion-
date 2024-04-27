@@ -88,15 +88,15 @@ public class Fight implements Serializable {
             System.out.println("-------------");
             System.out.println("FINAL RESULT");
             if (this.result == 1) {
-                System.out.println(this.challengerPlayer + " wins the fight");
+                System.out.println(this.challengerPlayer.getNick() + " wins the fight");
             } else if (this.result == 2) {
-                System.out.println(this.challengedPlayer + " wins the fight");
+                System.out.println(this.challengedPlayer.getNick() + " wins the fight");
             } else {
                 System.out.println("The fight ends with a draw");
             }
 
         } else {
-            System.out.println("The player " + this.challengedPlayer + " has paid " + this.gold + " to avoid the fight");
+            System.out.println("The player " + this.challengedPlayer.getNick() + " has paid " + this.gold + " to avoid the fight");
         }
     }
 
