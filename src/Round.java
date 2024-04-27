@@ -14,19 +14,23 @@ public class Round implements Serializable {
     private boolean challengerAttack=false;
     private boolean challengedAttack=false;
 
+    private Modifiers modifier;
 
-    public Round(CharacterUser characterChallenger, CharacterUser characterChallenged) {
+
+    public Round(CharacterUser characterChallenger, CharacterUser characterChallenged, Modifiers modifier) {
         this.characterChallenger=characterChallenger;
         this.characterChallenged=characterChallenged;
 
+
+        this.modifier = modifier;
     }
 
     public void playRound() {
         int attackChallengerExists=0,defenceChallengerExists=0,attackChallengedExists=0,defenceChallengedExists=0;
-        int potentialAttackCharacterChallenger= characterChallenger.calculateAttack();
-        int potentialDefenceCharacterChallenger= characterChallenger.calculateDefense();
-        int potentialAttackCharacterChallenged= characterChallenger.calculateAttack();
-        int potentialDefenceCharacterChallenged= characterChallenger.calculateDefense();
+        int potentialAttackCharacterChallenger= characterChallenger.calculateAttack(this.modifier);
+        int potentialDefenceCharacterChallenger= characterChallenger.calculateDefense(this.modifier);
+        int potentialAttackCharacterChallenged= characterChallenger.calculateAttack(this.modifier);
+        int potentialDefenceCharacterChallenged= characterChallenger.calculateDefense(this.modifier);
         int [] attackChallenger= new int[potentialAttackCharacterChallenger];
         int [] defenceChallenger= new int[potentialDefenceCharacterChallenger];
         int [] attackChallenged= new int[potentialAttackCharacterChallenged];

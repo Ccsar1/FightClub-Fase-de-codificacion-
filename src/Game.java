@@ -36,12 +36,12 @@ public class Game {
     private void register(String name, String nick, String pass, TUser type) {
         if (!this.dataBase.checkExistsNick(nick)) {
             switch (type) {
-                case TUser.Player:
+                case Player:
                     this.user = new Player(name, nick, pass, dataBase);
                     Player player = (Player) this.user;
                     this.dataBase.setPlayerDB(player);
                     break;
-                case TUser.Operator:
+                case Operator:
                     this.user = new Operator(name, nick, pass, dataBase);
                     Operator operator = (Operator) this.user;
                     this.dataBase.setOperatorDB(operator);
@@ -65,9 +65,7 @@ public class Game {
             System.out.println("2. Register");
             System.out.println("3. Exit");
 
-            Scanner scanner = new Scanner(System.in);
-            int input = scanner.nextInt();
-            scanner.nextLine();
+            int input = NumReader.readNumber();
 
             switch (input) {
                 case 1:
@@ -78,8 +76,7 @@ public class Game {
                     break;
                 case 3:
                     System.out.println("Please enter 1 to confirm exit");
-                    exit = scanner.nextInt();
-                    scanner.nextLine();
+                    exit = NumReader.readNumber();
                     if (exit == 1) {
                         System.out.println("Byebye!");
                     }
@@ -108,8 +105,7 @@ public class Game {
             System.out.println("Choose a role:");
             System.out.println("1. Player");
             System.out.println("2. Operator");
-            input = scanner.nextInt();
-            scanner.nextLine();
+            input = NumReader.readNumber();
             switch (input) {
                 case 1:
                     userType = TUser.Player;
@@ -127,6 +123,10 @@ public class Game {
         String nick = scanner.nextLine();
         System.out.print("Write your password: ");
         String pass = scanner.nextLine();
+        while (8 > pass.length() || pass.length() > 12){
+            System.out.println("Your password must be between 8 and 12 characters");
+            pass = scanner.nextLine();
+        }
         this.register(name, nick, pass, userType);
     }
 }

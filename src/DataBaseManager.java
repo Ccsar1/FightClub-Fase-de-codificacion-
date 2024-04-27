@@ -8,9 +8,7 @@ public class DataBaseManager implements Serializable{
 
     private ArrayList<Character> charDB;
     private ArrayList<Fight> fightDB;
-    private ArrayList<Weaknesses> weaknessesDB;
-
-    private ArrayList<Strengths> strengthsDB;
+    private ArrayList<Modifiers> modifiersDB;
     private ArrayList<Player> playerDB;
     private ArrayList<Operator> operatorDB;
     private ArrayList<Challenge> challengeDB;
@@ -30,8 +28,7 @@ public class DataBaseManager implements Serializable{
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("FightClub.ser"))) {
             DataBaseManager savedData = (DataBaseManager) inputStream.readObject();
             this.playerDB = savedData.playerDB;
-            this.weaknessesDB = savedData.weaknessesDB;
-            this.strengthsDB = savedData.strengthsDB;
+            this.modifiersDB = savedData.modifiersDB;
             this.operatorDB = savedData.operatorDB;
             this.userBlockDB = savedData.userBlockDB;
             this.charDB = savedData.charDB;
@@ -44,8 +41,7 @@ public class DataBaseManager implements Serializable{
         } catch (FileNotFoundException e) {
 
             this.playerDB = new ArrayList<>();
-            this.weaknessesDB = new ArrayList<>();
-            this.strengthsDB = new ArrayList<>();
+            this.modifiersDB = new ArrayList<>();
             this.operatorDB = new ArrayList<>();
             this.userBlockDB = new ArrayList<>();
             this.charDB = new ArrayList<>();
@@ -251,31 +247,17 @@ public class DataBaseManager implements Serializable{
         return nonValidatedChallenges;
     }
 
-    public ArrayList<Weaknesses> getAllWeaknesses(){
-        return weaknessesDB;
+    public ArrayList<Modifiers> getAllModifiers(){
+        return this.modifiersDB;
     }
 
-    public ArrayList<Strengths> getAllStrengths(){
-        return strengthsDB;
-    }
-
-    public void setWeaknessesDB(Weaknesses weaknesses){
-        weaknessesDB.add(weaknesses);
+    public void setModifier(Modifiers modifier){
+        this.modifiersDB.add(modifier);
         saveFiles();
     }
 
-    public void removeWeakness(Weaknesses weakness) {
-        this.weaknessesDB.remove(weakness);
-        saveFiles();
-    }
-
-    public void setStrengths(Strengths strengths){
-        this.strengthsDB.add(strengths);
-        saveFiles();
-    }
-
-    public void removeStrength(Strengths strength) {
-        this.strengthsDB.remove(strength);
+    public void removeModifier(Modifiers modifier) {
+        this.modifiersDB.remove(modifier);
         saveFiles();
     }
 

@@ -9,12 +9,13 @@ public class Fight implements Serializable {
     private Player challengedPlayer;
     private CharacterUser characterChallenger;
     private CharacterUser characterChallenged;
+    private Modifiers modifier;
     private int gold;
     private int roundNum;
     private ArrayList<Round> roundList;
     private int result; //0: draw; 1: challenger wins; 2: challenged wins
     private boolean notified;
-    public Fight(Player challengerPlayer, Player challengedPlayer, CharacterUser challengerCharacter, CharacterUser challengedCharacter, int gold) {
+    public Fight(Player challengerPlayer, Player challengedPlayer, CharacterUser challengerCharacter, CharacterUser challengedCharacter, int gold, Modifiers modifier) {
         this.challengerPlayer = challengerPlayer;
         this.challengedPlayer = challengedPlayer;
         this.characterChallenger=challengerCharacter;
@@ -23,6 +24,7 @@ public class Fight implements Serializable {
         this.roundNum = 0;
         this.roundList = new ArrayList<>();
         this.notified = false;
+        this.modifier = modifier;
     }
 
     public void giveUp(){
@@ -32,7 +34,7 @@ public class Fight implements Serializable {
     }
 
     public void startFight() {
-        Round round= new Round(this.characterChallenger,this.characterChallenged);
+        Round round= new Round(this.characterChallenger,this.characterChallenged, this.modifier);
 
         do {
             round.playRound();
@@ -67,6 +69,13 @@ public class Fight implements Serializable {
                     System.out.println(challengedPlayer.getNick() + "'s character, " + characterChallenged.getName() + ", deals damage to " + challengerPlayer.getNick() + "'s character, " + characterChallenger.getName());
                 }
                 i++;
+            }
+            if (this.result == 1) {
+                System.out.println(this.challengerPlayer + " wins the fight");
+            } else if (this.result == 2) {
+                System.out.println(this.challengedPlayer + " wins the fight");
+            } else {
+                System.out.println("The fight ends with a draw");
             }
 
         } else {
