@@ -68,7 +68,7 @@ public class Operator extends User {
             i++;
         }
         i = NumReader.readNumber();
-        if (i > 1 && i < playersArray.size()) {
+        if (i >= 1 && i <= playersArray.size()) {
             super.dataBase.blockUser(playersArray.get(i - 1));
         }
     }
@@ -82,7 +82,7 @@ public class Operator extends User {
             i++;
         }
         i = NumReader.readNumber();
-        if (i > 1 && i <= blockedPlayersArray.size()) {
+        if (i >= 1 && i <= blockedPlayersArray.size()) {
             super.dataBase.unlockUser(blockedPlayersArray.get(i - 1));
         }
     }
