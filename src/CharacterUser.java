@@ -186,12 +186,23 @@ public class CharacterUser implements Serializable {
         this.weaponActive = new ArrayList<>();
     }
 
+    public void removeWeapon(Weapons weapon) {
+        this.weaponActive.remove(weapon);
+        this.weaponActive.remove(weapon);
+    }
+
     public void setArmor(Armor armor){
         this.armorActive = armor;
     }
 
     public ArrayList<Armor> getArmors(){
         return character.getArmor();
+    }
+
+    public void removeArmor (Armor armor) {
+        if (this.armorActive == armor) {
+            this.armorActive = null;
+        }
     }
 
     public void addGold(int more){

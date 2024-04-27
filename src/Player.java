@@ -310,6 +310,19 @@ public class Player extends User {
             return this.registerNumber;
         }
 
+        public void removeWeapon(Weapons weapon) {
+            for (CharacterUser characterUser : this.characters){
+                characterUser.removeWeapon(weapon);
+            }
+
+        }
+
+        public void removeArmor(Armor armor) {
+            for (CharacterUser characterUser : this.characters) {
+                characterUser.removeArmor(armor);
+            }
+        }
+
         @Override
         public boolean showMenu () {
             System.out.println("Welcome " + super.getName());
