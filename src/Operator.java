@@ -9,42 +9,48 @@ public class Operator extends User {
 
     public void validateChallenge() {
         ArrayList<Challenge> challengesArray = super.dataBase.getNonValidatedChallenges();
-        int i = 0;
         int input;
         do {
-            Challenge challenge = challengesArray.get(i);
-            System.out.println("The player " + challenge.getChallenger().getNick() + " has bet " + challenge.getGold() + " gold in a challenge against the player " + challenge.getChallenged().getNick());
-            System.out.println("Do you want to validate this challenge?");
-            System.out.println("1. Validate challenge");
-            System.out.println("2. Delete challenge");
-            System.out.println("3. Go back");
-            do {
-                input = NumReader.readNumber();
-            } while (input < 1 || input > 3);
-            switch (input) {
-                case 1:
-                    challenge.setValid();
-                    break;
-                case 2:
-                    super.dataBase.deleteChallenge(challenge);
-                    break;
-                case 3:
-                    break;
-                default:
-                    System.out.println(input + " is not a valid option");
-            }
-            if (input == 1) {
-                System.out.println("Choose one of the following modifiers to be present in the fight");
-                int j = 1;
-                ArrayList<Modifiers> modifiersArray = super.dataBase.getAllModifiers();
-                for (Modifiers modifier : modifiersArray) {
-                    System.out.println(j + ". " + modifier.getName());
-                    j++;
+            if (!challengesArray.isEmpty()) {
+                Challenge challenge = challengesArray.get(0);
+                System.out.println("The player " + challenge.getChallenger().getNick() + " has bet " + challenge.getGold() + " gold in a challenge against the player " + challenge.getChallenged().getNick());
+                System.out.println("Do you want to validate this challenge?");
+                System.out.println("1. Validate challenge");
+                System.out.println("2. Delete challenge");
+                System.out.println("3. Go back");
+                do {
+                    input = NumReader.readNumber();
+                } while (input < 1 || input > 3);
+                switch (input) {
+                    case 1:
+                        challenge.setValid();
+                        challengesArray.remove(challenge);
+                        break;
+                    case 2:
+                        super.dataBase.deleteChallenge(challenge);
+                        challengesArray.remove(challenge);
+                        break;
+                    case 3:
+                        break;
+                    default:
+                        System.out.println(input + " is not a valid option");
                 }
-                int modifierIndex = NumReader.readNumber();
-                if (modifierIndex >= 0 && modifierIndex <= modifiersArray.size()) {
-                    challenge.setModifier(modifiersArray.get(modifierIndex - 1));
+                if (input == 1) {
+                    System.out.println("Choose one of the following modifiers to be present in the fight");
+                    int j = 1;
+                    ArrayList<Modifiers> modifiersArray = super.dataBase.getAllModifiers();
+                    for (Modifiers modifier : modifiersArray) {
+                        System.out.println(j + ". " + modifier.getName());
+                        j++;
+                    }
+                    int modifierIndex = NumReader.readNumber();
+                    if (modifierIndex >= 0 && modifierIndex <= modifiersArray.size()) {
+                        challenge.setModifier(modifiersArray.get(modifierIndex - 1));
+                    }
                 }
+            } else {
+                System.out.println("There are no more challenges to validate");
+                input = 3;
             }
         } while (input != 3);
     }
