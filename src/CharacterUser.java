@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class CharacterUser implements Serializable {
 
-    public CharacterUser(Character character) {
+    public CharacterUser(Character character,String nick) {
         this.gold = 150;
         this.character = character;
         this.resetValues();
         this.weaponActive = new ArrayList<>();
+        this.userNick=nick;
     }
 
     private Character character;
@@ -29,6 +30,7 @@ public class CharacterUser implements Serializable {
 
     private int willpower;
 
+    private String userNick;
 
     public void doDamage() {
         if (this.minionHP > 0) {
@@ -38,6 +40,9 @@ public class CharacterUser implements Serializable {
         }
     }
 
+    public boolean surviveMinionHP(){
+        return this.minionHP>0;
+    }
     public void removeGold(int minus) {
         this.gold -= minus;
         if (this.gold < 0) {
@@ -46,6 +51,9 @@ public class CharacterUser implements Serializable {
         }
     }
 
+    public String getUserNick(){
+        return this.userNick;
+    }
     public int getHP() {
         return this.hp;
     }
@@ -58,11 +66,14 @@ public class CharacterUser implements Serializable {
 
         int attack = 0;
         int equipmentAttack = 0;
+        if (this.weaponActive!=null){
         for (Weapons weapon : this.weaponActive){
             equipmentAttack += weapon.getAttackModifier();
+        }}
+        if (this.armorActive!=null) {
+            equipmentAttack += this.armorActive.getAttackModifier();
         }
 
-        equipmentAttack += this.armorActive.getAttackModifier();
 
         int modifierAttack = 0;
         ArrayList<ModifierValue> modifierValuesList = this.character.getModifiers();
@@ -111,10 +122,13 @@ public class CharacterUser implements Serializable {
     public int calculateDefense(Modifiers fightModifier){
         int defense = 0;
         int equipmentDefense = 0;
+        if (this.weaponActive!=null){
         for (Weapons weapon : this.weaponActive){
             equipmentDefense += weapon.getDefenseModifier();
+        }}
+        if (this.armorActive!=null) {
+            equipmentDefense += this.armorActive.getDefenseModifier();
         }
-        equipmentDefense += this.armorActive.getDefenseModifier();
 
         int modifierDefense = 0;
         ArrayList<ModifierValue> modifierValuesList = this.character.getModifiers();
