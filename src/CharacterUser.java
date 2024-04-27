@@ -66,12 +66,13 @@ public class CharacterUser implements Serializable {
 
         int attack = 0;
         int equipmentAttack = 0;
+        if (this.weaponActive!=null){
         for (Weapons weapon : this.weaponActive){
             equipmentAttack += weapon.getAttackModifier();
+        }}
+        if (this.armorActive!=null) {
+            equipmentAttack += this.armorActive.getAttackModifier();
         }
-
-        equipmentAttack += this.armorActive.getAttackModifier();
-
         SpecialAbility ability = character.getSpecialAbilities();
         switch (this.character.getType()){
             case TCharacter.Hunter:
@@ -108,11 +109,13 @@ public class CharacterUser implements Serializable {
     public int calculateDefense(){
         int defense = 0;
         int equipmentDefense = 0;
+        if (this.weaponActive!=null){
         for (Weapons weapon : this.weaponActive){
             equipmentDefense += weapon.getDefenseModifier();
+        }}
+        if (this.armorActive!=null) {
+            equipmentDefense += this.armorActive.getDefenseModifier();
         }
-        equipmentDefense += this.armorActive.getDefenseModifier();
-
         SpecialAbility ability = this.character.getSpecialAbilities();
         switch (this.character.getType()){
             case TCharacter.Hunter:
