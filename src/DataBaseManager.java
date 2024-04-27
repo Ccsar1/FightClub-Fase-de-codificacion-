@@ -374,6 +374,15 @@ public class DataBaseManager implements Serializable{
 
     public void removeMinion(Minions minion) {
         this.minionsDB.remove(minion);
+        for (Minions minions : this.minionsDB) {
+            if (minions.getType() == TMinion.Demons) {
+                Demons demon = (Demons) minions;
+                demon.removeMinion(minion);
+            }
+        }
+        for (Character character : this.charDB) {
+            character.removeMinion(minion);
+        }
         saveFiles();
     }
 

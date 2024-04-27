@@ -24,6 +24,14 @@ public class Demons extends Minions {
     public ArrayList<Minions> getMinions() {
         return minions;
     }
+
+    public void removeMinion(Minions minion) {
+        boolean b = true;
+        do {
+            b = this.minions.remove(minion);
+        } while (b);
+    }
+
     @Override
     public int getHP() {
         int totalSum = 0;
