@@ -123,6 +123,10 @@ public class Game {
         String nick = scanner.nextLine();
         System.out.print("Write your password: ");
         String pass = scanner.nextLine();
+        while (8 > pass.length() || pass.length() > 12){
+            System.out.println("Your password must be between 8 and 12 characters");
+            pass = scanner.nextLine();
+        }
         this.register(name, nick, pass, userType);
     }
 }
