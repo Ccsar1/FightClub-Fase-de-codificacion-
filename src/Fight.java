@@ -35,6 +35,8 @@ public class Fight implements Serializable {
 
     public void startFight() {
 
+        characterChallenged.resetValues();
+        characterChallenger.resetValues();
 
         do {
             Round round= new Round(this.characterChallenger,this.characterChallenged, this.modifier);
