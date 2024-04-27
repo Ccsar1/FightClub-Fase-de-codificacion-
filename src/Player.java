@@ -65,55 +65,58 @@ public class Player extends User {
         }}
 
         private void addEquipment (CharacterUser selectedCharacter){
-           int i,input;
+            int i,input;
             selectedCharacter.deleteWeapons();
             ArrayList<Weapons> posibleWeapons = selectedCharacter.getWeapons();
-            do {
-                System.out.println("Select a weapon");
-                i = 1;
-                for (Weapons weapon : posibleWeapons) {
-                    System.out.println(i + ". " + weapon.getName());
-                    i++;
-                }
-                input = NumReader.readNumber();
-                if (input < 1 || input > posibleWeapons.size()) {
-                    System.out.println(input + " is not a valid option");
-                }
-            } while (input < 1 || input > posibleWeapons.size());
-            Weapons selectedWeapon = posibleWeapons.get(input - 1);
-            selectedCharacter.setWeapons(selectedWeapon);
-            if (selectedWeapon.getWeaponType() == 1) {
-                do {
+            System.out.println("Select a weapon");
+            i = 1;
+            for (Weapons weapon : posibleWeapons) {
+                System.out.println(i + ". " + weapon.getName());
+                i++;
+            }
+            input = NumReader.readNumber();
+            if (input < 1 || input > posibleWeapons.size()) {
+                System.out.println(input + " is not a valid option, no weapon was chosen");
+            } else {
+                Weapons selectedWeapon = posibleWeapons.get(input - 1);
+                selectedCharacter.setWeapons(selectedWeapon);
+                if (selectedWeapon.getWeaponType() == 1) {
+                    ArrayList<Weapons> oneHandWeapons = new ArrayList<>();
+                    for (Weapons weapon : posibleWeapons) {
+                        if (weapon.getWeaponType() == 1) {
+                            oneHandWeapons.add(weapon);
+                        }
+                    }
                     System.out.println("Select a secondary weapon");
                     i = 1;
-                    for (Weapons weapon : posibleWeapons) {
+                    for (Weapons weapon : oneHandWeapons) {
                         System.out.println(i + ". " + weapon.getName());
                         i++;
                     }
                     input = NumReader.readNumber();
-                    if (input < 1 || input > posibleWeapons.size()) {
-                        System.out.println(input + " is not a valid option");
+                    if (input < 1 || input > oneHandWeapons.size()) {
+                        System.out.println(input + " is not a valid option, no secondary weapon was chosen");
+                    } else {
+                        Weapons secondaryWeapon = oneHandWeapons.get(input - 1);
+                        selectedCharacter.setWeapons(secondaryWeapon);
                     }
-                } while (input < 1 || input > posibleWeapons.size());
-                Weapons secondaryWeapon = posibleWeapons.get(input - 1);
-                selectedCharacter.setWeapons(secondaryWeapon);
+                }
             }
 
             ArrayList<Armor> posibleArmors = selectedCharacter.getArmors();
-            do {
-                System.out.println("Select an armor");
-                i = 1;
-                for (Armor armor : posibleArmors) {
-                    System.out.println(i + ". " + armor.getName());
-                    i++;
-                }
-                input = NumReader.readNumber();
-                if (input < 1 || input > posibleArmors.size()) {
-                    System.out.println(input + " is not a valid option");
-                }
-            } while (input < 1 || input > posibleArmors.size());
-            Armor selectedArmor = posibleArmors.get(input - 1);
-            selectedCharacter.setArmor(selectedArmor);
+            System.out.println("Select an armor");
+            i = 1;
+            for (Armor armor : posibleArmors) {
+                System.out.println(i + ". " + armor.getName());
+                i++;
+            }
+            input = NumReader.readNumber();
+            if (input < 1 || input > posibleArmors.size()) {
+                System.out.println(input + " is not a valid option, no armor was chosen");
+            } else {
+                Armor selectedArmor = posibleArmors.get(input - 1);
+                selectedCharacter.setArmor(selectedArmor);
+            }
         }
         private void deleteCharacter () {
             Scanner scanner = new Scanner(System.in);
@@ -186,7 +189,7 @@ public class Player extends User {
                                     System.out.println(goldBet + " is not a valid amount");
                                 } else {
                                     for (CharacterUser characterTest : charactersChallengedNeed) {
-                                        if (characterTest.getGold() > goldBet) {
+                                        if (characterTest.getGold() >= goldBet) {
                                             foundPossibility = true;
                                         }
                                     }
@@ -260,54 +263,7 @@ public class Player extends User {
                         } while (((input < 1 || input > this.characters.size()) || (this.characters.get(input - 1).getGold() < challenge.getGold())));
                         CharacterUser selectedCharacter = this.characters.get(input - 1);
 
-                        selectedCharacter.deleteWeapons();
-                        ArrayList<Weapons> posibleWeapons = selectedCharacter.getWeapons();
-                        do {
-                            System.out.println("Select a weapon");
-                            i = 1;
-                            for (Weapons weapon : posibleWeapons) {
-                                System.out.println(i + ". " + weapon.getName());
-                                i++;
-                            }
-                            input = NumReader.readNumber();
-                            if (input < 1 || input > posibleWeapons.size()) {
-                                System.out.println(input + " is not a valid option");
-                            }
-                        } while (input < 1 || input > posibleWeapons.size());
-                        Weapons selectedWeapon = posibleWeapons.get(input - 1);
-                        selectedCharacter.setWeapons(selectedWeapon);
-                        if (selectedWeapon.getWeaponType() == 1) {
-                            do {
-                                System.out.println("Select a secondary weapon");
-                                i = 1;
-                                for (Weapons weapon : posibleWeapons) {
-                                    System.out.println(i + ". " + weapon.getName());
-                                    i++;
-                                }
-                                input = NumReader.readNumber();
-                                if (input < 1 || input > posibleWeapons.size()) {
-                                    System.out.println(input + " is not a valid option");
-                                }
-                            } while (input < 1 || input > posibleWeapons.size());
-                            Weapons secondaryWeapon = posibleWeapons.get(input - 1);
-                            selectedCharacter.setWeapons(secondaryWeapon);
-                        }
-
-                        ArrayList<Armor> posibleArmors = selectedCharacter.getArmors();
-                        do {
-                            System.out.println("Select an armor");
-                            i = 1;
-                            for (Armor armor : posibleArmors) {
-                                System.out.println(i + ". " + armor.getName());
-                                i++;
-                            }
-                            input = NumReader.readNumber();
-                            if (input < 1 || input > posibleArmors.size()) {
-                                System.out.println(input + " is not a valid option");
-                            }
-                        } while (input < 1 || input > posibleArmors.size());
-                        Armor selectedArmor = posibleArmors.get(input - 1);
-                        selectedCharacter.setArmor(selectedArmor);
+                        this.addEquipment(selectedCharacter);
 
                         Fight newFight = new Fight(challenge.getChallenger(), challenge.getChallenged(), challenge.getChallengerCharacter(), selectedCharacter, challenge.getGold(), challenge.getModifier());
                         newFight.startFight();

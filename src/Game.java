@@ -121,18 +121,8 @@ public class  Game {
         String name = scanner.nextLine();
         System.out.print("Write your nickname: ");
         String nick = scanner.nextLine();
-        System.out.print("Write your password: ");
-        String pass = scanner.nextLine();
-        while (8 > pass.length() || pass.length() > 12){
-            System.out.println("Your password must be between 8 and 12 characters");
-            pass = scanner.nextLine();
-        }
-        System.out.println("Repeat your password:");
-        String pass2= scanner.nextLine();
-        if (pass != pass2){
-            System.out.println("Passwords don´t match");
-        }
-        while (pass != pass2){
+        String pass, pass2;
+        do {
             System.out.print("Write your password: ");
             pass = scanner.nextLine();
             while (8 > pass.length() || pass.length() > 12){
@@ -141,10 +131,10 @@ public class  Game {
             }
             System.out.println("Repeat your password:");
             pass2= scanner.nextLine();
-            if (pass != pass2){
+            if (!pass.equals(pass2)){
                 System.out.println("Passwords don´t match");
             }
-        }
+        } while (!pass.equals(pass2));
         this.register(name, nick, pass, userType);
     }
 }
