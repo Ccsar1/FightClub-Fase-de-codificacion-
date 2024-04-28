@@ -260,6 +260,12 @@ public class DataBaseManager implements Serializable{
 
     public void removeModifier(Modifiers modifier) {
         this.modifiersDB.remove(modifier);
+        for (Challenge challenge : this.challengeDB) {
+            challenge.removeModifier(modifier);
+        }
+        for (Character character : this.charDB) {
+            character.removeModifier(modifier);
+        }
         saveFiles();
     }
 

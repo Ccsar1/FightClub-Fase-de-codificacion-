@@ -95,4 +95,8 @@ public abstract class Character implements Serializable {
     public ArrayList<ModifierValue> getModifiers() {
         return this.modifiers;
     }
+
+    public void removeModifier(Modifiers modifier) {
+        this.modifiers.removeIf(modifierValue -> modifierValue.getModifier() == modifier);
+    }
 }

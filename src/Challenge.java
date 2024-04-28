@@ -56,4 +56,8 @@ public class Challenge implements Serializable {
         this.modifier = modifier;
     }
 
+    public void removeModifier(Modifiers modifier) {
+        this.modifier = null;
+    }
+
 }
