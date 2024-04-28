@@ -323,6 +323,10 @@ public class Player extends User {
             }
         }
 
+        public void removeCharacter(Character characterToEliminate) {
+            this.characters.removeIf(character -> character.getCharacter() == characterToEliminate);
+        }
+
         @Override
         public boolean showMenu () {
             System.out.println("Welcome " + super.getName());

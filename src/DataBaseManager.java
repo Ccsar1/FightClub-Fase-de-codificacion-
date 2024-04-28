@@ -71,6 +71,13 @@ public class DataBaseManager implements Serializable{
 
     public void removeCharacter(Character character) {
         this.charDB.remove(character);
+        this.challengeDB.removeIf(challenge -> challenge.containsCharacter(character));
+        for (Player player : this.playerDB) {
+            player.removeCharacter(character);
+        }
+        for (Player player : this.userBlockDB) {
+            player.removeCharacter(character);
+        }
         saveFiles();
     }
 
@@ -135,6 +142,7 @@ public class DataBaseManager implements Serializable{
             Player player = iterator.next();
             if (player.equals(user)) {
                 iterator.remove();
+                this.challengeDB.removeIf(challenge -> challenge.containsPlayer(player));
                 saveFiles();
                 return;
             }

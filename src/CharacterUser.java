@@ -244,4 +244,8 @@ public class CharacterUser implements Serializable {
         }
     }
 
+    public Character getCharacter() {
+        return this.character;
+    }
+
 }

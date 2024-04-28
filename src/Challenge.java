@@ -60,4 +60,12 @@ public class Challenge implements Serializable {
         this.modifier = null;
     }
 
+    public boolean containsPlayer(Player player) {
+        return (player == challenged || player == challenger);
+    }
+
+    public boolean containsCharacter(Character character) {
+        return (character == challengerCharacter.getCharacter());
+    }
+
 }
