@@ -248,7 +248,7 @@ public class Player extends User {
                             System.out.println("Choose your character");
                             i = 1;
                             for (CharacterUser character : this.characters) {
-                                if (challenge.getGold() < character.getGold()) {
+                                if (challenge.getGold() <= character.getGold()) {
                                     System.out.println(i + ". " + character.getName());
 
                                 } else {
