@@ -1,17 +1,16 @@
-
-import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
 public class  Game {
 
-    public Game() {
+    public Game(DataBaseManager dataBase) {
+        this.dataBase=dataBase;
     }
 
     private User user;
 
     private DataBaseManager dataBase;
 
-    private void login(String nick, String pass) {
+    public void login(String nick, String pass) {
         this.user = dataBase.getUserByNick(nick);
         if (this.user != null) {
             boolean correctPass = this.user.checkPassword(pass);
@@ -33,7 +32,7 @@ public class  Game {
 
     }
 
-    private void register(String name, String nick, String pass, TUser type) {
+    public void register(String name, String nick, String pass, TUser type) {
         if (!this.dataBase.checkExistsNick(nick)) {
             switch (type) {
                 case Player:
