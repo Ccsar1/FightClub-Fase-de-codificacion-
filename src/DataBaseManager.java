@@ -194,17 +194,17 @@ public class DataBaseManager implements Serializable{
 
     public boolean checkExistsNick(String nick){
         for (Player player:playerDB){
-            if (player.getName().equals(nick)){
+            if (player.getNick().equals(nick)){
                 return true;
             }
         }
         for (Operator operator:operatorDB){
-            if (operator.getName().equals(nick)){
+            if (operator.getNick().equals(nick)){
                 return true;
             }
         }
         for (Player playerBlock:userBlockDB){
-            if (playerBlock.getName().equals(nick)){
+            if (playerBlock.getNick().equals(nick)){
                 return true;
             }
         }
