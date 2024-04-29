@@ -71,6 +71,13 @@ public class DataBaseManager implements Serializable{
 
     public void removeCharacter(Character character) {
         this.charDB.remove(character);
+        this.challengeDB.removeIf(challenge -> challenge.containsCharacter(character));
+        for (Player player : this.playerDB) {
+            player.removeCharacter(character);
+        }
+        for (Player player : this.userBlockDB) {
+            player.removeCharacter(character);
+        }
         saveFiles();
     }
 
@@ -135,6 +142,7 @@ public class DataBaseManager implements Serializable{
             Player player = iterator.next();
             if (player.equals(user)) {
                 iterator.remove();
+                this.challengeDB.removeIf(challenge -> challenge.containsPlayer(player));
                 saveFiles();
                 return;
             }
@@ -260,6 +268,12 @@ public class DataBaseManager implements Serializable{
 
     public void removeModifier(Modifiers modifier) {
         this.modifiersDB.remove(modifier);
+        for (Challenge challenge : this.challengeDB) {
+            challenge.removeModifier(modifier);
+        }
+        for (Character character : this.charDB) {
+            character.removeModifier(modifier);
+        }
         saveFiles();
     }
 
@@ -326,6 +340,16 @@ public class DataBaseManager implements Serializable{
 
     public void removeWeapon(Weapons weapon) {
         this.weaponsDB.remove(weapon);
+        for (Character character : this.charDB) {
+            ArrayList<Weapons> characterWeaponsArray = character.getWeapons();
+            characterWeaponsArray.remove(weapon);
+        }
+        for (Player player : this.playerDB) {
+            player.removeWeapon(weapon);
+        }
+        for (Player player : this.userBlockDB) {
+            player.removeWeapon(weapon);
+        }
         saveFiles();
     }
 
@@ -340,6 +364,16 @@ public class DataBaseManager implements Serializable{
 
     public void removeArmor(Armor armor) {
         this.armorsDB.remove(armor);
+        for (Character character : this.charDB) {
+            ArrayList<Armor> characterArmorsArray = character.getArmor();
+            characterArmorsArray.remove(armor);
+        }
+        for (Player player : this.playerDB) {
+            player.removeArmor(armor);
+        }
+        for (Player player : this.userBlockDB) {
+            player.removeArmor(armor);
+        }
         saveFiles();
     }
 
@@ -354,6 +388,15 @@ public class DataBaseManager implements Serializable{
 
     public void removeMinion(Minions minion) {
         this.minionsDB.remove(minion);
+        for (Minions minions : this.minionsDB) {
+            if (minions.getType() == TMinion.Demons) {
+                Demons demon = (Demons) minions;
+                demon.removeMinion(minion);
+            }
+        }
+        for (Character character : this.charDB) {
+            character.removeMinion(minion);
+        }
         saveFiles();
     }
 

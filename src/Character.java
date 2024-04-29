@@ -33,6 +33,14 @@ public abstract class Character implements Serializable {
     public ArrayList<Minions> getMinions() {
         return minions;
     }
+
+    public void removeMinion(Minions minion) {
+        boolean b = true;
+        do {
+            b = this.minions.remove(minion);
+        } while (b);
+    }
+
     public ArrayList<Weapons> getWeapons() {
         return this.weapons;
     }
@@ -86,5 +94,9 @@ public abstract class Character implements Serializable {
 
     public ArrayList<ModifierValue> getModifiers() {
         return this.modifiers;
+    }
+
+    public void removeModifier(Modifiers modifier) {
+        this.modifiers.removeIf(modifierValue -> modifierValue.getModifier() == modifier);
     }
 }

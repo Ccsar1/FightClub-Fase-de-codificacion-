@@ -56,4 +56,16 @@ public class Challenge implements Serializable {
         this.modifier = modifier;
     }
 
+    public void removeModifier(Modifiers modifier) {
+        this.modifier = null;
+    }
+
+    public boolean containsPlayer(Player player) {
+        return (player == challenged || player == challenger);
+    }
+
+    public boolean containsCharacter(Character character) {
+        return (character == challengerCharacter.getCharacter());
+    }
+
 }
