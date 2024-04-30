@@ -22,9 +22,7 @@ public class Challenge implements Serializable {
 
     private boolean valid;
 
-    private Weaknesses weakness;
-
-    private Strengths strength;
+    private Modifiers modifier;
 
     public Player getChallenger() {
         return this.challenger;
@@ -50,20 +48,24 @@ public class Challenge implements Serializable {
         this.valid = true;
     }
 
-    public Weaknesses getWeakness() {
-        return this.weakness;
+    public Modifiers getModifier() {
+        return this.modifier;
     }
 
-    public Strengths getStrength() {
-        return this.strength;
+    public void setModifier(Modifiers modifier) {
+        this.modifier = modifier;
     }
 
-    public void setWeakness(Weaknesses weakness) {
-        this.weakness = weakness;
+    public void removeModifier(Modifiers modifier) {
+        this.modifier = null;
     }
 
-    public void setStrength(Strengths strength) {
-        this.strength = strength;
+    public boolean containsPlayer(Player player) {
+        return (player == challenged || player == challenger);
+    }
+
+    public boolean containsCharacter(Character character) {
+        return (character == challengerCharacter.getCharacter());
     }
 
 }

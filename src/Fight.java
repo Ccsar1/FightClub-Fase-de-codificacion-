@@ -9,12 +9,13 @@ public class Fight implements Serializable {
     private Player challengedPlayer;
     private CharacterUser characterChallenger;
     private CharacterUser characterChallenged;
+    private Modifiers modifier;
     private int gold;
     private int roundNum;
     private ArrayList<Round> roundList;
     private int result; //0: draw; 1: challenger wins; 2: challenged wins
     private boolean notified;
-    public Fight(Player challengerPlayer, Player challengedPlayer, CharacterUser challengerCharacter, CharacterUser challengedCharacter, int gold) {
+    public Fight(Player challengerPlayer, Player challengedPlayer, CharacterUser challengerCharacter, CharacterUser challengedCharacter, int gold, Modifiers modifier) {
         this.challengerPlayer = challengerPlayer;
         this.challengedPlayer = challengedPlayer;
         this.characterChallenger=challengerCharacter;
@@ -23,6 +24,7 @@ public class Fight implements Serializable {
         this.roundNum = 0;
         this.roundList = new ArrayList<>();
         this.notified = false;
+        this.modifier = modifier;
     }
 
     public void giveUp(){
@@ -32,9 +34,12 @@ public class Fight implements Serializable {
     }
 
     public void startFight() {
-        Round round= new Round(this.characterChallenger,this.characterChallenged);
+
+        characterChallenged.resetValues();
+        characterChallenger.resetValues();
 
         do {
+            Round round= new Round(this.characterChallenger,this.characterChallenged, this.modifier);
             round.playRound();
             roundList.add(round);
         }while(characterChallenger.getHP() > 0 && characterChallenged.getHP() > 0);
@@ -58,26 +63,40 @@ public class Fight implements Serializable {
     public void showResult() {
         if (!this.roundList.isEmpty()) {
             int i = 1;
-            Scanner escaner = new Scanner(System.in);
             for (Round round : this.roundList) {
+                System.out.println("-------------");
                 System.out.println("Round " + i);
                 if (round.challengerAttack()) {
+                    if(round.minionLiveChallenged()){
+                        System.out.println(challengerPlayer.getNick() + "'s character, " + characterChallenger.getName() + ", deals damage to " + challengedPlayer.getNick() + " minion");
+                    }else{
                     System.out.println(challengerPlayer.getNick() + "'s character, " + characterChallenger.getName() + ", deals damage to " + challengedPlayer.getNick() + "'s character, " + characterChallenged.getName());
-                }
+                }}
                 if (round.challengedAttack()) {
+                    if(round.minionLiveChallenger()){
+                        System.out.println(challengedPlayer.getNick() + "'s character, " + characterChallenged.getName() + ", deals damage to " + challengerPlayer.getNick() + " minion");
+                    }else{
                     System.out.println(challengedPlayer.getNick() + "'s character, " + characterChallenged.getName() + ", deals damage to " + challengerPlayer.getNick() + "'s character, " + characterChallenger.getName());
+                }}if (!round.challengerAttack() && !round.challengedAttack()){
+                    System.out.println("No attacks ");
                 }
-                escaner.nextLine();
+                System.out.println(challengerPlayer.getNick() + "'s character, " + characterChallenger.getName() + ", has " + round.HPChallenger() + " of HP");
+
+                System.out.println(challengedPlayer.getNick() + "'s character, " + characterChallenged.getName() + ", has " + round.HPChallenged() + " of HP");
                 i++;
             }
-            if (characterChallenger.getHP() == 0){
-                System.out.println(characterChallenged.getName() + "has won the fight");
-            } else if (characterChallenged.getHP() == 0){
-                System.out.println(characterChallenger.getName() + "has won the fight");
+            System.out.println("-------------");
+            System.out.println("FINAL RESULT");
+            if (this.result == 1) {
+                System.out.println(this.challengerPlayer.getNick() + " wins the fight");
+            } else if (this.result == 2) {
+                System.out.println(this.challengedPlayer.getNick() + " wins the fight");
+            } else {
+                System.out.println("The fight ends with a draw");
             }
 
         } else {
-            System.out.println("The player " + this.challengedPlayer + " has paid " + this.gold + " to avoid the fight");
+            System.out.println("The player " + this.challengedPlayer.getNick() + " has paid " + this.gold + " to avoid the fight");
         }
     }
 
@@ -100,9 +119,11 @@ public class Fight implements Serializable {
     public void showPayment() {
         switch (this.result) {
             case 1:
-                System.out.println(this.challengedPlayer + " pays " + this.gold + " to " + this.challengerPlayer);
+                System.out.println(this.challengedPlayer.getNick() + " pays " + this.gold + " to " + this.challengerPlayer.getNick());
+                return;
             case 2:
-                System.out.println(this.challengerPlayer + " pays " + this.gold + " to " + this.challengedPlayer);
+                System.out.println(this.challengerPlayer.getNick() + " pays " + this.gold + " to " + this.challengedPlayer.getNick());
+                return;
         }
     }
 }

@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class CharacterUser implements Serializable {
 
-    public CharacterUser(Character character) {
+    public CharacterUser(Character character,String nick) {
         this.gold = 150;
         this.character = character;
         this.resetValues();
         this.weaponActive = new ArrayList<>();
+        this.userNick=nick;
     }
 
     private Character character;
@@ -29,6 +30,7 @@ public class CharacterUser implements Serializable {
 
     private int willpower;
 
+    private String userNick;
 
     public void doDamage() {
         if (this.minionHP > 0) {
@@ -38,6 +40,9 @@ public class CharacterUser implements Serializable {
         }
     }
 
+    public boolean surviveMinionHP(){
+        return this.minionHP>0;
+    }
     public void removeGold(int minus) {
         this.gold -= minus;
         if (this.gold < 0) {
@@ -46,6 +51,9 @@ public class CharacterUser implements Serializable {
         }
     }
 
+    public String getUserNick(){
+        return this.userNick;
+    }
     public int getHP() {
         return this.hp;
     }
@@ -54,34 +62,45 @@ public class CharacterUser implements Serializable {
         return this.gold;
     }
 
-    public int calculateAttack() {
+    public int calculateAttack(Modifiers fightModifier) {
 
         int attack = 0;
         int equipmentAttack = 0;
+        if (this.weaponActive!=null){
         for (Weapons weapon : this.weaponActive){
             equipmentAttack += weapon.getAttackModifier();
+        }}
+        if (this.armorActive!=null) {
+            equipmentAttack += this.armorActive.getAttackModifier();
         }
 
-        equipmentAttack += this.armorActive.getAttackModifier();
+
+        int modifierAttack = 0;
+        ArrayList<ModifierValue> modifierValuesList = this.character.getModifiers();
+        for (ModifierValue modifierValue : modifierValuesList) {
+            if (modifierValue.getModifier() == fightModifier) {
+                modifierAttack += modifierValue.getValue();
+            }
+        }
 
         SpecialAbility ability = character.getSpecialAbilities();
         switch (this.character.getType()){
-            case TCharacter.Hunter:
+            case Hunter:
                 Hunter hunter = (Hunter) this.character;
                 Talent talent = (Talent) ability;
-                attack = character.getPower() + this.willpower + equipmentAttack + talent.getAttackValue();
+                attack = character.getPower() + this.willpower + equipmentAttack + talent.getAttackValue() + modifierAttack;
                 break;
 
-            case TCharacter.Lycanthrope:
+            case Lycanthrope:
                 Gift gift = (Gift) ability;
                 int giftAttack = 0;
                 if (this.fury >= gift.getFury()) {
                     giftAttack = gift.getAttackValue();
                 }
-                attack = character.getPower() + giftAttack + equipmentAttack + this.fury;
+                attack = character.getPower() + giftAttack + equipmentAttack + this.fury + modifierAttack;
                 break;
 
-            case TCharacter.Vampire:
+            case Vampire:
                 Disciplines discipline = (Disciplines) ability;
                 int disciplineAttack = 0;
                 if (this.blood > discipline.getCost()){
@@ -92,27 +111,41 @@ public class CharacterUser implements Serializable {
                 if (this.blood > 5){
                     extra = 2;
                 }
-                attack = character.getPower() + disciplineAttack + equipmentAttack + extra;
+                attack = character.getPower() + disciplineAttack + equipmentAttack + extra + modifierAttack;
+        }
+        if (attack < 0) {
+            return 0;
         }
         return attack;
     }
 
-    public int calculateDefense(){
+    public int calculateDefense(Modifiers fightModifier){
         int defense = 0;
         int equipmentDefense = 0;
+        if (this.weaponActive!=null){
         for (Weapons weapon : this.weaponActive){
             equipmentDefense += weapon.getDefenseModifier();
+        }}
+        if (this.armorActive!=null) {
+            equipmentDefense += this.armorActive.getDefenseModifier();
         }
-        equipmentDefense += this.armorActive.getDefenseModifier();
+
+        int modifierDefense = 0;
+        ArrayList<ModifierValue> modifierValuesList = this.character.getModifiers();
+        for (ModifierValue modifierValue : modifierValuesList) {
+            if (modifierValue.getModifier() == fightModifier) {
+                modifierDefense += modifierValue.getValue();
+            }
+        }
 
         SpecialAbility ability = this.character.getSpecialAbilities();
         switch (this.character.getType()){
-            case TCharacter.Hunter:
+            case Hunter:
                 Talent talent = (Talent) ability;
-                defense = this.character.getPower() + talent.getDefenseValue() + equipmentDefense + this.willpower;
+                defense = this.character.getPower() + talent.getDefenseValue() + equipmentDefense + this.willpower + modifierDefense;
                 break;
 
-            case TCharacter.Vampire:
+            case Vampire:
                 Disciplines discipline = (Disciplines) ability;
                 int disciplineDefense = 0;
                 if (this.blood > discipline.getCost()){
@@ -123,16 +156,16 @@ public class CharacterUser implements Serializable {
                 if (this.blood > 5){
                     extra = 2;
                 }
-                defense = this.character.getPower() + disciplineDefense + equipmentDefense + extra;
+                defense = this.character.getPower() + disciplineDefense + equipmentDefense + extra + modifierDefense;
                 break;
 
-            case TCharacter.Lycanthrope:
+            case Lycanthrope:
                 Gift gift = (Gift) ability;
                 int abilityDefense = 0;
                 if (this.fury >= gift.getFury()) {
                     abilityDefense = gift.getDefenseValue();
                 }
-                defense = character.getPower() + abilityDefense + armorActive.getDefenseModifier() + equipmentDefense + this.fury;
+                defense = character.getPower() + abilityDefense + armorActive.getDefenseModifier() + equipmentDefense + this.fury + modifierDefense;
         }
         return defense;
     }
@@ -153,12 +186,23 @@ public class CharacterUser implements Serializable {
         this.weaponActive = new ArrayList<>();
     }
 
+    public void removeWeapon(Weapons weapon) {
+        this.weaponActive.remove(weapon);
+        this.weaponActive.remove(weapon);
+    }
+
     public void setArmor(Armor armor){
         this.armorActive = armor;
     }
 
     public ArrayList<Armor> getArmors(){
         return character.getArmor();
+    }
+
+    public void removeArmor (Armor armor) {
+        if (this.armorActive == armor) {
+            this.armorActive = null;
+        }
     }
 
     public void addGold(int more){
@@ -198,6 +242,10 @@ public class CharacterUser implements Serializable {
                 this.willpower -= 1;
             }
         }
+    }
+
+    public Character getCharacter() {
+        return this.character;
     }
 
 }

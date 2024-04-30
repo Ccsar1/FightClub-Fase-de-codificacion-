@@ -8,28 +8,27 @@ public class Operator extends User {
     }
 
     public void validateChallenge() {
-        Scanner scanner = new Scanner(System.in);
         ArrayList<Challenge> challengesArray = super.dataBase.getNonValidatedChallenges();
-        int i = 0;
         int input;
-        if (!challengesArray.isEmpty()) {
-            do {
-                Challenge challenge = challengesArray.get(i);
+        do {
+            if (!challengesArray.isEmpty()) {
+                Challenge challenge = challengesArray.get(0);
                 System.out.println("The player " + challenge.getChallenger().getNick() + " has bet " + challenge.getGold() + " gold in a challenge against the player " + challenge.getChallenged().getNick());
                 System.out.println("Do you want to validate this challenge?");
                 System.out.println("1. Validate challenge");
                 System.out.println("2. Delete challenge");
                 System.out.println("3. Go back");
                 do {
-                    input = scanner.nextInt();
-                    scanner.nextLine();
+                    input = NumReader.readNumber();
                 } while (input < 1 || input > 3);
                 switch (input) {
                     case 1:
                         challenge.setValid();
+                        challengesArray.remove(challenge);
                         break;
                     case 2:
                         super.dataBase.deleteChallenge(challenge);
+                        challengesArray.remove(challenge);
                         break;
                     case 3:
                         break;
@@ -37,59 +36,44 @@ public class Operator extends User {
                         System.out.println(input + " is not a valid option");
                 }
                 if (input == 1) {
-                    System.out.println("Choose one of the following strengths to be present in the fight");
+                    System.out.println("Choose one of the following modifiers to be present in the fight");
                     int j = 1;
-                    ArrayList<Strengths> strengthsArray = super.dataBase.getAllStrengths();
-                    for (Strengths strength : strengthsArray) {
-                        System.out.println(j + ". " + strength.getName());
+                    ArrayList<Modifiers> modifiersArray = super.dataBase.getAllModifiers();
+                    for (Modifiers modifier : modifiersArray) {
+                        System.out.println(j + ". " + modifier.getName());
                         j++;
                     }
-                    int strengthIndex = scanner.nextInt();
-                    scanner.nextLine();
-                    if (strengthIndex >= 0 && strengthIndex <= strengthsArray.size()) {
-                        challenge.setStrength(strengthsArray.get(strengthIndex - 1));
-                    }
-                    System.out.println("Choose one of the following weaknesses to be present in the fight");
-                    j = 1;
-                    ArrayList<Weaknesses> weaknessesArray = super.dataBase.getAllWeaknesses();
-                    for (Weaknesses weakness : weaknessesArray) {
-                        System.out.println(j + ". " + weakness.getName());
-                        j++;
-                    }
-                    int weaknessIndex = scanner.nextInt();
-                    scanner.nextLine();
-                    if (weaknessIndex >= 0 && weaknessIndex <= weaknessesArray.size()) {
-                        challenge.setWeakness(weaknessesArray.get(weaknessIndex - 1));
-                    } else {
-                        System.out.println(weaknessIndex + " is not a valid option");
+                    int modifierIndex = NumReader.readNumber();
+                    if (modifierIndex >= 0 && modifierIndex <= modifiersArray.size()) {
+                        challenge.setModifier(modifiersArray.get(modifierIndex - 1));
                     }
                 }
-            } while (input != 3);
-        } else{
-            System.out.println("There are no challenges to validate");
-        }
+            } else {
+                System.out.println("There are no more challenges to validate");
+                input = 3;
+            }
+        } while (input != 3);
     }
 
     public void blockUser() {
-        Scanner scanner = new Scanner(System.in);
         ArrayList<Player> playersArray = super.dataBase.getAllPlayers();
+        if (playersArray.isEmpty()){
+            System.out.println("No players to block");
+            return;
+        }
         System.out.println("Select a player to block its account");
         int i = 1;
         for (Player player : playersArray) {
             System.out.println(i + ". " + player.getName());
             i++;
         }
-        i = scanner.nextInt();
-        scanner.nextLine();
-        if (i > 1 && i < playersArray.size()) {
-            Player player = playersArray.get(i -1);
-            super.dataBase.blockUser(player);
-            System.out.println(player.getName() + " has been blocked");
+        i = NumReader.readNumber();
+        if (i >= 1 && i <= playersArray.size()) {
+            super.dataBase.blockUser(playersArray.get(i - 1));
         }
     }
 
     public void unlockUser() {
-        Scanner scanner = new Scanner(System.in);
         ArrayList<Player> blockedPlayersArray = super.dataBase.getAllBlock();
         System.out.println("Select a player to unlock its account");
         int i = 1;
@@ -97,9 +81,8 @@ public class Operator extends User {
             System.out.println(i + ". " + blockedPlayer.getName());
             i++;
         }
-        i = scanner.nextInt();
-        scanner.nextLine();
-        if (i > 1 && i <= blockedPlayersArray.size()) {
+        i = NumReader.readNumber();
+        if (i >= 1 && i <= blockedPlayersArray.size()) {
             super.dataBase.unlockUser(blockedPlayersArray.get(i - 1));
         }
     }
@@ -107,7 +90,6 @@ public class Operator extends User {
     @Override
     public boolean showMenu() {
         System.out.println("Welcome " + super.getName());
-        Scanner scanner = new Scanner(System.in);
         int exit = 0;
         while (exit != 1) {
             System.out.println("1. Create or edit properties of the game");
@@ -117,8 +99,7 @@ public class Operator extends User {
             System.out.println("5. Exit");
             System.out.println("6. Delete user");
 
-            int input = scanner.nextInt();
-            scanner.nextLine();
+            int input = NumReader.readNumber();
 
             switch (input) {
                 case 1:
@@ -136,13 +117,11 @@ public class Operator extends User {
                     break;
                 case 5:
                     System.out.println("Press 1 to confirm exit");
-                    exit = scanner.nextInt();
-                    scanner.nextLine();
+                    exit = NumReader.readNumber();
                     break;
                 case 6:
                     System.out.println("Press 1 to exit and delete your user");
-                    exit = scanner.nextInt();
-                    scanner.nextLine();
+                    exit = NumReader.readNumber();
                     if (exit == 1) {
                         return true;
                     }

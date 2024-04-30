@@ -8,9 +8,7 @@ public class DataBaseManager implements Serializable{
 
     private ArrayList<Character> charDB;
     private ArrayList<Fight> fightDB;
-    private ArrayList<Weaknesses> weaknessesDB;
-
-    private ArrayList<Strengths> strengthsDB;
+    private ArrayList<Modifiers> modifiersDB;
     private ArrayList<Player> playerDB;
     private ArrayList<Operator> operatorDB;
     private ArrayList<Challenge> challengeDB;
@@ -30,8 +28,7 @@ public class DataBaseManager implements Serializable{
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("FightClub.ser"))) {
             DataBaseManager savedData = (DataBaseManager) inputStream.readObject();
             this.playerDB = savedData.playerDB;
-            this.weaknessesDB = savedData.weaknessesDB;
-            this.strengthsDB = savedData.strengthsDB;
+            this.modifiersDB = savedData.modifiersDB;
             this.operatorDB = savedData.operatorDB;
             this.userBlockDB = savedData.userBlockDB;
             this.charDB = savedData.charDB;
@@ -44,8 +41,7 @@ public class DataBaseManager implements Serializable{
         } catch (FileNotFoundException e) {
 
             this.playerDB = new ArrayList<>();
-            this.weaknessesDB = new ArrayList<>();
-            this.strengthsDB = new ArrayList<>();
+            this.modifiersDB = new ArrayList<>();
             this.operatorDB = new ArrayList<>();
             this.userBlockDB = new ArrayList<>();
             this.charDB = new ArrayList<>();
@@ -75,6 +71,14 @@ public class DataBaseManager implements Serializable{
 
     public void removeCharacter(Character character) {
         this.charDB.remove(character);
+        this.challengeDB.removeIf(challenge -> challenge.containsCharacter(character));
+        for (Player player : this.playerDB) {
+            player.removeCharacter(character);
+        }
+        for (Player player : this.userBlockDB) {
+            player.removeCharacter(character);
+        }
+        saveFiles();
     }
 
     public void setFightDB(Fight fight) {
@@ -138,6 +142,7 @@ public class DataBaseManager implements Serializable{
             Player player = iterator.next();
             if (player.equals(user)) {
                 iterator.remove();
+                this.challengeDB.removeIf(challenge -> challenge.containsPlayer(player));
                 saveFiles();
                 return;
             }
@@ -151,6 +156,7 @@ public class DataBaseManager implements Serializable{
                 return;
             }
         }
+        saveFiles();
 
     }
 
@@ -170,14 +176,14 @@ public class DataBaseManager implements Serializable{
         System.out.println("--------");
         int posicion=1;
         for (CharacterUser character:allcharacters){
-            System.out.println(posicion+": Name: "+character.getName()+",Gold: "+character.getGold());
+            System.out.println(posicion+": User: "+character.getUserNick()+", Name: "+character.getName()+",Gold: "+character.getGold());
             posicion++;
         }
 
     }
 
     public boolean isUserBlock (String nick){
-        for (Player player: playerDB){
+        for (Player player: userBlockDB){
             if (player.getNick().equals(nick)){
                 return true;
             }
@@ -250,63 +256,66 @@ public class DataBaseManager implements Serializable{
         return nonValidatedChallenges;
     }
 
-    public ArrayList<Weaknesses> getAllWeaknesses(){
-        return weaknessesDB;
+    public ArrayList<Modifiers> getAllModifiers(){
+        return this.modifiersDB;
     }
 
-    public ArrayList<Strengths> getAllStrengths(){
-        return strengthsDB;
-    }
-
-    public void setWeaknessesDB(Weaknesses weaknesses){
-        weaknessesDB.add(weaknesses);
+    public void setModifier(Modifiers modifier){
+        this.modifiersDB.add(modifier);
         saveFiles();
     }
 
-    public void removeWeakness(Weaknesses weakness) {
-        this.weaknessesDB.remove(weakness);
-        saveFiles();
-    }
-
-    public void setStrengths(Strengths strengths){
-        this.strengthsDB.add(strengths);
-        saveFiles();
-    }
-
-    public void removeStrength(Strengths strength) {
-        this.strengthsDB.remove(strength);
+    public void removeModifier(Modifiers modifier) {
+        this.modifiersDB.remove(modifier);
+        for (Challenge challenge : this.challengeDB) {
+            challenge.removeModifier(modifier);
+        }
+        for (Character character : this.charDB) {
+            character.removeModifier(modifier);
+        }
         saveFiles();
     }
 
     public void deleteChallenge(Challenge challengeToDelete){
-        for (Challenge challenge: challengeDB){
-            if (challenge.equals(challengeToDelete)){
-                challengeDB.remove(challenge);
-            }
-        }
+        challengeDB.remove(challengeToDelete);
         saveFiles();
+    }
+    public ArrayList<Challenge> getAllChallengeDB(){
+        return this.challengeDB;
     }
 
     public ArrayList<Fight> getNotNotifiedFights(Player player){
             ArrayList<Fight>nonNotified=new ArrayList<>();
             for(Fight fights:fightDB){
-                if ((!fights.getNotified())&&(fights.getChallenger().getName().equals(player.getName()))){
+                if ((!fights.getNotified())&&(fights.getChallenger().equals(player))){
                     nonNotified.add(fights);
                 }
             }
             return nonNotified;
     }
 
-    public void blockUser(Player player) {
-        this.playerDB.remove(player);
-        this.userBlockDB.add(player);
+    public void blockUser(Player playerBlock) {
+        playerDB.remove(playerBlock);
+        userBlockDB.add(playerBlock);
         saveFiles();
+
     }
 
-    public void unlockUser(Player player) {
-        this.userBlockDB.remove(player);
-        this.playerDB.add(player);
+    public boolean userInChallenge (Player player){
+
+        for (Challenge challenge: challengeDB){
+            if(((challenge.getChallenged()==player)|| (challenge.getChallenger()==player))){
+                return true;
+            }
+        }
+        return false;
+
+    }
+    public void unlockUser(Player playerBlock) {
+        playerDB.add(playerBlock);
+        userBlockDB.remove(playerBlock);
         saveFiles();
+
     }
 
     public ArrayList<Fight> getFights(Player player) {
@@ -330,6 +339,16 @@ public class DataBaseManager implements Serializable{
 
     public void removeWeapon(Weapons weapon) {
         this.weaponsDB.remove(weapon);
+        for (Character character : this.charDB) {
+            ArrayList<Weapons> characterWeaponsArray = character.getWeapons();
+            characterWeaponsArray.remove(weapon);
+        }
+        for (Player player : this.playerDB) {
+            player.removeWeapon(weapon);
+        }
+        for (Player player : this.userBlockDB) {
+            player.removeWeapon(weapon);
+        }
         saveFiles();
     }
 
@@ -344,6 +363,16 @@ public class DataBaseManager implements Serializable{
 
     public void removeArmor(Armor armor) {
         this.armorsDB.remove(armor);
+        for (Character character : this.charDB) {
+            ArrayList<Armor> characterArmorsArray = character.getArmor();
+            characterArmorsArray.remove(armor);
+        }
+        for (Player player : this.playerDB) {
+            player.removeArmor(armor);
+        }
+        for (Player player : this.userBlockDB) {
+            player.removeArmor(armor);
+        }
         saveFiles();
     }
 
@@ -358,8 +387,18 @@ public class DataBaseManager implements Serializable{
 
     public void removeMinion(Minions minion) {
         this.minionsDB.remove(minion);
+        for (Minions minions : this.minionsDB) {
+            if (minions.getType() == TMinion.Demons) {
+                Demons demon = (Demons) minions;
+                demon.removeMinion(minion);
+            }
+        }
+        for (Character character : this.charDB) {
+            character.removeMinion(minion);
+        }
         saveFiles();
     }
+
 }
 
 

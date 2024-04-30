@@ -7,26 +7,41 @@ import java.util.*;
  */
 public class Round implements Serializable {
 
-    Random random=new Random();
+    Random random;
     CharacterUser characterChallenger;
     CharacterUser characterChallenged;
 
-    private boolean challengerAttack=false;
-    private boolean challengedAttack=false;
+    private boolean challengerAttack;
+    private boolean challengedAttack;
+    private boolean challengerMinion;
+    private boolean challengedMinion;
+    private int challengerHP;
+    private int challengedHP;
 
 
-    public Round(CharacterUser characterChallenger, CharacterUser characterChallenged) {
+
+    private Modifiers modifier;
+
+    public Round(CharacterUser characterChallenger, CharacterUser characterChallenged, Modifiers modifier) {
+        this.random=new Random();
         this.characterChallenger=characterChallenger;
         this.characterChallenged=characterChallenged;
+        this.challengerAttack=false;
+        this.challengedAttack=false;
+        this.challengerMinion=false;
+        this.challengedMinion=false;
+        this.challengerHP=0;
+        this.challengedHP=0;
 
+        this.modifier = modifier;
     }
 
     public void playRound() {
         int attackChallengerExists=0,defenceChallengerExists=0,attackChallengedExists=0,defenceChallengedExists=0;
-        int potentialAttackCharacterChallenger= characterChallenger.calculateAttack();
-        int potentialDefenceCharacterChallenger= characterChallenger.calculateDefense();
-        int potentialAttackCharacterChallenged= characterChallenger.calculateAttack();
-        int potentialDefenceCharacterChallenged= characterChallenger.calculateDefense();
+        int potentialAttackCharacterChallenger= characterChallenger.calculateAttack(this.modifier);
+        int potentialDefenceCharacterChallenger= characterChallenger.calculateDefense(this.modifier);
+        int potentialAttackCharacterChallenged= characterChallenger.calculateAttack(this.modifier);
+        int potentialDefenceCharacterChallenged= characterChallenger.calculateDefense(this.modifier);
         int [] attackChallenger= new int[potentialAttackCharacterChallenger];
         int [] defenceChallenger= new int[potentialDefenceCharacterChallenger];
         int [] attackChallenged= new int[potentialAttackCharacterChallenged];
@@ -62,6 +77,7 @@ public class Round implements Serializable {
         }
 
         if (attackChallengerExists>=defenceChallengedExists){
+            SetchallengedMinion();
             characterChallenged.doDamage();
             characterChallenged.gainFury();
             characterChallenged.loseWillpower();
@@ -69,22 +85,39 @@ public class Round implements Serializable {
             SetchallengerAttack();
         }
         if (attackChallengedExists>=defenceChallengerExists){
+            SetchallengerMinion();
             characterChallenger.doDamage();
             characterChallenger.gainFury();
             characterChallenger.loseWillpower();
             characterChallenged.gainBlood();
             SetchallengedAttack();
         }
+        GetchallengerHP();
+        GetchallengedHP();
 
 
     }
 
-    private void SetchallengerAttack(){
+    public void SetchallengerAttack(){
         this.challengerAttack=true;
     }
 
-    private void SetchallengedAttack(){
+    public void SetchallengedAttack(){
         this.challengedAttack=true;
+    }
+    public void SetchallengerMinion(){
+        this.challengerMinion= characterChallenger.surviveMinionHP();
+    }
+
+    public void SetchallengedMinion(){
+        this.challengedMinion= characterChallenged.surviveMinionHP();
+    }
+    public void GetchallengerHP(){
+         this.challengerHP=characterChallenger.getHP();
+    }
+
+    public void GetchallengedHP(){
+        this.challengedHP=characterChallenged.getHP();
     }
     public boolean challengerAttack(){
         return this.challengerAttack;
@@ -94,4 +127,8 @@ public class Round implements Serializable {
         return this.challengedAttack;
     }
 
+    public boolean minionLiveChallenger(){ return this.challengerMinion;}
+    public boolean minionLiveChallenged(){ return this.challengedMinion;}
+    public int HPChallenger(){ return this.challengerHP;}
+    public int HPChallenged(){ return this.challengedHP;}
 }

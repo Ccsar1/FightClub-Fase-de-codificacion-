@@ -12,8 +12,7 @@ public abstract class Character implements Serializable {
         this.minions = new ArrayList<>();
         this.weapons = new ArrayList<>();
         this.armor = new ArrayList<>();
-        this.strengths = new ArrayList<>();
-        this.weaknesses = new ArrayList<>();
+        this.modifiers = new ArrayList<>();
     }
     private String name;
     private int power;
@@ -21,8 +20,7 @@ public abstract class Character implements Serializable {
     private ArrayList<Weapons> weapons;
     private ArrayList<Armor> armor;
     private TCharacter type;
-    private ArrayList<Strengths> strengths;
-    private ArrayList<Weaknesses> weaknesses;
+    private ArrayList<ModifierValue> modifiers;
     private SpecialAbility specialAbility;
     private int hp;
     public int getPower() {
@@ -35,6 +33,14 @@ public abstract class Character implements Serializable {
     public ArrayList<Minions> getMinions() {
         return minions;
     }
+
+    public void removeMinion(Minions minion) {
+        boolean b = true;
+        do {
+            b = this.minions.remove(minion);
+        } while (b);
+    }
+
     public ArrayList<Weapons> getWeapons() {
         return this.weapons;
     }
@@ -71,18 +77,6 @@ public abstract class Character implements Serializable {
         this.specialAbility=abilities;
     }
 
-    public ArrayList<Weaknesses> getWeaknesses() {
-        return this.weaknesses;
-    }
-    public ArrayList<Strengths> getStrengths() {
-        return this.strengths;
-    }
-    public void setWeaknesses(Weaknesses weakness) {
-        this.weaknesses.add(weakness);
-    }
-    public void setStrengths(Strengths strength) {
-        this.strengths.add(strength);
-    }
     public int getHp() {
         return this.hp;
     }
@@ -96,5 +90,13 @@ public abstract class Character implements Serializable {
 
     public void setHP(int newHP) {
         this.hp = newHP;
+    }
+
+    public ArrayList<ModifierValue> getModifiers() {
+        return this.modifiers;
+    }
+
+    public void removeModifier(Modifiers modifier) {
+        this.modifiers.removeIf(modifierValue -> modifierValue.getModifier() == modifier);
     }
 }
