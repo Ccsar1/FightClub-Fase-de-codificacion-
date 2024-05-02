@@ -1,8 +1,7 @@
 import java.io.Serializable;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
-public abstract class Character implements Serializable {
+public class Character implements Serializable {
     public Character(String name, int power, int hp, SpecialAbility specialAbility, TCharacter type) {
         this.name = name;
         this.power = power;

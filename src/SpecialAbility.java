@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 
 
-public abstract class SpecialAbility implements Serializable {
+public class SpecialAbility implements Serializable {
 
     private String name;
     private int attackValue;

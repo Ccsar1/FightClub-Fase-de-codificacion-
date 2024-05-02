@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class NumReader {
-    private static boolean isNumeric(String input) {
+    public static boolean isNumeric(String input) {
 
         boolean result;
 

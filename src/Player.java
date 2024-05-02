@@ -1,6 +1,6 @@
-
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Player extends User {
 
@@ -38,7 +38,7 @@ public class Player extends User {
 
     private ArrayList<CharacterUser> characters;
 
-    private void registerCharacter() {
+    public void registerCharacter() {
         ArrayList<Character> characterArray = super.dataBase.getCharacters();
         int input = 1;
         int i;
