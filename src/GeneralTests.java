@@ -42,7 +42,6 @@ class GeneralTests {
         Ghouls minionsTest3= new Ghouls("new",hp,2);
         Humans minionHuman = new Humans("humano",3,'r');
         minionHuman.setLoyalty(3);
-        database.setMinion(minionsTest3);
         System.out.println(minionsTest3.getDependence());
         minionsTest.setMinion(minionsTest2);
         ArrayList<Minions> minionsTestSonArray= minionsTest.getMinions();
@@ -88,18 +87,18 @@ class GeneralTests {
     @Test
     void registerCorrectly() {
         game.register("FernandoALO14","Fernando","12345678",TUser.Player);
-        database.setPlayerDB(player3);
+
     }
     @Test
     void registerNickIncorrectly() {
         game.register("FernandoALO14","FernandoALO14","12345678",TUser.Player);
-        database.setPlayerDB(player3);
+
     }
     @Test
     void registerIncorrectly() {
 
         game.register(null,null,null,null);
-        database.setPlayerDB(player3);
+
     }
 
     @Test
@@ -313,13 +312,13 @@ class GeneralTests {
     @Test
     void setWeapons() {
         hunter.setWeapons(weapon);
-        database.setWeapon(weapon);
+
     }
 
     @Test
     void setArmor() {
         hunter.setArmor(armor);
-        database.setArmor(armor);
+
     }
 
     @Test
@@ -407,7 +406,6 @@ class GeneralTests {
         String input = "1\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-    playerNew.registerCharacter();
     ArrayList<CharacterUser> characterArrayList= playerNew.getCharacters();
     for (CharacterUser chara:characterArrayList){
         System.out.println(chara.getName());

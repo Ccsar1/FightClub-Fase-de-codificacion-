@@ -38,7 +38,7 @@ public class Player extends User {
 
     private ArrayList<CharacterUser> characters;
 
-    public void registerCharacter() {
+    private void registerCharacter() {
         ArrayList<Character> characterArray = super.dataBase.getCharacters();
         int input = 1;
         int i;
